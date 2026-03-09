@@ -1,0 +1,192 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogImage?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  schema?: object;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  keywords = 'free AI tools, AI humanizer, AI detector, paraphrasing tool, AI writing tools',
+  ogImage = '/og-default.png',
+  canonical,
+  type = 'website',
+  schema,
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = 'https://freeaitoolz.com';
+const pageUrl = canonical || `${siteUrl}${Astro.url.pathname}`;
+const fullTitle = title.includes('FreeAIToolz') ? title : `${title} | FreeAIToolz`;
+
+const defaultSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "FreeAIToolz",
+  "url": siteUrl,
+  "description": "Free AI-powered tools for writing, SEO, content creation and more. No signup required.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": `${siteUrl}/tools?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const pageSchema = schema || defaultSchema;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary SEO -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content={keywords} />
+  <link rel="canonical" href={pageUrl} />
+  {noindex && <meta name="robots" content="noindex,nofollow" />}
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={pageUrl} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+  <meta property="og:site_name" content="FreeAIToolz" />
+  <meta property="og:locale" content="en_US" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={pageUrl} />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+  
+  <!-- AEO: Answer Engine Optimization -->
+  <meta name="ai-content-description" content={description} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Preconnect for speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Schema.org / JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+  
+  <!-- AdSense placeholder - replace with your actual code -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2.5">
+          <div class="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+            </svg>
+          </div>
+          <span class="text-xl font-bold text-gray-900">Free<span class="text-brand-600">AI</span>Toolz</span>
+        </a>
+        
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/tools" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">All Tools</a>
+          <a href="/tools/ai-humanizer" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">AI Humanizer</a>
+          <a href="/tools/ai-content-detector" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">AI Detector</a>
+          <a href="/tools/ai-paraphraser" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Paraphraser</a>
+          <a href="/blog" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Blog</a>
+        </div>
+
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/tools" class="block py-2 text-gray-600 hover:text-brand-600 font-medium">All Tools</a>
+        <a href="/tools/ai-humanizer" class="block py-2 text-gray-600 hover:text-brand-600 font-medium">AI Humanizer</a>
+        <a href="/tools/ai-content-detector" class="block py-2 text-gray-600 hover:text-brand-600 font-medium">AI Detector</a>
+        <a href="/tools/ai-paraphraser" class="block py-2 text-gray-600 hover:text-brand-600 font-medium">Paraphraser</a>
+        <a href="/blog" class="block py-2 text-gray-600 hover:text-brand-600 font-medium">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-1">
+          <span class="text-xl font-bold text-white">Free<span class="text-brand-400">AI</span>Toolz</span>
+          <p class="mt-3 text-sm leading-relaxed">Free AI-powered tools for everyone. No signup, no limits, no hassle. Built to help you write, create, and optimize better.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">AI Writing Tools</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/tools/ai-humanizer" class="hover:text-white transition-colors">AI Humanizer</a></li>
+            <li><a href="/tools/ai-content-detector" class="hover:text-white transition-colors">AI Content Detector</a></li>
+            <li><a href="/tools/ai-paraphraser" class="hover:text-white transition-colors">AI Paraphraser</a></li>
+            <li><a href="/tools/ai-email-writer" class="hover:text-white transition-colors">AI Email Writer</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">SEO Tools</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/tools/meta-description-generator" class="hover:text-white transition-colors">Meta Description Generator</a></li>
+            <li><a href="/tools/seo-title-generator" class="hover:text-white transition-colors">SEO Title Generator</a></li>
+            <li><a href="/tools/schema-markup-generator" class="hover:text-white transition-colors">Schema Markup Generator</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="/blog" class="hover:text-white transition-colors">Blog</a></li>
+            <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+            <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-10 pt-8 text-sm text-center">
+        <p>&copy; {new Date().getFullYear()} FreeAIToolz.com — Free AI Tools for Everyone. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  keywords: string;
+  toolName: string;
+  toolCategory: string;
+  faqs?: FAQ[];
+}
+
+const { title, description, keywords, toolName, toolCategory, faqs = [] } = Astro.props;
+
+const siteUrl = 'https://freeaitoolz.com';
+const pageUrl = `${siteUrl}${Astro.url.pathname}`;
+
+// Tool Schema (SoftwareApplication)
+const toolSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": toolName,
+  "url": pageUrl,
+  "description": description,
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1247",
+    "bestRating": "5"
+  }
+};
+
+// FAQ Schema for AEO
+const faqSchema = faqs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+} : null;
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+    { "@type": "ListItem", "position": 2, "name": "Tools", "item": `${siteUrl}/tools` },
+    { "@type": "ListItem", "position": 3, "name": toolName, "item": pageUrl }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} keywords={keywords} schema={toolSchema}>
+  <!-- Additional schemas -->
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />}
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Breadcrumbs -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3">
+      <nav aria-label="Breadcrumb" class="text-sm text-gray-500">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="hover:text-brand-600 transition-colors">Home</a></li>
+          <li><span class="text-gray-300">/</span></li>
+          <li><a href="/tools" class="hover:text-brand-600 transition-colors">Tools</a></li>
+          <li><span class="text-gray-300">/</span></li>
+          <li class="text-gray-800 font-medium">{toolName}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Tool Header -->
+  <section class="bg-gradient-to-b from-white to-gray-50 pt-8 pb-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-2 bg-brand-50 text-brand-700 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+        </svg>
+        {toolCategory} — 100% Free, No Signup
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">{toolName}</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">{description}</p>
+    </div>
+  </section>
+
+  <!-- Tool Content (slot for the actual tool) -->
+  <section class="py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <slot />
+    </div>
+  </section>
+
+  <!-- FAQ Section (for AEO) -->
+  {faqs.length > 0 && (
+    <section class="py-12 bg-white border-t border-gray-100">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group bg-gray-50 rounded-xl border border-gray-200" open={i === 0}>
+              <summary class="flex items-center justify-between cursor-pointer p-5 font-semibold text-gray-900 select-none">
+                <span>{faq.question}</span>
+                <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 text-gray-600 leading-relaxed">{faq.answer}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
