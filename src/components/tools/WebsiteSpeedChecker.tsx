@@ -1,13 +1,71 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+
+const RATE_LIMIT = 5;
+const RATE_WINDOW = 60 * 60 * 1000; // 1 hour in ms
+
+function getRateData() {
+  try {
+    const data = JSON.parse(localStorage.getItem('speed_checks') || '{}');
+    const now = Date.now();
+    // Clean old entries
+    if (data.timestamp && now - data.timestamp > RATE_WINDOW) {
+      return { count: 0, timestamp: now };
+    }
+    return { count: data.count || 0, timestamp: data.timestamp || now };
+  } catch { return { count: 0, timestamp: Date.now() }; }
+}
+
+function setRateData(count: number, timestamp: number) {
+  try { localStorage.setItem('speed_checks', JSON.stringify({ count, timestamp })); } catch {}
+}
+
+function getTimeRemaining(timestamp: number) {
+  const remaining = RATE_WINDOW - (Date.now() - timestamp);
+  if (remaining <= 0) return '';
+  const mins = Math.ceil(remaining / 60000);
+  return `${mins} min`;
+}
 
 export default function WebsiteSpeedChecker() {
   const [url, setUrl] = useState('');
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [strategy, setStrategy] = useState('mobile');
   const [error, setError] = useState('');
+  const [checksLeft, setChecksLeft] = useState(RATE_LIMIT);
+  const [resetTime, setResetTime] = useState('');
 
-  const getScoreColor = (score) => {
+  useEffect(() => {
+    const data = getRateData();
+    const now = Date.now();
+    if (now - data.timestamp > RATE_WINDOW) {
+      setChecksLeft(RATE_LIMIT);
+      setResetTime('');
+    } else {
+      setChecksLeft(Math.max(0, RATE_LIMIT - data.count));
+      if (data.count >= RATE_LIMIT) {
+        setResetTime(getTimeRemaining(data.timestamp));
+      }
+    }
+  }, []);
+
+  // Update timer every 30s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const data = getRateData();
+      const now = Date.now();
+      if (now - data.timestamp > RATE_WINDOW) {
+        setChecksLeft(RATE_LIMIT);
+        setResetTime('');
+        setRateData(0, now);
+      } else if (data.count >= RATE_LIMIT) {
+        setResetTime(getTimeRemaining(data.timestamp));
+      }
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getScoreColor = (score: number) => {
     if (score >= 90) return { color: '#22c55e', bg: 'bg-green-50', text: 'text-green-700', label: 'Good' };
     if (score >= 50) return { color: '#f59e0b', bg: 'bg-amber-50', text: 'text-amber-700', label: 'Needs Improvement' };
     return { color: '#ef4444', bg: 'bg-red-50', text: 'text-red-700', label: 'Poor' };
@@ -15,6 +73,21 @@ export default function WebsiteSpeedChecker() {
 
   const checkSpeed = useCallback(async () => {
     if (!url.trim()) return;
+
+    // Rate limit check
+    const data = getRateData();
+    const now = Date.now();
+    if (now - data.timestamp > RATE_WINDOW) {
+      // Reset window
+      setRateData(0, now);
+      data.count = 0;
+      data.timestamp = now;
+    }
+    if (data.count >= RATE_LIMIT) {
+      setError(`Rate limit reached. You can check ${RATE_LIMIT} websites per hour. Resets in ${getTimeRemaining(data.timestamp)}.`);
+      return;
+    }
+
     let testUrl = url.trim();
     if (!testUrl.startsWith('http')) testUrl = 'https://' + testUrl;
     
@@ -23,42 +96,23 @@ export default function WebsiteSpeedChecker() {
     setResult(null);
 
     try {
-      const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(testUrl)}&strategy=${strategy}&category=performance&category=accessibility&category=best-practices&category=seo`;
-      const response = await fetch(apiUrl);
-      const data = await response.json();
+      const response = await fetch(`/api/pagespeed?url=${encodeURIComponent(testUrl)}&strategy=${strategy}`);
+      const responseData = await response.json();
 
-      if (data.error) {
-        setError(data.error.message || 'Could not analyze this URL. Please check and try again.');
+      if (responseData.error) {
+        setError(responseData.error);
         return;
       }
 
-      const lh = data.lighthouseResult;
-      const categories = lh.categories;
-      const audits = lh.audits;
+      // Update rate limit
+      const newCount = data.count + 1;
+      setRateData(newCount, data.timestamp);
+      setChecksLeft(Math.max(0, RATE_LIMIT - newCount));
+      if (newCount >= RATE_LIMIT) {
+        setResetTime(getTimeRemaining(data.timestamp));
+      }
 
-      setResult({
-        url: testUrl,
-        strategy,
-        scores: {
-          performance: Math.round((categories.performance?.score || 0) * 100),
-          accessibility: Math.round((categories.accessibility?.score || 0) * 100),
-          bestPractices: Math.round((categories['best-practices']?.score || 0) * 100),
-          seo: Math.round((categories.seo?.score || 0) * 100),
-        },
-        metrics: {
-          fcp: audits['first-contentful-paint']?.displayValue || 'N/A',
-          lcp: audits['largest-contentful-paint']?.displayValue || 'N/A',
-          tbt: audits['total-blocking-time']?.displayValue || 'N/A',
-          cls: audits['cumulative-layout-shift']?.displayValue || 'N/A',
-          si: audits['speed-index']?.displayValue || 'N/A',
-          tti: audits['interactive']?.displayValue || 'N/A',
-        },
-        opportunities: Object.values(audits)
-          .filter(a => a.details?.type === 'opportunity' && a.score !== null && a.score < 1)
-          .sort((a, b) => (a.score || 0) - (b.score || 0))
-          .slice(0, 6)
-          .map(a => ({ title: a.title, description: a.description, savings: a.details?.overallSavingsMs ? `${Math.round(a.details.overallSavingsMs)}ms` : '' })),
-      });
+      setResult(responseData);
     } catch (err) {
       setError('Failed to analyze the website. Please check the URL and try again.');
     } finally {
@@ -66,7 +120,7 @@ export default function WebsiteSpeedChecker() {
     }
   }, [url, strategy]);
 
-  const ScoreCircle = ({ score, label, size = 'large' }) => {
+  const ScoreCircle = ({ score, label, size = 'large' }: { score: number; label: string; size?: string }) => {
     const s = getScoreColor(score);
     const r = size === 'large' ? 46 : 34;
     const circumference = 2 * Math.PI * r;
@@ -92,6 +146,23 @@ export default function WebsiteSpeedChecker() {
 
   return (
     <div className="space-y-6">
+      {/* Rate limit indicator */}
+      <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-2.5">
+        <span className="text-xs text-gray-500">
+          {checksLeft > 0 ? (
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+              <span><strong>{checksLeft}</strong> of {RATE_LIMIT} free checks remaining this hour</span>
+            </span>
+          ) : (
+            <span className="flex items-center gap-1.5 text-amber-600">
+              <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+              <span>Limit reached. Resets in <strong>{resetTime}</strong></span>
+            </span>
+          )}
+        </span>
+      </div>
+
       <div>
         <label className="block text-sm font-bold text-gray-700 mb-3">Device Type</label>
         <div className="flex gap-3">
@@ -108,8 +179,8 @@ export default function WebsiteSpeedChecker() {
         <input type="text" value={url} onChange={e => setUrl(e.target.value)} placeholder="Enter website URL (e.g., google.com)"
           onKeyDown={e => e.key === 'Enter' && checkSpeed()}
           className="flex-1 p-3.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-base transition-all" />
-        <button onClick={checkSpeed} disabled={!url.trim() || loading}
-          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold px-6 py-3.5 rounded-xl transition-all text-sm whitespace-nowrap">
+        <button onClick={checkSpeed} disabled={!url.trim() || loading || checksLeft <= 0}
+          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold px-6 py-3.5 rounded-xl transition-all text-sm whitespace-nowrap">
           {loading ? (
             <><svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" /></svg>Analyzing...</>
           ) : 'Check Speed'}
@@ -158,11 +229,11 @@ export default function WebsiteSpeedChecker() {
             ))}
           </div>
 
-          {result.opportunities.length > 0 && (
+          {result.opportunities && result.opportunities.length > 0 && (
             <div>
               <h3 className="text-lg font-bold text-gray-900 mb-4">Optimization Opportunities</h3>
               <div className="space-y-3">
-                {result.opportunities.map((o, i) => (
+                {result.opportunities.map((o: any, i: number) => (
                   <div key={i} className="bg-amber-50 border border-amber-200 rounded-xl p-4">
                     <div className="flex justify-between items-start">
                       <p className="text-sm font-bold text-gray-900">{o.title}</p>
@@ -176,6 +247,21 @@ export default function WebsiteSpeedChecker() {
           )}
         </div>
       )}
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-gray-100">
+        {[
+          { icon: '🎯', label: 'Google Powered', desc: 'PageSpeed Insights API' },
+          { icon: '📊', label: 'Core Web Vitals', desc: 'LCP, CLS, FCP, TBT' },
+          { icon: '📱', label: 'Mobile + Desktop', desc: 'Test both devices' },
+          { icon: '🔒', label: 'Private', desc: '5 free checks/hour' },
+        ].map(f => (
+          <div key={f.label} className="text-center p-3">
+            <span className="text-2xl">{f.icon}</span>
+            <p className="text-sm font-semibold text-gray-800 mt-1">{f.label}</p>
+            <p className="text-xs text-gray-500">{f.desc}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
