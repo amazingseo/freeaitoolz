@@ -1,0 +1,33 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import WebsiteSpeedChecker from '../../components/tools/WebsiteSpeedChecker';
+
+const faqs = [
+  { question: "What does the Website Speed Checker measure?", answer: "It measures 6 key performance metrics: First Contentful Paint (FCP), Largest Contentful Paint (LCP), Total Blocking Time (TBT), Cumulative Layout Shift (CLS), Speed Index, and Time to Interactive. It also scores your page on Performance, Accessibility, Best Practices, and SEO on a 0-100 scale." },
+  { question: "Is this speed test free?", answer: "Yes, completely free with no signup required. Powered by Google's PageSpeed Insights API, providing the same data used by Google to evaluate websites." },
+  { question: "What is a good speed score?", answer: "A score of 90-100 is considered good (green), 50-89 needs improvement (amber), and 0-49 is poor (red). For Core Web Vitals, aim for LCP under 2.5 seconds, CLS under 0.1, and FID/TBT as low as possible." },
+  { question: "Does page speed affect SEO?", answer: "Yes. Google uses Core Web Vitals (LCP, CLS, FID) as ranking factors. Faster pages rank higher, have lower bounce rates, and provide better user experiences. Page speed is especially important for mobile search rankings." },
+  { question: "Why test both mobile and desktop?", answer: "Google primarily uses mobile-first indexing, meaning your mobile speed score matters most for SEO. However, desktop performance matters for user experience. We recommend optimizing for mobile first, then verifying desktop performance." },
+];
+---
+
+<ToolLayout
+  title="Free Website Speed Checker - Test Page Performance & Core Web Vitals"
+  description="Free website speed test powered by Google PageSpeed Insights. Check performance, accessibility, SEO scores, and Core Web Vitals. Mobile and desktop analysis. No signup."
+  keywords="website speed checker, page speed test, site speed test free, core web vitals checker, Google PageSpeed test, website performance checker, LCP CLS FCP test"
+  toolName="Free Website Speed Checker"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <WebsiteSpeedChecker client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto prose-custom">
+    <h2>How to Check Your Website Speed for Free</h2>
+    <p>Our free website speed checker uses Google's PageSpeed Insights API to analyze any website's performance. Enter any URL, choose mobile or desktop, and get a complete performance report with scores for Performance, Accessibility, Best Practices, and SEO, plus detailed Core Web Vitals metrics and actionable optimization suggestions.</p>
+    <h3>Understanding Core Web Vitals</h3>
+    <p>Core Web Vitals are Google's metrics for measuring user experience. Largest Contentful Paint (LCP) measures loading performance and should be under 2.5 seconds. Cumulative Layout Shift (CLS) measures visual stability and should be under 0.1. Total Blocking Time (TBT) approximates interactivity and should be under 200ms. These metrics directly impact your Google search rankings.</p>
+  </div>
+</ToolLayout>

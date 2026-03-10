@@ -1,0 +1,33 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SchemaMarkupGenerator from '../../components/tools/SchemaMarkupGenerator';
+
+const faqs = [
+  { question: "What is Schema Markup?", answer: "Schema markup (also called structured data) is code you add to your website that helps search engines understand your content better. It can result in rich results like FAQ dropdowns, star ratings, and recipe cards appearing in Google search results, increasing your click-through rate." },
+  { question: "Is this Schema Generator free?", answer: "Yes, completely free with no signup required. Generate unlimited schema markup for any of the 6 supported types." },
+  { question: "What types of schema can I generate?", answer: "We support FAQ Page, How-To, Article, Product, Local Business, and Organization schema types. These are the most commonly used schemas that produce rich results in Google." },
+  { question: "How do I add schema markup to my website?", answer: "Copy the generated JSON-LD code (using the Copy button which includes the script tags) and paste it inside the <head> section of your webpage HTML. If you use WordPress, you can add it via a plugin like Rank Math or directly in your theme header." },
+  { question: "Does schema markup help SEO?", answer: "Schema markup does not directly boost rankings, but it significantly improves how your page appears in search results through rich snippets. This can dramatically increase click-through rates, which indirectly benefits your SEO performance." },
+];
+---
+
+<ToolLayout
+  title="Free Schema Markup Generator - JSON-LD Structured Data Tool"
+  description="Generate Schema markup (JSON-LD) for FAQ, How-To, Article, Product, Local Business and Organization. Free structured data generator with instant code output. No signup."
+  keywords="schema markup generator, JSON-LD generator, structured data generator, FAQ schema, how-to schema, product schema, local business schema, free schema tool"
+  toolName="Free Schema Markup Generator"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <SchemaMarkupGenerator client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto prose-custom">
+    <h2>How to Generate Schema Markup for Free</h2>
+    <p>Our free schema markup generator creates valid JSON-LD structured data for 6 common schema types. Simply select your schema type, fill in the fields, and get instant JSON-LD code ready to paste into your website. The generated code follows Google's structured data guidelines and is validated for rich result eligibility.</p>
+    <h3>Why Use Structured Data?</h3>
+    <p>Websites with proper schema markup can appear in Google's rich results, including FAQ accordions, how-to step displays, product star ratings, and business knowledge panels. These enhanced search appearances typically see 20-40% higher click-through rates compared to standard blue link results.</p>
+  </div>
+</ToolLayout>
