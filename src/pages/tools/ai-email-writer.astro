@@ -1,0 +1,50 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import AIEmailWriter from '../../components/tools/AIEmailWriter';
+
+const faqs = [
+  {
+    question: "What is the AI Email Writer?",
+    answer: "Our AI Email Writer generates professional, well-structured emails based on a brief description of what you need. It supports 6 email types (cold outreach, follow-up, meeting request, thank you, introduction, and custom) with 6 different tones to match any business communication need."
+  },
+  {
+    question: "Is this email generator free?",
+    answer: "Yes, completely free. No signup, no limits, no hidden charges. Generate as many emails as you need."
+  },
+  {
+    question: "What types of emails can it write?",
+    answer: "The tool generates cold outreach emails, follow-up messages, meeting requests, thank you emails, introduction emails, and fully custom emails. Each type has optimized prompts to produce the most effective email for that specific scenario."
+  },
+  {
+    question: "Can I customize the tone?",
+    answer: "Yes, choose from 6 tones: Professional, Friendly, Formal, Persuasive, Apologetic, and Urgent. Each tone adjusts the language, structure, and style of the generated email to match your communication needs."
+  },
+  {
+    question: "Are the generated emails unique?",
+    answer: "Yes, every email is uniquely generated based on your specific input. The AI creates original content each time, so you will never get duplicate or templated-sounding emails."
+  }
+];
+---
+
+<ToolLayout
+  title="Free AI Email Writer - Generate Professional Emails Instantly"
+  description="Free AI email writer to generate professional cold emails, follow-ups, meeting requests and more. 6 tones, 6 templates. No signup required."
+  keywords="AI email writer, free email generator, cold email generator, professional email writer AI, business email generator, AI email template, email writing tool free"
+  toolName="Free AI Email Writer"
+  toolCategory="Business Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <AIEmailWriter client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article class="prose prose-gray max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900">Write Professional Emails in Seconds with AI</h2>
+      <p>Stop staring at a blank screen trying to craft the perfect email. Our free AI email writer generates polished, professional emails for any business situation in seconds. Just describe what you need, pick a tone, and get a ready-to-send email complete with subject line, greeting, body, and sign-off.</p>
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Perfect for Business Professionals</h3>
+      <p>Whether you are sending a cold outreach to a potential client, following up on a proposal, requesting a meeting, or writing a thank-you note, our AI email writer handles it all. The tool is especially useful for freelancers, agency owners, sales professionals, and anyone who writes dozens of business emails every day.</p>
+    </article>
+  </div>
+</ToolLayout>

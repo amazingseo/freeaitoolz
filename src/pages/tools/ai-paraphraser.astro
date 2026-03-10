@@ -1,0 +1,80 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import AIParaphraser from '../../components/tools/AIParaphraser';
+
+const faqs = [
+  {
+    question: "What is an AI Paraphrasing Tool?",
+    answer: "An AI paraphrasing tool rewrites your text using different words and sentence structures while keeping the original meaning intact. It helps you express the same ideas in fresh, unique ways without changing the core message."
+  },
+  {
+    question: "Is this paraphrasing tool completely free?",
+    answer: "Yes, our AI paraphraser is 100% free with no signup required, no daily word limits, and no hidden fees. You can paraphrase unlimited text in any of our 6 available styles."
+  },
+  {
+    question: "What paraphrasing styles are available?",
+    answer: "We offer 6 paraphrasing styles: Standard (clear and natural), Casual (relaxed and easy), Professional (formal and polished), Academic (scholarly tone), Creative (engaging and vivid), and Simplified (easy to understand). Each style rewrites your text with a different tone and approach."
+  },
+  {
+    question: "Is paraphrased text plagiarism-free?",
+    answer: "Our AI paraphraser completely rewrites your text using different vocabulary, sentence structures, and phrasing. The output is unique content that expresses the same ideas in new ways. However, always cite your original sources when required by your institution or publication guidelines."
+  },
+  {
+    question: "How is this different from the AI Humanizer?",
+    answer: "The AI Humanizer specifically targets AI-generated text and removes robotic patterns to make it sound human-written. The AI Paraphraser rewrites any text (human or AI) in a different style while keeping the same meaning. Use the Humanizer for AI text, and the Paraphraser for general rewriting needs."
+  },
+  {
+    question: "Can I paraphrase text in other languages?",
+    answer: "Currently our paraphraser works best with English text. We are working on adding support for additional languages in future updates."
+  }
+];
+---
+
+<ToolLayout
+  title="Free AI Paraphrasing Tool - Rewrite Text Online (No Signup)"
+  description="Free AI paraphrasing tool to rewrite any text instantly. 6 writing styles available. No signup, no word limits. Paraphrase sentences, paragraphs, and articles for free."
+  keywords="AI paraphrasing tool, free paraphraser, rewrite text online, paraphrase tool free, AI sentence rewriter, rephrase text free, paraphraser no signup, unlimited paraphrasing tool"
+  toolName="Free AI Paraphraser"
+  toolCategory="AI Writing Tool"
+  faqs={faqs}
+>
+
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <AIParaphraser client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article class="prose prose-gray max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900">How to Paraphrase Text for Free with AI</h2>
+      <p>Our free AI paraphrasing tool rewrites any text while preserving the original meaning. Whether you need to rephrase an essay, rewrite a paragraph for a blog post, or express ideas in a different tone, our tool delivers natural-sounding results instantly. Choose from 6 writing styles to match your specific needs.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">When to Use a Paraphrasing Tool</h3>
+      <p>Paraphrasing is useful in many situations: rewriting content to avoid duplication, adjusting tone for different audiences, simplifying complex text for broader readability, repurposing existing content for new platforms, and improving clarity in technical or academic writing. Our tool handles all these use cases with multiple tone options.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Tips for Best Paraphrasing Results</h3>
+      <p>For optimal results, paraphrase one to three paragraphs at a time rather than entire documents. Choose the tone that matches your audience. After paraphrasing, review the output and make small personal edits to add your unique voice. For academic work, always ensure that paraphrased content properly cites the original source material.</p>
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Related Free Tools</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/ai-humanizer" class="tool-card group">
+          <span class="text-2xl">✍️</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">AI Humanizer</h4>
+          <p class="text-sm text-gray-600 mt-1">Make AI text sound human</p>
+        </a>
+        <a href="/tools/ai-content-detector" class="tool-card group">
+          <span class="text-2xl">🔍</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">AI Content Detector</h4>
+          <p class="text-sm text-gray-600 mt-1">Check if text is AI-written</p>
+        </a>
+        <a href="/tools/ai-email-writer" class="tool-card group">
+          <span class="text-2xl">📧</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">AI Email Writer</h4>
+          <p class="text-sm text-gray-600 mt-1">Write professional emails</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</ToolLayout>

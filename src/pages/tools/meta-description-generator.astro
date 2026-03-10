@@ -1,0 +1,46 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import MetaDescriptionGenerator from '../../components/tools/MetaDescriptionGenerator';
+
+const faqs = [
+  {
+    question: "What is a Meta Description Generator?",
+    answer: "A meta description generator creates optimized meta description tags and SEO title tags for your web pages. These HTML elements tell search engines and users what your page is about, directly impacting click-through rates from search results."
+  },
+  {
+    question: "How long should a meta description be?",
+    answer: "Google typically displays up to 155-160 characters for meta descriptions and 50-60 characters for title tags. Our generator ensures all output stays within these optimal ranges for maximum visibility in search results."
+  },
+  {
+    question: "Do meta descriptions affect SEO rankings?",
+    answer: "Meta descriptions do not directly affect rankings, but they significantly impact click-through rates (CTR) from search results. A compelling meta description can dramatically increase the number of people who click on your page, which can indirectly improve your search rankings over time."
+  },
+  {
+    question: "Is this meta description generator free?",
+    answer: "Yes, completely free with no signup required. Generate unlimited meta descriptions and title tags for any number of pages."
+  }
+];
+---
+
+<ToolLayout
+  title="Free Meta Description Generator - AI SEO Title & Description Tool"
+  description="Generate SEO-optimized meta descriptions and title tags for free. AI-powered tool with character count validation and Google SERP preview. No signup required."
+  keywords="meta description generator, SEO title generator, meta tag generator free, AI meta description writer, SERP preview tool, SEO description generator, title tag generator"
+  toolName="Free Meta Description Generator"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <MetaDescriptionGenerator client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article class="prose prose-gray max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900">How to Write Perfect Meta Descriptions with AI</h2>
+      <p>Our free meta description generator creates SEO-optimized title tags and meta descriptions for any web page. Simply describe your page content or topic, and the AI generates multiple options with proper character counts and a Google SERP preview showing exactly how your page will appear in search results.</p>
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Best Practices for Meta Descriptions</h3>
+      <p>Effective meta descriptions include a clear value proposition, contain relevant keywords naturally, include a call to action, stay within 155 characters, and accurately reflect the page content. Our AI follows all these best practices automatically, giving you publish-ready meta tags in seconds.</p>
+    </article>
+  </div>
+</ToolLayout>
