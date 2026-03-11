@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SgeReadinessScore from '../../components/tools/SgeReadinessScore';
+const faqs = [
+  { question: "What is an SGE Readiness Score?", answer: "It measures how likely your content is to be cited in Google AI Overviews (Search Generative Experience). It checks 8 factors including definitions, lists, Q&A headers, data citations, and more." },
+  { question: "Is this free?", answer: "Yes. The analysis is 95% regex-based (instant), with a tiny AI call only for the improvement tip." },
+  { question: "How accurate is it?", answer: "It analyzes the structural patterns that Google AI Overviews prefer. While no tool can guarantee AI Overview placement, optimizing for these factors significantly improves your chances." },
+];
+---
+<ToolLayout title="Free SGE Readiness Score - Google AI Overview Checker" description="Check if your content will appear in Google AI Overviews. Analyzes 8 SGE ranking factors with AI-powered improvement tips." keywords="SGE readiness, AI overview checker, Google SGE score, AI search optimization, AEO tool" toolName="Free SGE Readiness Score" toolCategory="SEO Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <SgeReadinessScore client:visible />
+  </div>
+</ToolLayout>
