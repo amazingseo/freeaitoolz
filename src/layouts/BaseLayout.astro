@@ -162,8 +162,6 @@ All tools are <span class="text-emerald-400 font-bold">100% free</span>
 
 <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
-<!-- Logo -->
-
 <a href="/" class="flex items-center gap-2">
 <img src="/favicon.svg" class="w-8 h-8" />
 <span class="text-xl font-bold">
@@ -171,19 +169,18 @@ Free<span class="text-blue-600">AI</span>Toolz
 </span>
 </a>
 
-
 <div class="hidden lg:flex items-center gap-8">
 
-<a href="/" class="font-semibold text-gray-700 hover:text-blue-600">
-Home
-</a>
+<a href="/" class="font-semibold text-gray-700 hover:text-blue-600">Home</a>
 
 
-<!-- TOOLS MENU -->
+<!-- TOOLS DROPDOWN -->
 
-<div class="relative group">
+<div class="relative">
 
-<button class="flex items-center gap-1 font-semibold text-gray-700 hover:text-blue-600">
+<button
+id="toolsButton"
+class="flex items-center gap-1 font-semibold text-gray-700 hover:text-blue-600">
 
 Tools
 
@@ -198,37 +195,40 @@ d="M19 9l-7 7-7-7"/>
 
 <!-- DROPDOWN -->
 
-<div class="absolute left-1/2 -translate-x-1/2 mt-4 hidden group-hover:block w-[360px]">
+<div
+id="toolsDropdown"
+class="absolute left-1/2 -translate-x-1/2 mt-4 w-[420px] hidden">
 
-<div class="rounded-2xl border border-white/40 backdrop-blur-xl bg-white/80 shadow-2xl p-4">
+<div class="rounded-2xl bg-white shadow-2xl border border-gray-200 p-4">
 
-{toolCategories.map((cat, index) => (
+{toolCategories.map((cat,index)=> (
 
-<div class="group/category border-b last:border-none border-gray-100">
+<div class="mb-2">
 
 <button
-class="flex items-center gap-2 w-full text-left px-3 py-3 text-sm font-semibold text-gray-800 hover:text-blue-600">
+class="categoryBtn w-full text-left flex items-center gap-2 px-3 py-3 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg"
+data-index={index}>
 
-{index === 0 && "✍️"}
-{index === 1 && "🔍"}
-{index === 2 && "📝"}
-{index === 3 && "⚡"}
-{index === 4 && "💼"}
-{index === 5 && "🧠"}
+{index===0 && "✍️"}
+{index===1 && "🔍"}
+{index===2 && "📝"}
+{index===3 && "⚡"}
+{index===4 && "💼"}
+{index===5 && "🧠"}
 
 {cat.name}
 
 </button>
 
-<!-- TOOL LIST -->
 
-<div class="hidden group-hover/category:block pb-3">
+<div
+class="toolList hidden pl-8 pb-2">
 
-{cat.tools.map(tool => (
+{cat.tools.map(tool=> (
 
 <a
 href={tool.href}
-class="block pl-8 pr-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">
+class="block py-2 text-sm text-gray-600 hover:text-blue-600">
 
 {tool.name}
 
@@ -249,13 +249,9 @@ class="block pl-8 pr-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-b
 </div>
 
 
-<a href="/tools" class="font-semibold text-gray-700 hover:text-blue-600">
-All Tools
-</a>
+<a href="/tools" class="font-semibold text-gray-700 hover:text-blue-600">All Tools</a>
 
-<a href="/about" class="font-semibold text-gray-700 hover:text-blue-600">
-About
-</a>
+<a href="/about" class="font-semibold text-gray-700 hover:text-blue-600">About</a>
 
 </div>
 
@@ -362,6 +358,38 @@ AI2Flows
 </div>
 
 </footer>
+<script>
 
+const btn = document.getElementById("toolsButton")
+const menu = document.getElementById("toolsDropdown")
+
+btn.addEventListener("mouseenter", ()=> menu.classList.remove("hidden"))
+menu.addEventListener("mouseenter", ()=> menu.classList.remove("hidden"))
+
+btn.addEventListener("mouseleave", ()=> {
+setTimeout(()=> {
+if(!menu.matches(":hover")) menu.classList.add("hidden")
+},150)
+})
+
+menu.addEventListener("mouseleave", ()=> menu.classList.add("hidden"))
+
+
+const categories = document.querySelectorAll(".categoryBtn")
+const lists = document.querySelectorAll(".toolList")
+
+categories.forEach((btn,i)=>{
+
+btn.addEventListener("mouseenter", ()=>{
+
+lists.forEach(l=>l.classList.add("hidden"))
+
+lists[i].classList.remove("hidden")
+
+})
+
+})
+
+</script>
 </body>
 </html>
