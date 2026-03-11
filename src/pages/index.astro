@@ -4,157 +4,369 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const categories = [
   {
-    name: 'AI Writing Tools', icon: '✍️', bg: 'from-blue-600 to-indigo-700',
+    name: 'AI Writing Tools',
+    icon: '✍️',
     tools: [
-      { name: 'AI Humanizer', desc: 'Transform AI text into natural human writing.', href: '/tools/ai-humanizer', icon: '✍️', badge: 'Popular' },
-      { name: 'AI Content Detector', desc: 'Check if text was written by AI.', href: '/tools/ai-content-detector', icon: '🔍' },
-      { name: 'AI Paraphraser', desc: 'Rewrite text in 6 different styles.', href: '/tools/ai-paraphraser', icon: '🔄' },
-      { name: 'AI Email Writer', desc: 'Generate professional emails instantly.', href: '/tools/ai-email-writer', icon: '📧' },
+      { name: 'AI Humanizer', desc: 'Transform AI text into natural human writing', href: '/tools/ai-humanizer', icon: '✍️', badge: 'Popular' },
+      { name: 'AI Content Detector', desc: 'Check if text was written by AI', href: '/tools/ai-content-detector', icon: '🔍' },
+      { name: 'AI Paraphraser', desc: 'Rewrite text with multiple styles', href: '/tools/ai-paraphraser', icon: '🔄' },
+      { name: 'AI Email Writer', desc: 'Generate professional emails instantly', href: '/tools/ai-email-writer', icon: '📧' }
     ]
   },
   {
-    name: 'SEO Tools', icon: '🔍', bg: 'from-emerald-600 to-teal-700',
+    name: 'SEO Tools',
+    icon: '🔍',
     tools: [
-      { name: 'Meta Description Generator', desc: 'Create SEO meta tags and titles.', href: '/tools/meta-description-generator', icon: '🏷️' },
-      { name: 'Schema Markup Generator', desc: 'Build JSON-LD structured data.', href: '/tools/schema-markup-generator', icon: '🔧' },
-      { name: 'Robots.txt Generator', desc: 'Generate robots.txt with AI crawler support.', href: '/tools/robots-txt-generator', icon: '🤖' },
-      { name: 'Website Speed Checker', desc: 'Test Core Web Vitals and performance.', href: '/tools/website-speed-checker', icon: '⚡' },
+      { name: 'Meta Description Generator', desc: 'Generate optimized meta descriptions', href: '/tools/meta-description-generator', icon: '🏷️' },
+      { name: 'Schema Markup Generator', desc: 'Create structured data markup', href: '/tools/schema-markup-generator', icon: '🔧' },
+      { name: 'Robots.txt Generator', desc: 'Generate robots.txt files', href: '/tools/robots-txt-generator', icon: '🤖' },
+      { name: 'Website Speed Checker', desc: 'Test page speed and performance', href: '/tools/website-speed-checker', icon: '⚡' }
     ]
   },
   {
-    name: 'Text Utilities', icon: '📝', bg: 'from-amber-500 to-orange-600',
+    name: 'Text Utilities',
+    icon: '📝',
     tools: [
-      { name: 'Word Counter', desc: 'Count words, characters, reading time.', href: '/tools/word-counter', icon: '🔢' },
-      { name: 'Case Converter', desc: 'Convert to 10 text case formats.', href: '/tools/case-converter', icon: '🔤' },
-      { name: 'Lorem Ipsum Generator', desc: 'Generate placeholder text.', href: '/tools/lorem-ipsum-generator', icon: '📄' },
-      { name: 'Markdown to HTML', desc: 'Convert MD to HTML with preview.', href: '/tools/markdown-to-html', icon: '📝' },
+      { name: 'Word Counter', desc: 'Count words and characters', href: '/tools/word-counter', icon: '🔢' },
+      { name: 'Case Converter', desc: 'Convert text case formats', href: '/tools/case-converter', icon: '🔤' },
+      { name: 'Lorem Ipsum Generator', desc: 'Generate placeholder text', href: '/tools/lorem-ipsum-generator', icon: '📄' },
+      { name: 'Markdown to HTML', desc: 'Convert markdown to HTML', href: '/tools/markdown-to-html', icon: '📝' }
     ]
   },
   {
-    name: 'Developer Tools', icon: '⚡', bg: 'from-purple-600 to-violet-700',
+    name: 'Developer Tools',
+    icon: '⚡',
     tools: [
-      { name: 'JSON Formatter', desc: 'Format, validate and minify JSON.', href: '/tools/json-formatter', icon: '📋' },
-      { name: 'Base64 Encoder/Decoder', desc: 'Encode and decode Base64 strings.', href: '/tools/base64-encoder-decoder', icon: '🔒' },
-      { name: 'CSS Gradient Generator', desc: 'Visual gradient builder with presets.', href: '/tools/css-gradient-generator', icon: '🎨' },
-      { name: 'Password Generator', desc: 'Generate strong random passwords.', href: '/tools/password-generator', icon: '🔑' },
-      { name: 'QR Code Generator', desc: 'Create QR codes with custom colors.', href: '/tools/qr-code-generator', icon: '📱' },
+      { name: 'JSON Formatter', desc: 'Format and validate JSON', href: '/tools/json-formatter', icon: '📋' },
+      { name: 'Base64 Encoder/Decoder', desc: 'Encode and decode Base64', href: '/tools/base64-encoder-decoder', icon: '🔒' },
+      { name: 'CSS Gradient Generator', desc: 'Create CSS gradients visually', href: '/tools/css-gradient-generator', icon: '🎨' },
+      { name: 'Password Generator', desc: 'Generate secure passwords', href: '/tools/password-generator', icon: '🔑' },
+      { name: 'QR Code Generator', desc: 'Create QR codes instantly', href: '/tools/qr-code-generator', icon: '📱' }
     ]
-  },
+  }
 ];
+
+const totalTools = categories.reduce((sum,c)=>sum+c.tools.length,0);
+
+/* structured data */
+
+const homepageSchema = {
+ "@context":"https://schema.org",
+ "@type":"WebPage",
+ "name":"FreeAIToolz",
+ "description":"Free AI tools, SEO tools, and developer utilities",
+ "url":"https://freeaitoolz.com"
+};
 ---
 
 <BaseLayout
-  title="Free AI Tools Online - 17 Free AI, SEO & Developer Tools | FreeAIToolz"
-  description="17 free online tools: AI Humanizer, Content Detector, JSON Formatter, Password Generator, QR Code Maker, Schema Generator and more. No signup required."
-  keywords="free AI tools, free SEO tools, free developer tools, AI humanizer, JSON formatter, password generator, QR code generator, word counter"
+title={`${totalTools}+ Free AI Tools, SEO Tools & Developer Tools | FreeAIToolz`}
+description={`Discover ${totalTools}+ free online AI tools, SEO tools and developer utilities including AI Humanizer, Content Detector, JSON Formatter, Password Generator and more.`}
+keywords="free ai tools, seo tools online, developer tools free, ai humanizer, json formatter"
+schema={homepageSchema}
 >
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #0A0F1C 0%, #111827 50%, #0A0F1C 100%);">
-    <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 20% 50%, #1d4ed8 0%, transparent 50%), radial-gradient(circle at 80% 50%, #7c3aed 0%, transparent 50%);"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
-      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-blue-200 border border-white/10 mb-8">
-        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-        17 free tools — no signup, no limits
-      </div>
-      
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
-        AI Tools That Actually
-        <span class="block mt-2" style="background: linear-gradient(135deg, #60a5fa, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Work. For Free.</span>
-      </h1>
-      
-      <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-        AI writing tools, SEO utilities, text processors, and developer tools — all powered by AI, all completely free. No signup. No limits.
-      </p>
-      
-      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/tools/ai-humanizer" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all shadow-lg hover:shadow-blue-500/25">
-          Try AI Humanizer →
-        </a>
-        <a href="/tools" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl text-lg border border-white/20 transition-all">
-          Browse All 17 Tools
-        </a>
-      </div>
+<!-- HERO -->
 
-      <div class="mt-14 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-400">
-        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>No signup required</span>
-        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>No word limits</span>
-        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>Private & secure</span>
-        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>AI-powered accuracy</span>
-      </div>
-    </div>
-  </section>
+<section class="py-24 bg-gray-950 text-white text-center">
 
-  <!-- Tool Categories -->
-  {categories.map((cat, catIdx) => (
-    <section class={`py-20 ${catIdx % 2 === 1 ? 'bg-gray-50' : ''}`}>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="flex items-center gap-3 mb-8">
-          <span class="text-2xl">{cat.icon}</span>
-          <h2 class="text-3xl font-extrabold text-gray-900">{cat.name}</h2>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {cat.tools.map(tool => (
-            <a href={tool.href} class="tool-card group flex flex-col">
-              <div class="flex items-start justify-between mb-3">
-                <span class="text-3xl">{tool.icon}</span>
-                {tool.badge && <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">{tool.badge}</span>}
-              </div>
-              <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
-              <p class="mt-1.5 text-sm text-gray-500 flex-1">{tool.desc}</p>
-              <div class="mt-4 text-sm font-bold text-blue-600 flex items-center gap-1">
-                Use Free <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  ))}
+<div class="max-w-4xl mx-auto px-4">
 
-  <!-- How it works -->
-  <section class="py-20 bg-gray-50">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-3xl font-extrabold text-gray-900 mb-12">How It Works</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div>
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-extrabold text-blue-600">1</span></div>
-          <h3 class="text-lg font-bold text-gray-900">Choose Your Tool</h3>
-          <p class="mt-2 text-sm text-gray-500">Pick from 17 free tools across AI writing, SEO, text and developer categories.</p>
-        </div>
-        <div>
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-extrabold text-blue-600">2</span></div>
-          <h3 class="text-lg font-bold text-gray-900">Enter Your Content</h3>
-          <p class="mt-2 text-sm text-gray-500">Paste text or enter data. No account needed, no limits.</p>
-        </div>
-        <div>
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-extrabold text-blue-600">3</span></div>
-          <h3 class="text-lg font-bold text-gray-900">Get Instant Results</h3>
-          <p class="mt-2 text-sm text-gray-500">AI processes your request in seconds. Copy and use anywhere.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<h1 class="text-5xl font-extrabold leading-tight">
 
-  <!-- CTA -->
-  <section class="py-20 bg-gray-950 text-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Need Custom AI Automation?</h2>
-      <p class="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">FreeAIToolz is built by AI2Flows — we build GoHighLevel workflows, AI chatbots, Meta & Google Ads campaigns, and custom integrations for growing businesses.</p>
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://www.ai2flows.com/" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all">Visit AI2Flows →</a>
-        <a href="/about" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl text-lg border border-white/20 transition-all">About Our Team</a>
-      </div>
-    </div>
-  </section>
+Free AI Tools That Actually Work
 
-  <!-- SEO Content -->
-  <section class="py-16">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 prose-custom">
-      <h2>Why Use FreeAIToolz?</h2>
-      <p>FreeAIToolz provides 17 free online tools across four categories: AI writing, SEO optimization, text utilities, and developer tools. Every tool is completely free — no signup, no word limits, no hidden fees. Our AI-powered tools use enterprise-grade technology, while our client-side tools run entirely in your browser for maximum speed and privacy.</p>
-      <p>Whether you need to humanize AI text, check website speed, format JSON, generate passwords, or create QR codes — FreeAIToolz has you covered. Built by the team at AI2Flows for students, bloggers, marketers, developers, and professionals who need fast, reliable tools every day.</p>
-    </div>
-  </section>
+</h1>
+
+<p class="mt-6 text-lg text-gray-300">
+
+Browse {totalTools}+ powerful tools for AI writing, SEO optimization, text editing and development.
+
+All tools are completely free and run directly in your browser.
+
+</p>
+
+<div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+
+<a href="/tools/ai-humanizer" class="bg-blue-600 hover:bg-blue-500 px-8 py-4 rounded-xl font-bold">
+
+Try AI Humanizer →
+
+</a>
+
+<a href="/tools" class="bg-white/10 px-8 py-4 rounded-xl border border-white/20">
+
+Browse All Tools
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- DISCOVERY SEARCH -->
+
+<section class="py-12">
+
+<div class="max-w-3xl mx-auto px-4">
+
+<input
+type="text"
+placeholder="Search tools (AI Humanizer, JSON Formatter, QR Code...)"
+class="w-full border border-gray-200 rounded-xl px-5 py-3"
+/>
+
+</div>
+
+</section>
+
+
+<!-- FEATURED TOOLS -->
+
+<section class="py-12 bg-gray-50">
+
+<div class="max-w-6xl mx-auto px-4">
+
+<h2 class="text-3xl font-bold text-gray-900 mb-8">
+
+Popular Tools
+
+</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+<a href="/tools/ai-humanizer" class="p-5 border rounded-xl hover:border-blue-500">
+
+<h3 class="font-bold">AI Humanizer</h3>
+
+<p class="text-sm text-gray-500 mt-1">
+
+Convert AI text into natural human writing
+
+</p>
+
+</a>
+
+<a href="/tools/ai-content-detector" class="p-5 border rounded-xl hover:border-blue-500">
+
+<h3 class="font-bold">AI Content Detector</h3>
+
+<p class="text-sm text-gray-500 mt-1">
+
+Detect AI generated content
+
+</p>
+
+</a>
+
+<a href="/tools/website-speed-checker" class="p-5 border rounded-xl hover:border-blue-500">
+
+<h3 class="font-bold">Website Speed Checker</h3>
+
+<p class="text-sm text-gray-500 mt-1">
+
+Analyze Core Web Vitals
+
+</p>
+
+</a>
+
+<a href="/tools/json-formatter" class="p-5 border rounded-xl hover:border-blue-500">
+
+<h3 class="font-bold">JSON Formatter</h3>
+
+<p class="text-sm text-gray-500 mt-1">
+
+Format and validate JSON instantly
+
+</p>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORY SECTIONS -->
+
+{categories.map(cat => (
+
+<section class="py-20">
+
+<div class="max-w-7xl mx-auto px-4">
+
+<div class="flex items-center gap-3 mb-8">
+
+<span class="text-2xl">{cat.icon}</span>
+
+<h2 class="text-3xl font-bold">
+
+{cat.name}
+
+</h2>
+
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+{cat.tools.map(tool => (
+
+<a href={tool.href} class="group border rounded-xl p-5 hover:border-blue-500 flex flex-col">
+
+<div class="flex items-center justify-between">
+
+<span class="text-2xl">{tool.icon}</span>
+
+{tool.badge && (
+
+<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
+
+{tool.badge}
+
+</span>
+
+)}
+
+</div>
+
+<h3 class="mt-3 font-bold group-hover:text-blue-600">
+
+{tool.name}
+
+</h3>
+
+<p class="text-sm text-gray-500 mt-1 flex-1">
+
+{tool.desc}
+
+</p>
+
+<div class="mt-4 text-blue-600 font-semibold">
+
+Use Tool →
+
+</div>
+
+</a>
+
+))}
+
+</div>
+
+</div>
+
+</section>
+
+))}
+
+
+<!-- HOW IT WORKS -->
+
+<section class="py-20 bg-gray-50">
+
+<div class="max-w-5xl mx-auto text-center px-4">
+
+<h2 class="text-3xl font-bold mb-10">
+
+How FreeAIToolz Works
+
+</h2>
+
+<div class="grid md:grid-cols-3 gap-10">
+
+<div>
+
+<h3 class="font-bold text-lg">
+
+Choose a Tool
+
+</h3>
+
+<p class="text-gray-500 mt-2">
+
+Select from AI tools, SEO tools, text utilities and developer tools.
+
+</p>
+
+</div>
+
+<div>
+
+<h3 class="font-bold text-lg">
+
+Enter Your Content
+
+</h3>
+
+<p class="text-gray-500 mt-2">
+
+Paste your text or input data into the tool.
+
+</p>
+
+</div>
+
+<div>
+
+<h3 class="font-bold text-lg">
+
+Get Results Instantly
+
+</h3>
+
+<p class="text-gray-500 mt-2">
+
+Results appear immediately in your browser.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SEO CONTENT -->
+
+<section class="py-16">
+
+<div class="max-w-3xl mx-auto px-4">
+
+<h2 class="text-2xl font-bold mb-4">
+
+Free AI Tools, SEO Tools and Developer Utilities
+
+</h2>
+
+<p class="text-gray-600">
+
+FreeAIToolz provides a growing collection of free online tools designed for writers,
+marketers, developers and creators. Our platform includes AI writing tools like
+AI Humanizer and AI Content Detector, SEO utilities such as Schema Generator and
+Meta Description Generator, and developer tools including JSON Formatter and
+QR Code Generator.
+
+</p>
+
+<p class="text-gray-600 mt-4">
+
+All tools run directly in your browser and require no account or signup.
+Whether you need to optimize content, analyze data or generate code,
+FreeAIToolz helps you complete tasks faster using free and powerful utilities.
+
+</p>
+
+</div>
+
+</section>
 
 </BaseLayout>
