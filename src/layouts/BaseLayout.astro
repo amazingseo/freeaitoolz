@@ -17,7 +17,7 @@ interface Props {
 const {
   title,
   description,
-  keywords = 'free AI tools, AI humanizer, AI detector, paraphrasing tool, SEO tools',
+  keywords = 'free AI tools, SEO tools, developer tools',
   ogImage = '/og-default.png',
   canonical,
   type = 'website',
@@ -36,42 +36,90 @@ const defaultSchema = {
   "@type": "WebSite",
   "name": "FreeAIToolz",
   "url": siteUrl,
-  "description": "Free AI-powered tools for writing, SEO, content creation and more.",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": `${siteUrl}/tools?q={search_term_string}`,
-    "query-input": "required name=search_term_string"
-  }
+  "description": "Free AI tools for writing, SEO and developers."
 };
 
 const pageSchema = schema || defaultSchema;
 
+
+/* FULL TOOL CATEGORY LIST */
+
 const toolCategories = [
-  {
-    name: 'AI Writing Tools',
-    icon: '✍️',
-    tools: [
-      { name: 'AI Humanizer', href: '/tools/ai-humanizer', desc: 'Make AI text sound human' },
-      { name: 'AI Content Detector', href: '/tools/ai-content-detector', desc: 'Check if text is AI-written' },
-      { name: 'AI Paraphraser', href: '/tools/ai-paraphraser', desc: 'Rewrite text instantly' },
-      { name: 'AI Email Writer', href: '/tools/ai-email-writer', desc: 'Generate professional emails' },
-    ]
-  },
-  {
-    name: 'SEO Tools',
-    icon: '🔍',
-    tools: [
-      { name: 'Meta Description Generator', href: '/tools/meta-description-generator', desc: 'Create SEO meta tags' },
-      { name: 'Schema Markup Generator', href: '/tools/schema-markup-generator', desc: 'Build structured data' },
-      { name: 'Robots.txt Generator', href: '/tools/robots-txt-generator', desc: 'Generate robots.txt files' },
-      { name: 'Website Speed Checker', href: '/tools/website-speed-checker', desc: 'Test page performance' },
-    ]
-  }
+
+{
+name: 'AI Writing Tools',
+tools: [
+{ name:'AI Humanizer', href:'/tools/ai-humanizer' },
+{ name:'AI Content Detector', href:'/tools/ai-content-detector' },
+{ name:'AI Paraphraser', href:'/tools/ai-paraphraser' },
+{ name:'AI Email Writer', href:'/tools/ai-email-writer' }
+]
+},
+
+{
+name: 'SEO Tools',
+tools: [
+{ name:'Meta Description Generator', href:'/tools/meta-description-generator' },
+{ name:'Schema Markup Generator', href:'/tools/schema-markup-generator' },
+{ name:'Robots.txt Generator', href:'/tools/robots-txt-generator' },
+{ name:'Website Speed Checker', href:'/tools/website-speed-checker' }
+]
+},
+
+{
+name: 'Text Utilities',
+tools: [
+{ name:'Word Counter', href:'/tools/word-counter' },
+{ name:'Case Converter', href:'/tools/case-converter' },
+{ name:'Lorem Ipsum Generator', href:'/tools/lorem-ipsum-generator' },
+{ name:'Markdown to HTML', href:'/tools/markdown-to-html' }
+]
+},
+
+{
+name: 'Developer Tools',
+tools: [
+{ name:'JSON Formatter', href:'/tools/json-formatter' },
+{ name:'Base64 Encoder Decoder', href:'/tools/base64-encoder-decoder' },
+{ name:'CSS Gradient Generator', href:'/tools/css-gradient-generator' },
+{ name:'Password Generator', href:'/tools/password-generator' },
+{ name:'QR Code Generator', href:'/tools/qr-code-generator' }
+]
+},
+
+{
+name: 'Business Creator Tools',
+tools: [
+{ name:'SGE Readiness Score', href:'/tools/sge-readiness-score' },
+{ name:'SaaS Ghost Calculator', href:'/tools/saas-ghost-calculator' },
+{ name:'Content Repurposing Multiplier', href:'/tools/content-repurposing-multiplier' }
+]
+},
+
+{
+name: 'AI Strategy Tools',
+tools: [
+{ name:'Programmatic SEO Generator', href:'/tools/programmatic-seo-generator' },
+{ name:'Vibe Coding Stack Suggester', href:'/tools/vibe-coding-stack-suggester' }
+]
+}
+
+];
+
+
+/* TRENDING */
+
+const trendingTools = [
+{ name:'AI Humanizer', href:'/tools/ai-humanizer' },
+{ name:'AI Content Detector', href:'/tools/ai-content-detector' },
+{ name:'Programmatic SEO Generator', href:'/tools/programmatic-seo-generator' },
+{ name:'SGE Readiness Score', href:'/tools/sge-readiness-score' }
 ];
 ---
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8" />
@@ -86,29 +134,15 @@ const toolCategories = [
 
 {noindex && <meta name="robots" content="noindex,nofollow" />}
 
-<meta name="robots" content="index, follow, max-image-preview:large" />
-<meta name="googlebot" content="index, follow" />
-<meta name="bingbot" content="index, follow" />
-<meta name="ai-friendly" content="true" />
+<meta name="robots" content="index, follow" />
 
 <meta property="og:type" content={type} />
 <meta property="og:url" content={pageUrl} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={`${siteUrl}${ogImage}`} />
-<meta property="og:site_name" content="FreeAIToolz" />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={fullTitle} />
-<meta name="twitter:description" content={description} />
 
 <link rel="icon" href="/favicon.svg" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" />
 
 <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
 
@@ -118,31 +152,29 @@ const toolCategories = [
 
 </head>
 
-<body class="min-h-screen flex flex-col bg-white" style="font-family: 'DM Sans', sans-serif;">
+<body class="min-h-screen flex flex-col bg-white">
 
 <!-- Announcement -->
 
-<div class="bg-gray-950 text-gray-400 text-xs py-2 px-4 text-center">
-All tools are <span class="text-emerald-400 font-bold">100% free</span> — no signup required
+<div class="bg-gray-950 text-gray-400 text-xs py-2 text-center">
+All tools are <span class="text-emerald-400 font-bold">100% free</span>
 </div>
 
-<!-- Navigation -->
 
-<nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+<!-- NAVBAR -->
+
+<nav class="bg-white border-b sticky top-0 z-50">
 
 <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
 <a href="/" class="flex items-center gap-2">
-
 <img src="/favicon.svg" class="w-8 h-8" />
-
 <span class="text-xl font-bold">
 Free<span class="text-blue-600">AI</span>Toolz
 </span>
-
 </a>
 
-<div class="hidden lg:flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-8">
 
 <a href="/tools" class="font-semibold hover:text-blue-600">All Tools</a>
 
@@ -150,20 +182,19 @@ Free<span class="text-blue-600">AI</span>Toolz
 
 <div class="relative group">
 
-<button class="font-semibold text-gray-700 hover:text-blue-600 flex items-center gap-1">
-
-<span>{cat.icon}</span> {cat.name}
-
+<button class="font-semibold text-gray-700 hover:text-blue-600">
+{cat.name}
 </button>
 
 <div class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl p-4 w-64">
 
 {cat.tools.map(tool => (
 
-<a href={tool.href} class="block py-2 text-sm hover:text-blue-600">
-
+<a
+href={tool.href}
+class="block py-2 text-sm hover:text-blue-600"
+>
 {tool.name}
-
 </a>
 
 ))}
@@ -182,7 +213,8 @@ Free<span class="text-blue-600">AI</span>Toolz
 
 </nav>
 
-<!-- Discovery Search -->
+
+<!-- SEARCH -->
 
 <section class="border-b bg-gray-50 py-6">
 
@@ -193,7 +225,7 @@ Free<span class="text-blue-600">AI</span>Toolz
 <input
 type="text"
 name="q"
-placeholder="Search tools (AI Humanizer, Schema Generator...)"
+placeholder="Search tools..."
 class="w-full border border-gray-200 rounded-xl px-4 py-3"
 />
 
@@ -203,87 +235,74 @@ class="w-full border border-gray-200 rounded-xl px-4 py-3"
 
 </section>
 
-<!-- Breadcrumbs -->
+
+<!-- TRENDING TOOLS -->
+
+<section class="py-6 border-b">
+
+<div class="max-w-6xl mx-auto px-4">
+
+<h3 class="text-sm font-semibold text-gray-500 mb-3">
+Trending Tools
+</h3>
+
+<div class="flex flex-wrap gap-3">
+
+{trendingTools.map(tool => (
+
+<a
+href={tool.href}
+class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100"
+>
+{tool.name}
+</a>
+
+))}
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BREADCRUMBS -->
 
 {breadcrumbs && (
 
 <div class="max-w-7xl mx-auto px-4 mt-6 text-sm text-gray-500">
 
-{breadcrumbs.map((item, i) => (
-
+{breadcrumbs.map((item,i)=>(
 <>
-
-{i > 0 && <span class="mx-2">›</span>}
-
+{i>0 && <span class="mx-2">›</span>}
 {item.url ? (
-
 <a href={item.url} class="hover:text-blue-600">{item.label}</a>
-
-) : (
-
+):(
 <span>{item.label}</span>
-
 )}
-
 </>
-
 ))}
 
 </div>
 
 )}
 
-<!-- Main -->
-
 <main class="flex-1">
-
 <slot />
-
 </main>
 
-<!-- Tool Request -->
 
-<section class="max-w-4xl mx-auto px-4 mt-24 text-center">
-
-<h2 class="text-2xl font-bold text-gray-900">
-
-Need a tool we don’t have?
-
-</h2>
-
-<p class="text-gray-600 mt-2">
-
-Tell us what tool you want and we may build it next.
-
-</p>
-
-<a
-href="/contact"
-class="inline-block mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
->
-
-Request a Tool
-
-</a>
-
-</section>
-
-<!-- Footer -->
+<!-- FOOTER -->
 
 <footer class="bg-gray-950 text-gray-400 mt-20">
 
 <div class="max-w-7xl mx-auto px-4 py-10 text-center text-sm">
 
 <p>
-
 © {new Date().getFullYear()} FreeAIToolz — Built by
-
 <a href="https://www.ai2flows.com/" class="text-blue-400">
-
 AI2Flows
-
 </a>
-
 </p>
 
 </div>
@@ -291,5 +310,4 @@ AI2Flows
 </footer>
 
 </body>
-
 </html>
