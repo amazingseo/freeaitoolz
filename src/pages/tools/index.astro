@@ -4,39 +4,55 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const categories = [
   {
-    name: 'AI Writing Tools',
-    desc: 'AI-powered tools for content creation, editing, and optimization',
-    icon: '✍️',
+    name: 'AI Writing Tools', icon: '✍️', desc: 'AI-powered content creation and editing',
     tools: [
       { name: 'AI Humanizer', desc: 'Transform AI text into natural human writing', href: '/tools/ai-humanizer', icon: '✍️', badge: 'Popular' },
-      { name: 'AI Content Detector', desc: 'Check if text was written by AI with confidence scores', href: '/tools/ai-content-detector', icon: '🔍', badge: 'New' },
-      { name: 'AI Paraphraser', desc: 'Rewrite text with 6 different tones and styles', href: '/tools/ai-paraphraser', icon: '🔄', badge: 'Unlimited' },
-      { name: 'AI Email Writer', desc: 'Generate professional emails for any business situation', href: '/tools/ai-email-writer', icon: '📧', badge: 'Business' },
+      { name: 'AI Content Detector', desc: 'Check if text was written by AI', href: '/tools/ai-content-detector', icon: '🔍' },
+      { name: 'AI Paraphraser', desc: 'Rewrite text with 6 different styles', href: '/tools/ai-paraphraser', icon: '🔄' },
+      { name: 'AI Email Writer', desc: 'Generate professional emails instantly', href: '/tools/ai-email-writer', icon: '📧' },
     ]
   },
   {
-    name: 'SEO Tools',
-    desc: 'Essential tools for search engine optimization and technical SEO',
-    icon: '🔍',
+    name: 'SEO Tools', icon: '🔍', desc: 'Search engine optimization essentials',
     tools: [
-      { name: 'Meta Description Generator', desc: 'Create SEO-optimized meta descriptions and title tags', href: '/tools/meta-description-generator', icon: '🏷️', badge: 'SEO' },
-      { name: 'Schema Markup Generator', desc: 'Build JSON-LD structured data for rich results', href: '/tools/schema-markup-generator', icon: '🔧', badge: 'New' },
-      { name: 'Website Speed Checker', desc: 'Test Core Web Vitals and page performance scores', href: '/tools/website-speed-checker', icon: '⚡', badge: 'New' },
+      { name: 'Meta Description Generator', desc: 'Create SEO meta tags and title tags', href: '/tools/meta-description-generator', icon: '🏷️' },
+      { name: 'Schema Markup Generator', desc: 'Build JSON-LD structured data', href: '/tools/schema-markup-generator', icon: '🔧' },
+      { name: 'Robots.txt Generator', desc: 'Generate robots.txt with AI crawler support', href: '/tools/robots-txt-generator', icon: '🤖' },
+      { name: 'Website Speed Checker', desc: 'Test Core Web Vitals and performance', href: '/tools/website-speed-checker', icon: '⚡' },
+    ]
+  },
+  {
+    name: 'Text Utilities', icon: '📝', desc: 'Essential text processing tools',
+    tools: [
+      { name: 'Word Counter', desc: 'Count words, characters, sentences, reading time', href: '/tools/word-counter', icon: '🔢' },
+      { name: 'Case Converter', desc: 'Convert to 10 text case formats', href: '/tools/case-converter', icon: '🔤' },
+      { name: 'Lorem Ipsum Generator', desc: 'Generate placeholder text', href: '/tools/lorem-ipsum-generator', icon: '📄' },
+      { name: 'Markdown to HTML', desc: 'Convert Markdown to HTML with preview', href: '/tools/markdown-to-html', icon: '📝' },
+    ]
+  },
+  {
+    name: 'Developer Tools', icon: '⚡', desc: 'Code, security, and design utilities',
+    tools: [
+      { name: 'JSON Formatter', desc: 'Format, validate and minify JSON', href: '/tools/json-formatter', icon: '📋' },
+      { name: 'Base64 Encoder/Decoder', desc: 'Encode and decode Base64 strings', href: '/tools/base64-encoder-decoder', icon: '🔒' },
+      { name: 'CSS Gradient Generator', desc: 'Visual CSS gradient builder with presets', href: '/tools/css-gradient-generator', icon: '🎨' },
+      { name: 'Password Generator', desc: 'Generate strong random passwords', href: '/tools/password-generator', icon: '🔑' },
+      { name: 'QR Code Generator', desc: 'Create QR codes with custom colors', href: '/tools/qr-code-generator', icon: '📱' },
     ]
   },
 ];
 ---
 
 <BaseLayout
-  title="Free AI & SEO Tools Online - Complete Collection | FreeAIToolz"
-  description="Browse our complete collection of free AI writing tools and SEO tools. AI Humanizer, Content Detector, Paraphraser, Schema Generator, Speed Checker and more. No signup required."
-  keywords="free AI tools, SEO tools, AI writing tools, free online tools, schema generator, speed checker"
+  title="Free AI & SEO & Developer Tools Online - 17 Free Tools | FreeAIToolz"
+  description="Browse 17 free online tools: AI writing, SEO, text utilities, and developer tools. AI Humanizer, JSON Formatter, Password Generator, QR Code and more. No signup."
+  keywords="free AI tools, SEO tools, developer tools, text utilities, free online tools"
 >
   <section class="py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-14">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">All Free Tools</h1>
-        <p class="mt-4 text-lg text-gray-500 max-w-xl mx-auto">Every tool is free, requires no signup, and works instantly in your browser.</p>
+        <p class="mt-4 text-lg text-gray-500 max-w-xl mx-auto">17 free tools — no signup, no limits, works in your browser.</p>
       </div>
 
       {categories.map(cat => (
@@ -51,15 +67,10 @@ const categories = [
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {cat.tools.map(tool => (
               <a href={tool.href} class="tool-card group flex flex-col">
-                <div class="flex items-start justify-between mb-3">
-                  <span class="text-2xl">{tool.icon}</span>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">{tool.badge}</span>
-                </div>
+                <span class="text-2xl mb-3">{tool.icon}</span>
                 <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
                 <p class="mt-1.5 text-sm text-gray-500 flex-1">{tool.desc}</p>
-                <div class="mt-4 text-sm font-bold text-blue-600 flex items-center gap-1">
-                  Use Free <span class="group-hover:translate-x-1 transition-transform">→</span>
-                </div>
+                <div class="mt-4 text-sm font-bold text-blue-600 flex items-center gap-1">Use Free <span class="group-hover:translate-x-1 transition-transform inline-block">→</span></div>
               </a>
             ))}
           </div>
