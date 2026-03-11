@@ -164,6 +164,8 @@ All tools are <span class="text-emerald-400 font-bold">100% free</span>
 
 <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
+<!-- Logo -->
+
 <a href="/" class="flex items-center gap-2">
 <img src="/favicon.svg" class="w-8 h-8" />
 <span class="text-xl font-bold">
@@ -171,32 +173,46 @@ Free<span class="text-blue-600">AI</span>Toolz
 </span>
 </a>
 
+
 <div class="hidden lg:flex items-center gap-8">
 
 <a href="/" class="font-semibold hover:text-blue-600">Home</a>
 
-<!-- TOOLS DROPDOWN -->
+
+<!-- TOOLS MENU -->
 
 <div class="relative group">
 
 <button class="font-semibold text-gray-700 hover:text-blue-600 flex items-center gap-1">
 Tools
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
 </svg>
 </button>
 
-<div class="absolute left-0 top-full hidden group-hover:block bg-white shadow-xl border rounded-xl p-6 w-[720px]">
 
-<div class="grid grid-cols-3 gap-8">
+<!-- MAIN DROPDOWN -->
 
-{toolCategories.map(cat => (
+<div class="absolute left-0 top-full hidden group-hover:flex bg-white shadow-xl border rounded-xl w-[520px]">
 
-<div>
+<!-- CATEGORY LIST -->
 
-<h4 class="text-sm font-bold text-gray-900 mb-3">
+<div class="w-1/2 border-r bg-gray-50">
+
+{toolCategories.map((cat, i) => (
+
+<div class="relative group/category">
+
+<button class="w-full text-left px-4 py-3 text-sm font-semibold hover:bg-gray-100">
+
 {cat.name}
-</h4>
+
+</button>
+
+<!-- TOOLS PANEL -->
+
+<div class="absolute left-full top-0 hidden group-hover/category:block bg-white shadow-xl border rounded-r-xl w-64 p-4">
 
 <div class="space-y-2">
 
@@ -215,6 +231,8 @@ class="block text-sm text-gray-600 hover:text-blue-600"
 
 </div>
 
+</div>
+
 ))}
 
 </div>
@@ -223,9 +241,14 @@ class="block text-sm text-gray-600 hover:text-blue-600"
 
 </div>
 
-<a href="/tools" class="font-semibold hover:text-blue-600">All Tools</a>
 
-<a href="/about" class="font-semibold hover:text-blue-600">About</a>
+<a href="/tools" class="font-semibold hover:text-blue-600">
+All Tools
+</a>
+
+<a href="/about" class="font-semibold hover:text-blue-600">
+About
+</a>
 
 </div>
 
