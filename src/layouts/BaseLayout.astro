@@ -42,12 +42,75 @@ const defaultSchema = {
 const pageSchema = schema || defaultSchema;
 
 
+/* TOOL CATEGORIES */
 
-const trendingTools = [
+const toolCategories = [
+
+{
+name: 'AI Writing Tools',
+tools: [
 { name:'AI Humanizer', href:'/tools/ai-humanizer' },
 { name:'AI Content Detector', href:'/tools/ai-content-detector' },
+{ name:'AI Paraphraser', href:'/tools/ai-paraphraser' },
+{ name:'AI Email Writer', href:'/tools/ai-email-writer' }
+]
+},
+
+{
+name: 'SEO Tools',
+tools: [
+{ name:'Meta Description Generator', href:'/tools/meta-description-generator' },
+{ name:'Schema Markup Generator', href:'/tools/schema-markup-generator' },
+{ name:'Robots.txt Generator', href:'/tools/robots-txt-generator' },
+{ name:'Website Speed Checker', href:'/tools/website-speed-checker' }
+]
+},
+
+{
+name: 'Text Utilities',
+tools: [
+{ name:'Word Counter', href:'/tools/word-counter' },
+{ name:'Case Converter', href:'/tools/case-converter' },
+{ name:'Lorem Ipsum Generator', href:'/tools/lorem-ipsum-generator' },
+{ name:'Markdown to HTML', href:'/tools/markdown-to-html' }
+]
+},
+
+{
+name: 'Developer Tools',
+tools: [
+{ name:'JSON Formatter', href:'/tools/json-formatter' },
+{ name:'Base64 Encoder Decoder', href:'/tools/base64-encoder-decoder' },
+{ name:'CSS Gradient Generator', href:'/tools/css-gradient-generator' },
+{ name:'Password Generator', href:'/tools/password-generator' },
+{ name:'QR Code Generator', href:'/tools/qr-code-generator' }
+]
+},
+
+{
+name: 'Business Creator Tools',
+tools: [
+{ name:'SGE Readiness Score', href:'/tools/sge-readiness-score' },
+{ name:'SaaS Ghost Calculator', href:'/tools/saas-ghost-calculator' },
+{ name:'Content Repurposing Multiplier', href:'/tools/content-repurposing-multiplier' }
+]
+},
+
+{
+name: 'AI Strategy Tools',
+tools: [
 { name:'Programmatic SEO Generator', href:'/tools/programmatic-seo-generator' },
-{ name:'SGE Readiness Score', href:'/tools/sge-readiness-score' }
+{ name:'Vibe Coding Stack Suggester', href:'/tools/vibe-coding-stack-suggester' }
+]
+}
+
+];
+
+const trendingTools = [
+  toolCategories[0].tools[0],
+  toolCategories[0].tools[1],
+  toolCategories[5].tools[0],
+  toolCategories[4].tools[0]
 ];
 ---
 
@@ -164,7 +227,7 @@ class="toolList hidden pl-8 pb-2">
 {cat.tools.map(tool=> (
 
 <a
-href={tool.href}
+href={`/tools/${tool.slug}`}
 class="block py-2 text-sm text-gray-600 hover:text-blue-600">
 
 {tool.name}
@@ -233,7 +296,7 @@ Trending Tools
 {trendingTools.map(tool => (
 
 <a
-href={tool.href}
+href={`/tools/${tool.slug}`}
 class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100"
 >
 {tool.name}
