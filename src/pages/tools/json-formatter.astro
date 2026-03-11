@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import JsonFormatter from '../../components/tools/JsonFormatter';
+const faqs = [
+  { question: "Is this tool free?", answer: "Yes, completely free with no signup, no limits, no hidden charges." },
+  { question: "Is my data private?", answer: "Yes. Everything runs in your browser. No data is stored on our servers." },
+];
+---
+<ToolLayout title="Free JSON Formatter & Validator - No Signup Required" description="Format, validate and minify JSON online with syntax highlighting." keywords="json-formatter, free online tool" toolName="Free JSON Formatter & Validator" toolCategory="Developer Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <JsonFormatter client:visible />
+  </div>
+</ToolLayout>
