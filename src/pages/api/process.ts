@@ -2,6 +2,12 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 
+// Tools that use Claude (heavy AI writing tasks)
+const CLAUDE_TOOLS = ['humanizer', 'paraphraser'];
+
+// Tools that use OpenAI (lighter tasks)
+const OPENAI_TOOLS = ['detector', 'meta-description', 'email-writer', 'sge-score'];
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const { text, tone, tool } = await request.json();
@@ -13,19 +19,9 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Rate limiting: max 5000 characters
     if (text.length > 5000) {
       return new Response(JSON.stringify({ error: 'Text must be under 5000 characters' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    const ANTHROPIC_API_KEY = import.meta.env.ANTHROPIC_API_KEY;
-
-    if (!ANTHROPIC_API_KEY) {
-      return new Response(JSON.stringify({ error: 'API not configured' }), {
-        status: 500,
         headers: { 'Content-Type': 'application/json' },
       });
     }
@@ -125,6 +121,16 @@ Request:
 ${text}`;
         break;
 
+      case 'sge-score':
+        systemPrompt = 'You are an SEO expert specializing in Google AI Overviews and Search Generative Experience optimization.';
+        userPrompt = `Based on the regex analysis provided, generate a brief actionable improvement tip (2-3 sentences max) for improving this content's chances of appearing in Google AI Overviews.
+
+Analysis data:
+${text}
+
+Respond with ONLY the improvement tip, no preamble.`;
+        break;
+
       default:
         return new Response(JSON.stringify({ error: 'Invalid tool type' }), {
           status: 400,
@@ -132,31 +138,105 @@ ${text}`;
         });
     }
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
-      }),
-    });
+    // Route to appropriate AI provider
+    let result = '';
 
-    const data = await response.json();
+    if (CLAUDE_TOOLS.includes(tool)) {
+      // Use Claude for heavy writing tasks
+      const ANTHROPIC_API_KEY = import.meta.env.ANTHROPIC_API_KEY;
+      if (!ANTHROPIC_API_KEY) {
+        return new Response(JSON.stringify({ error: 'Claude API not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+      }
 
-    if (data.content && data.content[0]) {
-      return new Response(JSON.stringify({ result: data.content[0].text }), {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 4000,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: userPrompt }],
+        }),
+      });
+
+      const data = await response.json();
+      if (data.content && data.content[0]) {
+        result = data.content[0].text;
+      } else {
+        return new Response(JSON.stringify({ error: 'Claude API error. Please try again.' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+      }
+
+    } else if (OPENAI_TOOLS.includes(tool)) {
+      // Use OpenAI for lighter tasks
+      const OPENAI_API_KEY = import.meta.env.OPENAI_API_KEY;
+      
+      // Fallback to Claude if OpenAI key not set
+      if (!OPENAI_API_KEY) {
+        const ANTHROPIC_API_KEY = import.meta.env.ANTHROPIC_API_KEY;
+        if (!ANTHROPIC_API_KEY) {
+          return new Response(JSON.stringify({ error: 'API not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        }
+        
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 4000,
+            system: systemPrompt,
+            messages: [{ role: 'user', content: userPrompt }],
+          }),
+        });
+
+        const data = await response.json();
+        if (data.content && data.content[0]) {
+          result = data.content[0].text;
+        } else {
+          return new Response(JSON.stringify({ error: 'API error. Please try again.' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        }
+      } else {
+        // Use OpenAI
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-4.1-mini',
+            max_tokens: 4000,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: userPrompt },
+            ],
+          }),
+        });
+
+        const data = await response.json();
+        if (data.choices && data.choices[0]) {
+          result = data.choices[0].message.content;
+        } else {
+          return new Response(JSON.stringify({ error: 'OpenAI API error. Please try again.' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        }
+      }
+    }
+
+    if (result) {
+      return new Response(JSON.stringify({ result }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    return new Response(JSON.stringify({ error: 'Failed to process text. Please try again.' }), {
+    return new Response(JSON.stringify({ error: 'Failed to process. Please try again.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
