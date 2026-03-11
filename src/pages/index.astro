@@ -2,24 +2,51 @@
 export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const writingTools = [
-  { name: 'AI Humanizer', desc: 'Transform AI-generated text into natural, human-sounding writing.', href: '/tools/ai-humanizer', icon: '✍️', badge: 'Most Popular' },
-  { name: 'AI Content Detector', desc: 'Check if any text was written by AI with confidence scores.', href: '/tools/ai-content-detector', icon: '🔍', badge: 'New' },
-  { name: 'AI Paraphraser', desc: 'Rewrite any text in seconds. 6 styles available.', href: '/tools/ai-paraphraser', icon: '🔄', badge: 'Unlimited' },
-  { name: 'AI Email Writer', desc: 'Generate professional emails for any business situation.', href: '/tools/ai-email-writer', icon: '📧', badge: 'Business' },
-];
-
-const seoTools = [
-  { name: 'Meta Description Generator', desc: 'Generate SEO-optimized meta descriptions and title tags.', href: '/tools/meta-description-generator', icon: '🏷️', badge: 'SEO' },
-  { name: 'Schema Markup Generator', desc: 'Build JSON-LD structured data for rich Google results.', href: '/tools/schema-markup-generator', icon: '🔧', badge: 'New' },
-  { name: 'Website Speed Checker', desc: 'Test Core Web Vitals, performance, and SEO scores.', href: '/tools/website-speed-checker', icon: '⚡', badge: 'New' },
+const categories = [
+  {
+    name: 'AI Writing Tools', icon: '✍️', bg: 'from-blue-600 to-indigo-700',
+    tools: [
+      { name: 'AI Humanizer', desc: 'Transform AI text into natural human writing.', href: '/tools/ai-humanizer', icon: '✍️', badge: 'Popular' },
+      { name: 'AI Content Detector', desc: 'Check if text was written by AI.', href: '/tools/ai-content-detector', icon: '🔍' },
+      { name: 'AI Paraphraser', desc: 'Rewrite text in 6 different styles.', href: '/tools/ai-paraphraser', icon: '🔄' },
+      { name: 'AI Email Writer', desc: 'Generate professional emails instantly.', href: '/tools/ai-email-writer', icon: '📧' },
+    ]
+  },
+  {
+    name: 'SEO Tools', icon: '🔍', bg: 'from-emerald-600 to-teal-700',
+    tools: [
+      { name: 'Meta Description Generator', desc: 'Create SEO meta tags and titles.', href: '/tools/meta-description-generator', icon: '🏷️' },
+      { name: 'Schema Markup Generator', desc: 'Build JSON-LD structured data.', href: '/tools/schema-markup-generator', icon: '🔧' },
+      { name: 'Robots.txt Generator', desc: 'Generate robots.txt with AI crawler support.', href: '/tools/robots-txt-generator', icon: '🤖' },
+      { name: 'Website Speed Checker', desc: 'Test Core Web Vitals and performance.', href: '/tools/website-speed-checker', icon: '⚡' },
+    ]
+  },
+  {
+    name: 'Text Utilities', icon: '📝', bg: 'from-amber-500 to-orange-600',
+    tools: [
+      { name: 'Word Counter', desc: 'Count words, characters, reading time.', href: '/tools/word-counter', icon: '🔢' },
+      { name: 'Case Converter', desc: 'Convert to 10 text case formats.', href: '/tools/case-converter', icon: '🔤' },
+      { name: 'Lorem Ipsum Generator', desc: 'Generate placeholder text.', href: '/tools/lorem-ipsum-generator', icon: '📄' },
+      { name: 'Markdown to HTML', desc: 'Convert MD to HTML with preview.', href: '/tools/markdown-to-html', icon: '📝' },
+    ]
+  },
+  {
+    name: 'Developer Tools', icon: '⚡', bg: 'from-purple-600 to-violet-700',
+    tools: [
+      { name: 'JSON Formatter', desc: 'Format, validate and minify JSON.', href: '/tools/json-formatter', icon: '📋' },
+      { name: 'Base64 Encoder/Decoder', desc: 'Encode and decode Base64 strings.', href: '/tools/base64-encoder-decoder', icon: '🔒' },
+      { name: 'CSS Gradient Generator', desc: 'Visual gradient builder with presets.', href: '/tools/css-gradient-generator', icon: '🎨' },
+      { name: 'Password Generator', desc: 'Generate strong random passwords.', href: '/tools/password-generator', icon: '🔑' },
+      { name: 'QR Code Generator', desc: 'Create QR codes with custom colors.', href: '/tools/qr-code-generator', icon: '📱' },
+    ]
+  },
 ];
 ---
 
 <BaseLayout
-  title="Free AI Tools Online - AI Humanizer, Paraphraser, Detector, SEO Tools | FreeAIToolz"
-  description="100% free AI tools for writing, SEO, and content creation. AI Humanizer, Content Detector, Paraphraser, Schema Generator, Speed Checker and more. No signup required."
-  keywords="free AI tools, AI humanizer, AI content detector, paraphrasing tool, schema generator, website speed checker, free SEO tools"
+  title="Free AI Tools Online - 17 Free AI, SEO & Developer Tools | FreeAIToolz"
+  description="17 free online tools: AI Humanizer, Content Detector, JSON Formatter, Password Generator, QR Code Maker, Schema Generator and more. No signup required."
+  keywords="free AI tools, free SEO tools, free developer tools, AI humanizer, JSON formatter, password generator, QR code generator, word counter"
 >
 
   <!-- Hero -->
@@ -28,7 +55,7 @@ const seoTools = [
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
       <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-blue-200 border border-white/10 mb-8">
         <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-        8 free tools — no signup, no limits
+        17 free tools — no signup, no limits
       </div>
       
       <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
@@ -37,16 +64,15 @@ const seoTools = [
       </h1>
       
       <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-        Humanize AI text, detect AI content, paraphrase anything, generate schema markup, check site speed — all powered by AI, all completely free.
+        AI writing tools, SEO utilities, text processors, and developer tools — all powered by AI, all completely free. No signup. No limits.
       </p>
       
       <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
         <a href="/tools/ai-humanizer" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all shadow-lg hover:shadow-blue-500/25">
-          Try AI Humanizer
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+          Try AI Humanizer →
         </a>
         <a href="/tools" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl text-lg border border-white/20 transition-all">
-          Browse All Tools
+          Browse All 17 Tools
         </a>
       </div>
 
@@ -59,85 +85,50 @@ const seoTools = [
     </div>
   </section>
 
-  <!-- AI Writing Tools -->
-  <section class="py-20" id="tools">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex items-center gap-3 mb-8">
-        <span class="text-2xl">✍️</span>
-        <div>
-          <h2 class="text-3xl font-extrabold text-gray-900">AI Writing Tools</h2>
-          <p class="text-gray-500 mt-1">AI-powered tools for content creation and editing</p>
+  <!-- Tool Categories -->
+  {categories.map((cat, catIdx) => (
+    <section class={`py-20 ${catIdx % 2 === 1 ? 'bg-gray-50' : ''}`}>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-2xl">{cat.icon}</span>
+          <h2 class="text-3xl font-extrabold text-gray-900">{cat.name}</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {cat.tools.map(tool => (
+            <a href={tool.href} class="tool-card group flex flex-col">
+              <div class="flex items-start justify-between mb-3">
+                <span class="text-3xl">{tool.icon}</span>
+                {tool.badge && <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">{tool.badge}</span>}
+              </div>
+              <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
+              <p class="mt-1.5 text-sm text-gray-500 flex-1">{tool.desc}</p>
+              <div class="mt-4 text-sm font-bold text-blue-600 flex items-center gap-1">
+                Use Free <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {writingTools.map(tool => (
-          <a href={tool.href} class="tool-card group flex flex-col">
-            <div class="flex items-start justify-between mb-3">
-              <span class="text-3xl">{tool.icon}</span>
-              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">{tool.badge}</span>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
-            <p class="mt-1.5 text-sm text-gray-500 flex-1">{tool.desc}</p>
-            <div class="mt-4 text-sm font-bold text-blue-600 flex items-center gap-1">
-              Use Free <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- SEO Tools -->
-  <section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex items-center gap-3 mb-8">
-        <span class="text-2xl">🔍</span>
-        <div>
-          <h2 class="text-3xl font-extrabold text-gray-900">SEO Tools</h2>
-          <p class="text-gray-500 mt-1">Essential tools for search engine optimization</p>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {seoTools.map(tool => (
-          <a href={tool.href} class="tool-card group flex flex-col">
-            <div class="flex items-start justify-between mb-3">
-              <span class="text-3xl">{tool.icon}</span>
-              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">{tool.badge}</span>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
-            <p class="mt-1.5 text-sm text-gray-500 flex-1">{tool.desc}</p>
-            <div class="mt-4 text-sm font-bold text-blue-600 flex items-center gap-1">
-              Use Free <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+    </section>
+  ))}
 
   <!-- How it works -->
-  <section class="py-20">
+  <section class="py-20 bg-gray-50">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-3xl font-extrabold text-gray-900 mb-12">How It Works</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span class="text-2xl font-extrabold text-blue-600">1</span>
-          </div>
+          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-extrabold text-blue-600">1</span></div>
           <h3 class="text-lg font-bold text-gray-900">Choose Your Tool</h3>
-          <p class="mt-2 text-sm text-gray-500">Pick from 8 free AI-powered tools for writing, SEO, and content creation.</p>
+          <p class="mt-2 text-sm text-gray-500">Pick from 17 free tools across AI writing, SEO, text and developer categories.</p>
         </div>
         <div>
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span class="text-2xl font-extrabold text-blue-600">2</span>
-          </div>
+          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-extrabold text-blue-600">2</span></div>
           <h3 class="text-lg font-bold text-gray-900">Enter Your Content</h3>
-          <p class="mt-2 text-sm text-gray-500">Paste text or enter your data. No account needed, no limits.</p>
+          <p class="mt-2 text-sm text-gray-500">Paste text or enter data. No account needed, no limits.</p>
         </div>
         <div>
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span class="text-2xl font-extrabold text-blue-600">3</span>
-          </div>
+          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-extrabold text-blue-600">3</span></div>
           <h3 class="text-lg font-bold text-gray-900">Get Instant Results</h3>
           <p class="mt-2 text-sm text-gray-500">AI processes your request in seconds. Copy and use anywhere.</p>
         </div>
@@ -149,14 +140,10 @@ const seoTools = [
   <section class="py-20 bg-gray-950 text-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Need Custom AI Automation?</h2>
-      <p class="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">FreeAIToolz is built by AI2Flows — a full-service AI automation agency. We build GoHighLevel workflows, AI chatbots, Meta & Google Ads campaigns, and custom integrations for growing businesses.</p>
+      <p class="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">FreeAIToolz is built by AI2Flows — we build GoHighLevel workflows, AI chatbots, Meta & Google Ads campaigns, and custom integrations for growing businesses.</p>
       <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://www.ai2flows.com/" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all">
-          Visit AI2Flows →
-        </a>
-        <a href="/about" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl text-lg border border-white/20 transition-all">
-          Learn About Our Team
-        </a>
+        <a href="https://www.ai2flows.com/" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all">Visit AI2Flows →</a>
+        <a href="/about" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl text-lg border border-white/20 transition-all">About Our Team</a>
       </div>
     </div>
   </section>
@@ -165,8 +152,8 @@ const seoTools = [
   <section class="py-16">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 prose-custom">
       <h2>Why Use FreeAIToolz?</h2>
-      <p>FreeAIToolz provides a comprehensive suite of AI-powered writing and SEO tools that are completely free to use. Whether you need to humanize AI-generated content, detect if text was written by AI, paraphrase paragraphs, generate SEO metadata, write professional emails, create schema markup, or check website performance — our tools deliver fast, accurate results without requiring any signup or payment.</p>
-      <p>Every tool runs with enterprise-grade AI and is designed for speed, privacy, and accuracy. Your text is never stored on our servers. We built these tools for students, bloggers, marketers, SEO professionals, and anyone who works with written content daily.</p>
+      <p>FreeAIToolz provides 17 free online tools across four categories: AI writing, SEO optimization, text utilities, and developer tools. Every tool is completely free — no signup, no word limits, no hidden fees. Our AI-powered tools use enterprise-grade technology, while our client-side tools run entirely in your browser for maximum speed and privacy.</p>
+      <p>Whether you need to humanize AI text, check website speed, format JSON, generate passwords, or create QR codes — FreeAIToolz has you covered. Built by the team at AI2Flows for students, bloggers, marketers, developers, and professionals who need fast, reliable tools every day.</p>
     </div>
   </section>
 
