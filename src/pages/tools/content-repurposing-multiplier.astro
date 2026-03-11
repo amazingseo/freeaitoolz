@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import ContentRepurposingMultiplier from '../../components/tools/ContentRepurposingMultiplier';
+const faqs = [
+  { question: "What is content repurposing?", answer: "Content repurposing is taking one piece of content (like a video or blog post) and adapting it into multiple formats for different platforms. This tool plans that strategy for you." },
+  { question: "How accurate are the counts?", answer: "The tool uses proven content marketing formulas. A 10-minute video really can produce 30+ pieces of content. The actual count depends on your content density." },
+  { question: "Is this free?", answer: "Yes. 100% client-side logic. No API needed." },
+];
+---
+<ToolLayout title="Free Content Repurposing Multiplier - Social Media Strategy Map" description="Calculate how many social posts you can create from one video, blog post, or podcast. Platform-specific distribution map with effort levels." keywords="content repurposing, content multiplier, social media strategy, repurpose content, content distribution" toolName="Free Content Repurposing Multiplier" toolCategory="Creator Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <ContentRepurposingMultiplier client:visible />
+  </div>
+</ToolLayout>
