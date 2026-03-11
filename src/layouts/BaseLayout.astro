@@ -206,20 +206,14 @@ class="absolute left-1/2 -translate-x-1/2 mt-4 w-[420px] hidden">
 <div class="mb-2">
 
 <button
-class="categoryBtn w-full text-left flex items-center gap-2 px-3 py-3 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg"
+class="categoryBtn w-full text-left flex items-center gap-3 px-3 py-3 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg transition"
 data-index={index}>
 
-{index===0 && "✍️"}
-{index===1 && "🔍"}
-{index===2 && "📝"}
-{index===3 && "⚡"}
-{index===4 && "💼"}
-{index===5 && "🧠"}
+<span class="text-lg">{cat.icon}</span>
 
-{cat.name}
+<span>{cat.name}</span>
 
 </button>
-
 
 <div
 class="toolList hidden pl-8 pb-2">
