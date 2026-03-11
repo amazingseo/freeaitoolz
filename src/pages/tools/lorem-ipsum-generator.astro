@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import LoremIpsumGenerator from '../../components/tools/LoremIpsumGenerator';
+const faqs = [
+  { question: "Is this tool free?", answer: "Yes, completely free with no signup, no limits, no hidden charges." },
+  { question: "Is my data private?", answer: "Yes. Everything runs in your browser. No data is stored on our servers." },
+];
+---
+<ToolLayout title="Free Lorem Ipsum Generator - No Signup Required" description="Generate lorem ipsum placeholder text by paragraphs, sentences or words." keywords="lorem-ipsum-generator, free online tool" toolName="Free Lorem Ipsum Generator" toolCategory="Text Utility" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <LoremIpsumGenerator client:visible />
+  </div>
+</ToolLayout>
