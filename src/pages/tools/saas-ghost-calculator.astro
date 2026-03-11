@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SaasGhostCalculator from '../../components/tools/SaasGhostCalculator';
+const faqs = [
+  { question: "What is a ghost user?", answer: "A ghost user is a paid seat in your SaaS that is inactive or barely used. You are paying for them but getting no value." },
+  { question: "Is this free?", answer: "Yes. 100% client-side calculator. No data leaves your browser." },
+  { question: "How accurate are the calculations?", answer: "The math is straightforward - it calculates waste based on your actual numbers. The accuracy depends on how accurately you input your seat count and activity rates." },
+];
+---
+<ToolLayout title="Free SaaS Ghost User & Burn Calculator" description="Calculate hidden costs from inactive seats and wasted API calls. Optimize your SaaS burn rate and extend runway." keywords="SaaS calculator, ghost users, burn rate calculator, SaaS cost optimizer, seat utilization" toolName="Free SaaS Ghost User Calculator" toolCategory="Business Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <SaasGhostCalculator client:visible />
+  </div>
+</ToolLayout>
