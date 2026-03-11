@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import ProgrammaticSeoGenerator from '../../components/tools/ProgrammaticSeoGenerator';
+const faqs = [
+  { question: "What is programmatic SEO?", answer: "Programmatic SEO creates hundreds or thousands of pages targeting long-tail keywords using templates. This tool helps generate the title tags, meta descriptions, H1s, and URL slugs for those pages." },
+  { question: "How many variations can it generate?", answer: "Up to 200 variations per generation. The tool calculates all possible combinations of your variables automatically." },
+  { question: "Is this free?", answer: "Yes. 100% client-side. No API calls needed." },
+];
+---
+<ToolLayout title="Free Programmatic SEO Template Generator - Bulk Title & Meta Tags" description="Generate 50-200 title tag and meta description variations from templates for programmatic SEO. Free bulk pSEO tool." keywords="programmatic SEO, bulk title generator, pSEO template, meta description generator bulk, programmatic SEO tool" toolName="Free Programmatic SEO Generator" toolCategory="Marketing Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <ProgrammaticSeoGenerator client:visible />
+  </div>
+</ToolLayout>
