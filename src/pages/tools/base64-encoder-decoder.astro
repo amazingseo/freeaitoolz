@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import Base64Tool from '../../components/tools/Base64Tool';
+const faqs = [
+  { question: "Is this tool free?", answer: "Yes, completely free with no signup, no limits, no hidden charges." },
+  { question: "Is my data private?", answer: "Yes. Everything runs in your browser. No data is stored on our servers." },
+];
+---
+<ToolLayout title="Free Base64 Encoder & Decoder - No Signup Required" description="Encode text to Base64 or decode Base64 strings instantly online." keywords="base64-encoder-decoder, free online tool" toolName="Free Base64 Encoder & Decoder" toolCategory="Developer Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <Base64Tool client:visible />
+  </div>
+</ToolLayout>
