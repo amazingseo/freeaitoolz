@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import VibeCodingStackSuggester from '../../components/tools/VibeCodingStackSuggester';
+const faqs = [
+  { question: "What is vibe coding?", answer: "Vibe coding is building apps using natural language and AI tools like Bolt.new, Cursor, and Lovable, without traditional hand-coding. It is the 2026 trend for non-technical founders." },
+  { question: "Are these recommendations up to date?", answer: "Yes. Our tool database reflects the best free-tier options available in 2026 including Bolt.new, Supabase, Clerk, and other leading platforms." },
+  { question: "Is this free?", answer: "Yes. Uses a curated lookup table - no API calls needed." },
+];
+---
+<ToolLayout title="Free Vibe Coding Stack Suggester - Best Free Tech Stack 2026" description="Describe your app idea and get the best free-tier tech stack for 2026. Covers frontend, database, auth, payments, AI and more." keywords="vibe coding, tech stack suggester, free tier tools, bolt.new, supabase, best stack 2026" toolName="Free Vibe Coding Stack Suggester" toolCategory="Developer Tool" faqs={faqs}>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <VibeCodingStackSuggester client:visible />
+  </div>
+</ToolLayout>
