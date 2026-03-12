@@ -1,0 +1,58 @@
+---
+import { getAllTools } from "../lib/tools"
+
+const tools = getAllTools()
+---
+
+<div class="max-w-3xl mx-auto mb-10">
+
+<input
+id="toolSearch"
+placeholder="Search tools..."
+class="w-full border rounded-xl px-4 py-3"
+/>
+
+</div>
+
+<div id="searchResults" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+{tools.map(tool => (
+
+<a
+href={`/tools/${tool.slug}`}
+class="tool-card border rounded-xl p-5 hover:shadow"
+data-name={tool.name.toLowerCase()}
+>
+
+<h3 class="font-semibold text-gray-900">{tool.name}</h3>
+
+<p class="text-sm text-gray-500 mt-2">{tool.description}</p>
+
+</a>
+
+))}
+
+</div>
+
+<script>
+
+const search = document.getElementById("toolSearch")
+const cards = document.querySelectorAll(".tool-card")
+
+search.addEventListener("input", () => {
+
+const value = search.value.toLowerCase()
+
+cards.forEach(card => {
+
+const name = card.dataset.name
+
+card.style.display = name.includes(value)
+? "block"
+: "none"
+
+})
+
+})
+
+</script>
