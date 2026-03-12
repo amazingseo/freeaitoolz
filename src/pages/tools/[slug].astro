@@ -84,10 +84,22 @@ breadcrumbs={[
 <p class="inline-block text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full mb-4">
 {tool.category}
 </p>
-<p class="text-gray-600 mb-10">
-{tool.description}
+<div class="text-gray-600 mb-10 max-w-3xl space-y-4">
+
+<p>
+Use our free <strong>{tool.name}</strong> tool online to quickly and easily
+{tool.description.toLowerCase()}. This tool works instantly in your browser
+and requires no signup or installation.
 </p>
 
+<p>
+FreeAIToolz provides powerful browser-based utilities designed for speed,
+privacy, and simplicity. Whether you're a developer, marketer, or content
+creator, this tool helps you complete tasks faster without needing paid
+software.
+</p>
+
+</div>
 <div class="border border-gray-200 rounded-xl p-8 bg-white shadow-sm">
 
 <p class="text-gray-500">
@@ -97,5 +109,23 @@ Tool interface will go here.
 </div>
 
 </section>
+<section class="max-w-5xl mx-auto px-4 py-16">
 
+<h2 class="text-2xl font-bold text-gray-900 mb-6">
+How to Use {tool.name}
+</h2>
+
+<ol class="list-decimal pl-6 space-y-3 text-gray-600">
+
+<li>Enter your text or input into the tool.</li>
+
+<li>Click the process or generate button.</li>
+
+<li>Review the results instantly.</li>
+
+<li>Copy or download the output for your use.</li>
+
+</ol>
+
+</section>
 </BaseLayout>
