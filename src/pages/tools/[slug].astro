@@ -1,52 +1,56 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'
-import { toolCategories } from '../../data/tools'
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { getAllTools } from "../../lib/tools"
 
-const { slug } = Astro.params
+export async function getStaticPaths() {
 
-/* find tool */
+const tools = getAllTools()
 
-let currentTool = null
-let currentCategory = null
+return tools.map(tool => ({
+params: { slug: tool.slug },
+props: { tool }
+}))
 
-for (const category of toolCategories) {
-  const found = category.tools.find(t => t.slug === slug)
-
-  if (found) {
-    currentTool = found
-    currentCategory = category
-    break
-  }
 }
 
-/* 404 fallback */
-
-if (!currentTool) {
-  return Astro.redirect('/tools')
+const { tool } = Astro.props
+const toolSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": tool.name,
+  "applicationCategory": "WebApplication",
+  "operatingSystem": "All",
+  "description": tool.description,
+  "url": `https://freeaitoolz.com/tools/${tool.slug}`,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
 }
 ---
 
 <BaseLayout
-  title={`${currentTool.name} | FreeAIToolz`}
-  description={currentTool.description}
-  breadcrumbs={[
-    { label: "Home", url: "/" },
-    { label: "Tools", url: "/tools" },
-    { label: currentTool.name }
-  ]}
+title={`${tool.name} | FreeAIToolz`}
+description={tool.description}
+schema={toolSchema}
+breadcrumbs={[
+{ label: "Home", url: "/" },
+{ label: "Tools", url: "/tools" },
+{ label: tool.name }
+]}
 >
+<section class="max-w-5xl mx-auto px-4 py-16">
 
-<section class="max-w-4xl mx-auto px-4 py-16">
-
-<h1 class="text-4xl font-bold text-gray-900 mb-4">
-{currentTool.name}
+<h1 class="text-4xl font-bold text-gray-900 mb-6">
+{tool.name}
 </h1>
 
 <p class="text-gray-600 mb-10">
-{currentTool.description}
+{tool.description}
 </p>
 
-<div class="bg-white border rounded-xl p-8 shadow-sm">
+<div class="border rounded-xl p-8">
 
 <p class="text-gray-500">
 Tool interface will go here.
