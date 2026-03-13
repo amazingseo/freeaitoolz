@@ -137,16 +137,15 @@ d="M19 9l-7 7-7-7"/>
 
 <div
 id="toolsDropdown"
-class="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] hidden opacity-0 scale-95 transition-all duration-200">
+class="absolute left-1/2 -translate-x-1/2 mt-4 w-[380px] hidden opacity-0 scale-95 transition-all duration-200">
 
-<div class="rounded-2xl bg-white/90 backdrop-blur-xl shadow-2xl border border-gray-200 p-4">
-
+<div class="rounded-xl bg-white/90 backdrop-blur-xl shadow-xl border border-gray-200 p-3">
 {toolCategories.map((cat,index)=> (
 
-<div class="mb-2">
+<div class="mb-1">
 
 <button
-class="categoryBtn w-full text-left flex items-center gap-3 px-3 py-3 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg transition"
+class="categoryBtn w-full text-left flex items-center gap-3 px-3 py-2 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg transition"
 data-index={index}>
 
 <span class="text-lg">{cat.icon}</span>
@@ -155,13 +154,13 @@ data-index={index}>
 
 </button>
 
-<div class="toolList hidden pl-8 pb-2">
+<div class="toolList hidden pl-8 pb-1 space-y-1">
 
 {cat.tools.map(tool=> (
 
 <a
 href={`/tools/${tool.slug}`}
-class="block py-2 text-sm text-gray-600 hover:text-blue-600 hover:translate-x-1 transition">
+class="block py-1 text-sm text-gray-600 hover:text-blue-600 hover:translate-x-1 transition">
 
 {tool.name}
 
