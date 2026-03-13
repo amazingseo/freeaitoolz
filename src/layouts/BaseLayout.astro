@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { toolCategories } from '../data/tools';
+
 interface Props {
   title: string;
   description: string;
@@ -41,8 +42,6 @@ const defaultSchema = {
 
 const pageSchema = schema || defaultSchema;
 
-/* ADD THIS */
-
 const trendingTools = [
   toolCategories[0].tools[0],
   toolCategories[0].tools[1],
@@ -67,7 +66,6 @@ const trendingTools = [
 <link rel="canonical" href={pageUrl} />
 
 {noindex && <meta name="robots" content="noindex,nofollow" />}
-
 <meta name="robots" content="index, follow" />
 
 <meta property="og:type" content={type} />
@@ -94,10 +92,13 @@ const trendingTools = [
 All tools are <span class="text-emerald-400 font-bold">100% free</span>
 </div>
 
+<!-- NAVBAR -->
 
-<nav class="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/40 shadow-sm">
+<nav class="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-gray-200/60 shadow-sm">
 
 <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+
+<!-- Logo -->
 
 <a href="/" class="flex items-center gap-2">
 <img src="/favicon.svg" class="w-8 h-8" />
@@ -106,18 +107,21 @@ Free<span class="text-blue-600">AI</span>Toolz
 </span>
 </a>
 
-<div class="hidden lg:flex items-center gap-8">
+<!-- Desktop Menu -->
 
-<a href="/" class="font-semibold text-gray-700 hover:text-blue-600">Home</a>
+<div class="hidden lg:flex items-center gap-8 text-sm font-semibold">
 
+<a href="/" class="text-gray-700 hover:text-blue-600 transition">
+Home
+</a>
 
-<!-- TOOLS DROPDOWN -->
+<!-- Tools Dropdown -->
 
 <div class="relative">
 
 <button
 id="toolsButton"
-class="flex items-center gap-1 font-semibold text-gray-700 hover:text-blue-600">
+class="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition">
 
 Tools
 
@@ -129,14 +133,13 @@ d="M19 9l-7 7-7-7"/>
 
 </button>
 
-
-<!-- DROPDOWN -->
+<!-- Dropdown -->
 
 <div
 id="toolsDropdown"
-class="absolute left-1/2 -translate-x-1/2 mt-4 w-[420px] hidden">
+class="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] hidden opacity-0 scale-95 transition-all duration-200">
 
-<div class="rounded-2xl bg-white shadow-2xl border border-gray-200 p-4">
+<div class="rounded-2xl bg-white/90 backdrop-blur-xl shadow-2xl border border-gray-200 p-4">
 
 {toolCategories.map((cat,index)=> (
 
@@ -152,14 +155,13 @@ data-index={index}>
 
 </button>
 
-<div
-class="toolList hidden pl-8 pb-2">
+<div class="toolList hidden pl-8 pb-2">
 
 {cat.tools.map(tool=> (
 
 <a
 href={`/tools/${tool.slug}`}
-class="block py-2 text-sm text-gray-600 hover:text-blue-600">
+class="block py-2 text-sm text-gray-600 hover:text-blue-600 hover:translate-x-1 transition">
 
 {tool.name}
 
@@ -179,16 +181,62 @@ class="block py-2 text-sm text-gray-600 hover:text-blue-600">
 
 </div>
 
+<a href="/tools" class="text-gray-700 hover:text-blue-600 transition">
+All Tools
+</a>
 
-<a href="/tools" class="font-semibold text-gray-700 hover:text-blue-600">All Tools</a>
-
-<a href="/about" class="font-semibold text-gray-700 hover:text-blue-600">About</a>
+<a href="/about" class="text-gray-700 hover:text-blue-600 transition">
+About
+</a>
 
 </div>
+
+<!-- Mobile Button -->
+
+<button
+id="mobileMenuBtn"
+class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+class="w-6 h-6 text-gray-700"
+fill="none"
+viewBox="0 0 24 24"
+stroke="currentColor">
+
+<path stroke-linecap="round"
+stroke-linejoin="round"
+stroke-width="2"
+d="M4 6h16M4 12h16M4 18h16"/>
+
+</svg>
+
+</button>
 
 </div>
 
 </nav>
+
+<!-- MOBILE MENU -->
+
+<div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-gray-200">
+
+<div class="px-4 py-4 space-y-3">
+
+<a href="/" class="block font-semibold text-gray-700">
+Home
+</a>
+
+<a href="/tools" class="block font-semibold text-gray-700">
+All Tools
+</a>
+
+<a href="/about" class="block font-semibold text-gray-700">
+About
+</a>
+
+</div>
+
+</div>
 
 <!-- SEARCH -->
 
@@ -211,7 +259,6 @@ class="w-full border border-gray-200 rounded-xl px-4 py-3"
 
 </section>
 
-
 <!-- TRENDING -->
 
 <section class="py-6 border-b">
@@ -228,7 +275,7 @@ Trending Tools
 
 <a
 href={`/tools/${tool.slug}`}
-class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100"
+class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100 transition"
 >
 {tool.name}
 </a>
@@ -240,7 +287,6 @@ class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100
 </div>
 
 </section>
-
 
 <!-- BREADCRUMBS -->
 
@@ -272,7 +318,6 @@ class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100
 <slot />
 </main>
 
-
 <!-- FOOTER -->
 
 <footer class="bg-gray-950 text-gray-400 mt-20">
@@ -289,38 +334,58 @@ AI2Flows
 </div>
 
 </footer>
+
 <script>
+
+/* Desktop Dropdown */
 
 const btn = document.getElementById("toolsButton")
 const menu = document.getElementById("toolsDropdown")
 
-btn.addEventListener("mouseenter", ()=> menu.classList.remove("hidden"))
-menu.addEventListener("mouseenter", ()=> menu.classList.remove("hidden"))
+btn.addEventListener("mouseenter", () => {
+menu.classList.remove("hidden","opacity-0","scale-95")
+})
 
-btn.addEventListener("mouseleave", ()=> {
-setTimeout(()=> {
-if(!menu.matches(":hover")) menu.classList.add("hidden")
+menu.addEventListener("mouseenter", () => {
+menu.classList.remove("hidden")
+})
+
+btn.addEventListener("mouseleave", () => {
+setTimeout(() => {
+if (!menu.matches(":hover")) {
+menu.classList.add("opacity-0","scale-95")
+setTimeout(()=>menu.classList.add("hidden"),150)
+}
 },150)
 })
 
-menu.addEventListener("mouseleave", ()=> menu.classList.add("hidden"))
+menu.addEventListener("mouseleave", () => {
+menu.classList.add("opacity-0","scale-95")
+setTimeout(()=>menu.classList.add("hidden"),150)
+})
 
+/* Category Hover */
 
 const categories = document.querySelectorAll(".categoryBtn")
 const lists = document.querySelectorAll(".toolList")
 
 categories.forEach((btn,i)=>{
-
 btn.addEventListener("mouseenter", ()=>{
-
 lists.forEach(l=>l.classList.add("hidden"))
-
 lists[i].classList.remove("hidden")
-
+})
 })
 
+/* Mobile Menu */
+
+const mobileBtn = document.getElementById("mobileMenuBtn")
+const mobileMenu = document.getElementById("mobileMenu")
+
+mobileBtn.addEventListener("click", ()=>{
+mobileMenu.classList.toggle("hidden")
 })
 
 </script>
+
 </body>
 </html>
