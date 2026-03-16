@@ -180,7 +180,7 @@ const toolSchema = {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {relatedTools.map(t => (
           
-            href={`/tools/${t.slug}`}
+            href={"/tools/" + t.slug}
             class="border border-gray-200 bg-white rounded-xl p-5 hover:shadow-md hover:border-blue-500 transition flex flex-col"
           >
             <h3 class="font-semibold text-gray-900">{t.name}</h3>
