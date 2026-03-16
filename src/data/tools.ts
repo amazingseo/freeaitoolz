@@ -59,8 +59,11 @@ description: "Generate robots.txt file"
 name: "Website Speed Checker",
 slug: "website-speed-checker",
 description: "Analyze website performance and Core Web Vitals"
+},
+{ name: "Internal Link Suggester", 
+ slug: "internal-link-suggester", 
+ description: "Find internal linking opportunities for your new articles instantly"
 }
-
 ]
 },
 
