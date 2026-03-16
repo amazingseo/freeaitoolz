@@ -14,7 +14,11 @@ const { tool } = Astro.props
 const relatedTools = getToolsByCategory(tool.category)
   .filter(t => t.slug !== tool.slug)
   .slice(0, 4)
-  .map(t => ({ ...t, url: `/tools/${t.slug}` }))
+  .map(t => ({
+    name: t.name,
+    description: t.description,
+    url: '/tools/' + t.slug
+  }))
 const toolSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
