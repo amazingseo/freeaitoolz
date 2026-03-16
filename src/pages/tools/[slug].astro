@@ -173,7 +173,7 @@ const toolSchema = {
     </div>
   </section>
 
- <!-- ✅ SECTION 4: Related Tools — bg-gray-50 -->
+<!-- ✅ SECTION 4: Related Tools — bg-gray-50 -->
 <section class="w-full bg-gray-50 border-t border-gray-100">
   <div class="max-w-5xl mx-auto px-4 py-16">
 
@@ -182,19 +182,32 @@ const toolSchema = {
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
       {relatedTools.map(t => (
-        
+
+        <a
           href={t.url}
           class="border border-gray-200 bg-white rounded-xl p-5 hover:shadow-md hover:border-blue-500 transition flex flex-col"
         >
-          <h3 class="font-semibold text-gray-900">{t.name}</h3>
-          <p class="text-sm text-gray-500 mt-2 flex-1">{t.description}</p>
-          <div class="mt-4 text-blue-600 font-semibold text-sm">Use Tool →</div>
+
+          <h3 class="font-semibold text-gray-900">
+            {t.name}
+          </h3>
+
+          <p class="text-sm text-gray-500 mt-2 flex-1">
+            {t.description}
+          </p>
+
+          <div class="mt-4 text-blue-600 font-semibold text-sm">
+            Use Tool →
+          </div>
+
         </a>
+
       ))}
+
     </div>
 
   </div>
 </section>
-
 </BaseLayout>
