@@ -1,0 +1,75 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import InternalLinkSuggester from '../../components/tools/InternalLinkSuggester';
+
+const faqs = [
+  {
+    question: "What is an Internal Link Suggester?",
+    answer: "An internal link suggester analyzes your existing content and identifies opportunities to add internal links to a new article. It matches keywords from your new post with mentions in your existing articles."
+  },
+  {
+    question: "Is this tool free to use?",
+    answer: "Yes, completely free. No signup required. The tool runs entirely in your browser using JavaScript keyword matching."
+  },
+  {
+    question: "How do I use this tool?",
+    answer: "Enter your new article title and URL, then paste your existing article titles and URLs (one per line). The tool will scan for keyword matches and suggest where to add internal links."
+  },
+  {
+    question: "Does this tool access my website?",
+    answer: "No. Everything runs in your browser. The tool only analyzes the titles and URLs you paste into it. Nothing is sent to any server."
+  },
+  {
+    question: "How accurate are the suggestions?",
+    answer: "The tool uses keyword matching logic to find relevant linking opportunities. It extracts key terms from your new article title and matches them against your existing content titles for relevance."
+  }
+];
+---
+
+<ToolLayout
+  title="Free Internal Link Suggester - Find SEO Link Opportunities Instantly"
+  description="Find internal linking opportunities for your new articles instantly. Paste your existing URLs and get keyword-matched link suggestions. Free, no signup required."
+  keywords="internal link suggester, internal linking tool, SEO internal links, find internal link opportunities, free internal link checker"
+  toolName="Internal Link Suggester"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <InternalLinkSuggester client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article class="prose prose-gray max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900">How to Find Internal Link Opportunities for Free</h2>
+      <p>Internal linking is one of the most underused SEO tactics. When you publish a new article, you should go back to your existing content and add links pointing to it. This helps search engines discover and rank your new page faster. Our free internal link suggester automates this process instantly.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Why Internal Links Matter for SEO</h3>
+      <p>Internal links pass authority (link equity) between your pages, help search engines understand your site structure, and keep visitors on your site longer. Tools like Link Whisper charge $77+ for this feature. Our tool does the same keyword-matching logic completely free in your browser.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Tips for Best Results</h3>
+      <p>For the most accurate suggestions, paste as many of your existing article titles as possible. The more context you give the tool, the better the keyword matches. After getting suggestions, manually review each one to ensure the linking context makes sense for your readers.</p>
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Related Free Tools</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/meta-description-generator" class="tool-card group">
+          <span class="text-2xl">🏷️</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Meta Description Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Generate optimized meta descriptions</p>
+        </a>
+        <a href="/tools/schema-markup-generator" class="tool-card group">
+          <span class="text-2xl">🔧</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Schema Markup Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Create structured data markup</p>
+        </a>
+        <a href="/tools/sge-readiness-score" class="tool-card group">
+          <span class="text-2xl">🧠</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">SGE Readiness Score</h4>
+          <p class="text-sm text-gray-600 mt-1">Check your AI search readiness</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
