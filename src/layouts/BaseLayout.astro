@@ -320,20 +320,62 @@ class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100
 <!-- FOOTER -->
 
 <footer class="bg-gray-950 text-gray-400 mt-20">
+  <div class="max-w-7xl mx-auto px-4 py-12">
 
-<div class="max-w-7xl mx-auto px-4 py-10 text-center text-sm">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-gray-800">
 
-<p>
-© {new Date().getFullYear()} FreeAIToolz — Built by
-<a href="https://www.ai2flows.com/" class="text-blue-400">
-AI2Flows
-</a>
-</p>
+      <div>
+        <a href="/" class="flex items-center gap-2 mb-3">
+          <img src="/favicon.svg" class="w-7 h-7" />
+          <span class="text-white font-bold text-lg">Free<span class="text-blue-400">AI</span>Toolz</span>
+        </a>
+        <p class="text-sm text-gray-500 leading-relaxed">
+          Free AI tools, SEO utilities and developer tools. No signup required. Everything runs in your browser.
+        </p>
+      </div>
 
-</div>
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/" class="hover:text-white transition">Home</a></li>
+          <li><a href="/tools" class="hover:text-white transition">All Tools</a></li>
+          <li><a href="/about" class="hover:text-white transition">About</a></li>
+          <li><a href="/privacy" class="hover:text-white transition">Privacy Policy</a></li>
+          <li><a href="/terms" class="hover:text-white transition">Terms & Conditions</a></li>
+        </ul>
+      </div>
 
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4">Need Custom AI?</h4>
+        
+          href="https://www.ai2flows.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Visit AI2Flows
+        </a>
+        <p class="text-xs text-gray-500 mt-3">
+          Custom AI automations, GHL funnels, chatbots and more.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
+      <p>© {new Date().getFullYear()} FreeAIToolz. All rights reserved. Built by <a href="https://www.ai2flows.com/" class="text-blue-400 hover:text-blue-300" target="_blank">AI2Flows</a></p>
+      <div class="flex gap-4">
+        <a href="/privacy" class="hover:text-gray-400 transition">Privacy Policy</a>
+        <a href="/terms" class="hover:text-gray-400 transition">Terms & Conditions</a>
+        <a href="/about" class="hover:text-gray-400 transition">About</a>
+      </div>
+    </div>
+
+  </div>
 </footer>
-
 <script>
 
 /* Desktop Dropdown */
@@ -385,6 +427,48 @@ mobileMenu.classList.toggle("hidden")
 })
 
 </script>
+<!-- Floating CTA Button -->
+<div id="floatingCta" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
 
+  <!-- Tooltip -->
+  <div id="ctaTooltip" class="hidden bg-gray-900 text-white text-xs rounded-xl px-4 py-3 shadow-xl max-w-[200px] text-center border border-gray-700">
+    <p class="font-semibold text-white mb-1">Need Custom AI Solutions?</p>
+    <p class="text-gray-400">GHL funnels, chatbots, automations & more</p>
+  </div>
+
+  <!-- Button -->
+  
+    href="https://www.ai2flows.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm px-5 py-3 rounded-2xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200 hover:scale-105"
+    id="ctaBtn"
+  >
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+    </svg>
+    Custom AI Solutions
+  </a>
+
+</div>
+
+<script>
+  const ctaBtn = document.getElementById('ctaBtn');
+  const ctaTooltip = document.getElementById('ctaTooltip');
+
+  ctaBtn.addEventListener('mouseenter', () => {
+    ctaTooltip.classList.remove('hidden');
+  });
+
+  ctaBtn.addEventListener('mouseleave', () => {
+    ctaTooltip.classList.add('hidden');
+  });
+
+  // Auto show tooltip once after 3 seconds
+  setTimeout(() => {
+    ctaTooltip.classList.remove('hidden');
+    setTimeout(() => ctaTooltip.classList.add('hidden'), 4000);
+  }, 3000);
+</script>
 </body>
 </html>
