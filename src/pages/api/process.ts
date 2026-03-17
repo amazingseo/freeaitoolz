@@ -6,7 +6,7 @@ import type { APIRoute } from 'astro';
 const CLAUDE_TOOLS = ['humanizer', 'paraphraser'];
 
 // Tools that use OpenAI (lighter tasks)
-const OPENAI_TOOLS = ['detector', 'meta-description', 'email-writer', 'sge-score'];
+const OPENAI_TOOLS = ['detector', 'meta-description', 'email-writer', 'sge-score', 'nugget-extractor'];
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -130,7 +130,19 @@ ${text}
 
 Respond with ONLY the improvement tip, no preamble.`;
         break;
-
+case 'nugget-extractor':
+  systemPrompt = `You are an AEO (Answer Engine Optimization) expert. Extract information nuggets from the article. Return ONLY a valid JSON object in this exact format, no other text:
+{
+  "nuggets": [
+    { "type": "fact", "text": "the nugget text" }
+  ],
+  "score": 7,
+  "recommendation": "one sentence recommendation"
+}
+Types: fact=clear factual statement, statistic=contains numbers/%, definition=defines something, insight=quotable standalone statement.
+Score 1-10 based on quantity and quality of nuggets. Extract minimum 3, maximum 15 nuggets.`;
+  userPrompt = `Extract information nuggets from this article:\n\n${text}`;
+  break;
       default:
         return new Response(JSON.stringify({ error: 'Invalid tool type' }), {
           status: 400,
