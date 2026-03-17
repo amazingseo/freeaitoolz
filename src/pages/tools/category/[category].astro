@@ -1,48 +1,163 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro'
-import { getToolsByCategory } from '../../../lib/tools'
+export const prerender = true;
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { toolCategories } from '../../../data/tools';
 
-const { category } = Astro.params
-
-const tools = getToolsByCategory(category)
-
-if (!tools.length) {
-  return Astro.redirect('/tools')
+export async function getStaticPaths() {
+  return toolCategories.map(cat => ({
+    params: {
+      category: cat.name.toLowerCase().replace(/ /g, '-')
+    },
+    props: { cat }
+  }));
 }
+
+const { cat } = Astro.props;
+
+const categoryColors = {
+  'AI Writing Tools': 'from-violet-500 to-purple-600',
+  'SEO Tools': 'from-blue-500 to-cyan-500',
+  'Text Utilities': 'from-emerald-500 to-teal-500',
+  'Developer Tools': 'from-orange-500 to-amber-500',
+  'Business Creator Tools': 'from-pink-500 to-rose-500',
+  'AI Strategy Tools': 'from-indigo-500 to-blue-600',
+};
+
+const gradient = categoryColors[cat.name] || 'from-blue-500 to-violet-600';
+
+const toolsWithUrls = cat.tools.map(tool => ({
+  name: tool.name,
+  description: tool.description,
+  href: '/tools/' + tool.slug
+}));
+
+const otherCategories = toolCategories
+  .filter(c => c.name !== cat.name)
+  .map(c => ({
+    name: c.name,
+    icon: c.icon,
+    count: c.tools.length,
+    href: '/category/' + c.name.toLowerCase().replace(/ /g, '-')
+  }));
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": cat.name + " — FreeAIToolz",
+  "description": "Browse " + cat.tools.length + " free " + cat.name.toLowerCase() + " — all browser-based, no signup required.",
+  "url": "https://www.freeaitoolz.com/category/" + cat.name.toLowerCase().replace(/ /g, '-'),
+  "numberOfItems": cat.tools.length
+};
 ---
 
 <BaseLayout
-title={`${category} | FreeAIToolz`}
-description={`Browse ${category}`}
+  title={cat.name + ' — ' + cat.tools.length + ' Free Tools | FreeAIToolz'}
+  description={'Browse ' + cat.tools.length + ' free ' + cat.name.toLowerCase() + ' — all browser-based, no signup, no cost. ' + cat.tools.map(t => t.name).join(', ') + '.'}
+  schema={schema}
+  breadcrumbs={[
+    { label: 'Home', url: '/' },
+    { label: 'Tools', url: '/tools' },
+    { label: cat.name }
+  ]}
 >
 
-<section class="max-w-7xl mx-auto px-4 py-16">
+<!-- HERO -->
+<section class="relative overflow-hidden bg-gray-950 py-14 text-white">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/3 w-72 h-72 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
+    <div class="absolute bottom-0 right-1/3 w-64 h-64 bg-violet-600 rounded-full opacity-10 blur-3xl"></div>
+  </div>
+  <div class="relative max-w-4xl mx-auto px-4 text-center">
+    <div class={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} text-2xl mb-5 shadow-lg`}>
+      {cat.icon}
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
+      {cat.name}
+    </h1>
+    <p class="mt-4 text-gray-400 max-w-xl mx-auto">
+      {cat.tools.length} free browser-based tools — no signup, no limits, no cost.
+    </p>
+    <div class="mt-6 flex flex-wrap justify-center gap-2">
+      {toolsWithUrls.map(tool => (
+        
+          href={tool.href}
+          class="text-xs bg-white/10 hover:bg-white/20 border border-white/10 text-gray-300 px-3 py-1.5 rounded-full transition"
+        >
+          {tool.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
 
-<h1 class="text-4xl font-bold mb-10">
-{category}
-</h1>
+<!-- TOOLS GRID -->
+<section class="py-14 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-xl font-extrabold text-gray-900">
+        All {cat.name}
+      </h2>
+      <span class="text-sm text-gray-500">{cat.tools.length} tools</span>
+    </div>
 
-{tools.map(tool => (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {toolsWithUrls.map(tool => (
+        
+          href={tool.href}
+          class="group bg-white border border-gray-200 rounded-2xl p-5 hover:border-transparent hover:shadow-lg transition-all duration-200 flex flex-col"
+        >
+          <h3 class="font-bold text-sm text-gray-900 group-hover:text-blue-600 transition">
+            {tool.name}
+          </h3>
+          <p class="text-xs text-gray-500 mt-1.5 flex-1 leading-relaxed">
+            {tool.description}
+          </p>
+          <div class="mt-3 text-xs font-semibold text-blue-600 flex items-center gap-1">
+            Use Tool <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
 
-<a
-href={`/tools/${tool.slug}`}
-class="border rounded-xl p-5 hover:shadow"
->
+  </div>
+</section>
 
-<h3 class="font-semibold">{tool.name}</h3>
+<!-- AEO CONTENT -->
+<section class="py-14 bg-gray-50 border-t border-gray-100">
+  <div class="max-w-3xl mx-auto px-4">
+    <h2 class="text-xl font-bold text-gray-900 mb-4">
+      What are {cat.name}?
+    </h2>
+    <p class="text-gray-600 leading-relaxed mb-6">
+      FreeAIToolz offers {cat.tools.length} free {cat.name.toLowerCase()} — all browser-based with zero data storage and no account required. These tools include {toolsWithUrls.slice(0, 4).map(t => t.name).join(', ')} and more. Every tool runs instantly in your browser and produces results in seconds.
+    </p>
+    <h3 class="text-base font-bold text-gray-900 mb-2">
+      Are these {cat.name.toLowerCase()} free?
+    </h3>
+    <p class="text-gray-600 leading-relaxed text-sm">
+      Yes. All {cat.tools.length} tools in this category are 100% free with no premium tier, no word limits, and no signup required. FreeAIToolz is built on the principle that powerful tools should be accessible to everyone.
+    </p>
+  </div>
+</section>
 
-<p class="text-sm text-gray-500 mt-2">
-{tool.description}
-</p>
-
-</a>
-
-))}
-
-</div>
-
+<!-- OTHER CATEGORIES -->
+<section class="py-14 bg-white border-t border-gray-100">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-xl font-bold text-gray-900 mb-6">Browse Other Categories</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      {otherCategories.map(c => (
+        
+          href={c.href}
+          class="group bg-gray-50 border border-gray-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-blue-50 transition flex flex-col items-center text-center gap-2"
+        >
+          <span class="text-2xl">{c.icon}</span>
+          <p class="text-xs font-bold text-gray-900 group-hover:text-blue-600 transition leading-tight">{c.name}</p>
+          <p class="text-xs text-gray-400">{c.count} tools</p>
+        </a>
+      ))}
+    </div>
+  </div>
 </section>
 
 </BaseLayout>
