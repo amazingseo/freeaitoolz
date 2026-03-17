@@ -1,0 +1,75 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SaasStackBuilder from '../../components/tools/SaasStackBuilder';
+
+const faqs = [
+  {
+    question: "What is the SaaS Free Tier Stack Builder?",
+    answer: "It's a curated tool that recommends the best free-tier services for your project type. Select your project (SaaS, Mobile App, Blog, or Startup) and get a complete tech stack with free tier limits and direct links."
+  },
+  {
+    question: "Are all the recommended tools actually free?",
+    answer: "Yes. Every tool in our database has a genuine free tier that is sufficient to start and launch a project. We include the specific free tier limits so you know exactly what you get without paying."
+  },
+  {
+    question: "How often is the database updated?",
+    answer: "The stack database is reviewed and updated regularly to reflect 2026 free tier availability. Free tier limits change frequently, so we prioritize accuracy."
+  },
+  {
+    question: "Can I export my stack?",
+    answer: "Yes, you can copy your full recommended stack to clipboard with one click, including tool names, free limits, and links."
+  },
+  {
+    question: "Why is this better than just Googling?",
+    answer: "Googling for free tier tools returns outdated articles, sponsored content, and paid alternatives. Our database is curated specifically for founders who want to launch without spending, with verified free limits."
+  }
+];
+---
+
+<ToolLayout
+  title="SaaS Free Tier Stack Builder - Best Free Tools for Startups 2026"
+  description="Build your complete tech stack using only free tier tools. Auth, database, hosting, email and more. Curated for SaaS, mobile apps, blogs and startups. No signup needed."
+  keywords="SaaS free tier stack, free startup tools 2026, free tech stack builder, best free SaaS tools, free tier database hosting auth"
+  toolName="SaaS Free Tier Stack Builder"
+  toolCategory="Business & Creator Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <SaasStackBuilder client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article class="prose prose-gray max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900">Build Your Startup Stack for Free in 2026</h2>
+      <p>New founders often spend days researching the best free tools before writing a single line of code. Our SaaS Free Tier Stack Builder solves this instantly — select your project type and get a production-ready tech stack using only tools with genuine free tiers.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Why Free Tier Stacks Matter</h3>
+      <p>The best free tier stacks in 2026 let you go from idea to live product with zero monthly costs. Tools like Supabase, Vercel, Clerk, and Resend offer generous free tiers that can support thousands of users before you need to pay. Knowing which tools to combine is the difference between a $0/month stack and an unnecessary $200/month bill.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">When to Upgrade</h3>
+      <p>Free tiers are designed to get you started. Once you have paying customers, upgrade the services you actually use rather than switching stacks. Most founders find they only need to upgrade 1-2 services after reaching $1,000 MRR.</p>
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Related Free Tools</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/saas-ghost-calculator" class="tool-card group">
+          <span class="text-2xl">👻</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">SaaS Ghost Calculator</h4>
+          <p class="text-sm text-gray-600 mt-1">Calculate hidden SaaS costs</p>
+        </a>
+        <a href="/tools/programmatic-seo-generator" class="tool-card group">
+          <span class="text-2xl">⚙️</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Programmatic SEO Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Generate SEO page templates</p>
+        </a>
+        <a href="/tools/schema-markup-generator" class="tool-card group">
+          <span class="text-2xl">🔧</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Schema Markup Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Create structured data markup</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
