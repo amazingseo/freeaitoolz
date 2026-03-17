@@ -4,48 +4,117 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="About Us - FreeAIToolz | Built by AI2Flows Team"
-  description="Learn about FreeAIToolz and the AI2Flows team behind it. We offer AI automation, GoHighLevel, Meta Ads, Google Ads, and more."
-  keywords="about freeaitoolz, AI2Flows, AI automation agency, GoHighLevel experts"
+  title="About FreeAIToolz | Free AI Tools Built by AI2Flows"
+  description="FreeAIToolz is a free AI tools directory built by AI2Flows. Learn about our mission to make AI tools accessible to everyone."
 >
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16">
-    <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">About FreeAIToolz</h1>
-    <p class="mt-4 text-xl text-gray-500">Free tools, real expertise, no gimmicks.</p>
 
-    <div class="mt-12 prose-custom">
-      <p>FreeAIToolz is a collection of free, AI-powered online tools built for writers, marketers, SEO professionals, and business owners. Every tool on this platform is completely free to use — no signup required, no word limits, no hidden costs.</p>
-      
-      <h2>Who We Are</h2>
-      <p>We are the team at <a href="https://www.ai2flows.com/" target="_blank" rel="noopener">AI2Flows</a> — a digital agency specializing in AI automation, business workflow optimization, and growth marketing. With experience serving 178+ growing businesses, we understand the daily tools that professionals need to work smarter and faster.</p>
-      <p>Our core expertise spans across multiple areas of digital business:</p>
-      <ul>
-        <li><strong>AI Automation & Chatbots</strong> — Custom AI solutions, intelligent chatbots, and voice agents that automate customer interactions and lead nurturing</li>
-        <li><strong>GoHighLevel (GHL) Expertise</strong> — Full CRM setup, funnel architecture, workflow automation, pipeline management, and white-label SaaS enablement</li>
-        <li><strong>Meta Ads & Google Ads</strong> — Strategic ad campaign management, A/B testing, pixel setup, conversion optimization, and full-funnel lead generation</li>
-        <li><strong>n8n & Zapier Integrations</strong> — Complex multi-platform automations connecting your CRM, email, ads, and business tools into seamless workflows</li>
-        <li><strong>Sales Funnel Design</strong> — High-converting landing pages, lead magnets, appointment funnels, and complete sales systems</li>
-        <li><strong>Website Development & SEO</strong> — Custom websites, technical SEO, schema markup, and performance optimization</li>
-        <li><strong>SMS/Email Compliance</strong> — A2P/10DLC registration, Twilio setup, and messaging compliance for US and Canadian businesses</li>
-      </ul>
-
-      <h2>Why We Built FreeAIToolz</h2>
-      <p>As an agency that works with dozens of businesses every month, we noticed that our clients and their teams constantly needed quick access to simple AI-powered tools — humanizing AI text, detecting AI content, paraphrasing paragraphs, generating meta descriptions, writing emails. Instead of recommending expensive paid tools, we decided to build and offer these tools for free.</p>
-      <p>Every tool on FreeAIToolz is built with the same attention to quality and user experience that we bring to our client projects. No ads cluttering your screen, no forced signups to access features, and no artificial word limits designed to push you into a paid plan.</p>
-
-      <h2>Our Mission</h2>
-      <p>To provide the best free AI tools on the internet — tools that are fast, accurate, private, and genuinely useful. We believe that basic AI writing and SEO tools should be accessible to everyone, regardless of budget.</p>
-
-      <h2>Industries We Serve</h2>
-      <p>Through AI2Flows, we serve businesses across real estate, automotive, home services, fitness, coaching, healthcare, B2B SaaS, marketing agencies, and more. Our free tools on FreeAIToolz are designed to be universally useful across all of these industries.</p>
-
-      <h2>Get in Touch</h2>
-      <p>Have questions, feedback, or need custom automation services? We would love to hear from you.</p>
-      <ul>
-        <li><strong>Email:</strong> <a href="mailto:contact@ai2flows.com">contact@ai2flows.com</a></li>
-        <li><strong>Website:</strong> <a href="https://www.ai2flows.com/" target="_blank" rel="noopener">www.ai2flows.com</a></li>
-        <li><strong>Book a Free Strategy Call:</strong> <a href="https://www.ai2flows.com/" target="_blank" rel="noopener">Schedule here</a></li>
-      </ul>
-      <p>For tool-specific feedback, you can reach us at <a href="mailto:tools@freeaitoolz.com">tools@freeaitoolz.com</a>.</p>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-gray-950 to-gray-900 text-white py-20 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="inline-flex items-center gap-2 bg-blue-600/20 text-blue-400 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 border border-blue-500/20">
+        About Us
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
+        Free AI Tools for Everyone
+      </h1>
+      <p class="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+        FreeAIToolz is a growing directory of free, browser-based AI tools built for writers,
+        marketers, developers, and creators. No signup. No limits. No cost.
+      </p>
     </div>
-  </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Our Mission</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            AI tools are transforming how people work — but most of the best ones cost money,
+            require signups, or hide features behind paywalls. We built FreeAIToolz to change that.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Every tool on this platform is 100% free, runs directly in your browser, and requires
+            zero registration. From AI writing assistants to SEO utilities and developer tools,
+            we're building the most useful free AI toolkit on the internet.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {[
+            { number: '26+', label: 'Free Tools' },
+            { number: '100%', label: 'Free Forever' },
+            { number: '0', label: 'Signups Needed' },
+            { number: '6', label: 'Tool Categories' },
+          ].map(stat => (
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 text-center">
+              <div class="text-3xl font-extrabold text-blue-600">{stat.number}</div>
+              <div class="text-sm text-gray-500 mt-1 font-medium">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Built By -->
+  <section class="py-20 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Built by AI2Flows</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
+        FreeAIToolz is built and maintained by
+        <a href="https://www.ai2flows.com/" target="_blank" class="text-blue-600 font-semibold hover:underline">AI2Flows</a>
+        — a digital agency specializing in AI automation, GoHighLevel CRM, sales funnels,
+        and custom AI solutions for businesses across the US, UK, and beyond.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+        {[
+          { icon: '🤖', title: 'AI Automation', desc: 'n8n, Zapier, voice AI, chatbots' },
+          { icon: '🚀', title: 'GHL Funnels', desc: 'CRM setup, pipelines, workflows' },
+          { icon: '📈', title: 'Meta & Google Ads', desc: 'Paid traffic and lead generation' },
+        ].map(service => (
+          <div class="bg-white border border-gray-200 rounded-2xl p-6">
+            <span class="text-3xl">{service.icon}</span>
+            <h3 class="font-bold text-gray-900 mt-3">{service.title}</h3>
+            <p class="text-sm text-gray-500 mt-1">{service.desc}</p>
+          </div>
+        ))}
+      </div>
+      
+        href="https://www.ai2flows.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        Visit AI2Flows
+      </a>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">Why FreeAIToolz</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {[
+          { icon: '⚡', title: 'Instant Results', desc: 'Every tool processes your input instantly. No waiting, no queues.' },
+          { icon: '🔒', title: 'Privacy First', desc: 'Your content is never stored or shared. Everything stays between you and the AI.' },
+          { icon: '🌐', title: 'Browser Based', desc: 'No installation required. Open any tool and start using it immediately.' },
+          { icon: '♾️', title: 'Always Free', desc: 'No hidden fees, no premium tiers, no credit card required. Free forever.' },
+        ].map(value => (
+          <div class="flex items-start gap-4 p-6 border border-gray-200 rounded-2xl hover:border-blue-300 transition">
+            <span class="text-3xl shrink-0">{value.icon}</span>
+            <div>
+              <h3 class="font-bold text-gray-900">{value.title}</h3>
+              <p class="text-sm text-gray-500 mt-1">{value.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
