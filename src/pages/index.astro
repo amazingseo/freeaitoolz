@@ -6,13 +6,15 @@ import { toolCategories } from '../data/tools';
 const totalTools = toolCategories.reduce((sum, c) => sum + c.tools.length, 0);
 
 const categoriesWithUrls = toolCategories.map(cat => ({
-  ...cat,
+  name: cat.name,
+  icon: cat.icon,
   tools: cat.tools.map(tool => ({
-    ...tool,
+    name: tool.name,
+    description: tool.description,
+    slug: tool.slug,
     href: '/tools/' + tool.slug
   }))
 }));
-
 const homepageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
