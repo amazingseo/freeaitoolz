@@ -201,16 +201,25 @@ const faqNuggets = [
     <div class="max-w-6xl mx-auto px-4">
 
       <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center gap-3">
-          <div class={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[cat.name] || 'from-gray-500 to-gray-600'} flex items-center justify-center text-lg shadow-sm`}>
-            {cat.icon}
-          </div>
-          <div>
-            <h2 class="text-xl font-extrabold text-gray-900">{cat.name}</h2>
-            <p class="text-xs text-gray-500">{cat.tools.length} free tools</p>
-          </div>
-        </div>
-      </div>
+  
+    href={'/category/' + cat.name.toLowerCase().replace(/ /g, '-')}
+    class="flex items-center gap-3 group"
+  >
+    <div class={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[cat.name] || 'from-gray-500 to-gray-600'} flex items-center justify-center text-lg shadow-sm`}>
+      {cat.icon}
+    </div>
+    <div>
+      <h2 class="text-xl font-extrabold text-gray-900 group-hover:text-blue-600 transition">{cat.name}</h2>
+      <p class="text-xs text-gray-500">{cat.tools.length} free tools</p>
+    </div>
+  </a>
+  
+    href={'/category/' + cat.name.toLowerCase().replace(/ /g, '-')}
+    class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition"
+  >
+    View all →
+  </a>
+</div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {cat.tools.map(tool => (
