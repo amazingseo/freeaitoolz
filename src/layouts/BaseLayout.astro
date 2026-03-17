@@ -97,7 +97,8 @@ const trendingTools = [
   "logo": "https://www.freeaitoolz.com/favicon.svg",
   "founder": { "@type": "Organization", "name": "AI2Flows" },
   "sameAs": ["https://www.ai2flows.com"]
-})}</script>
+})}
+</script>
 
 </head>
 
@@ -343,7 +344,7 @@ class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100
 
       <div>
         <a href="/" class="flex items-center gap-2 mb-3">
-          <img src="/favicon.svg" class="w-7 h-7" alt="FreeAIToolz logo" />
+          <img src="/favicon.svg" class="w-7 h-7" alt="FreeAIToolz logo" loading="lazy" />
           <span class="text-white font-bold text-lg">Free<span class="text-blue-400">AI</span>Toolz</span>
         </a>
         <p class="text-sm text-gray-500 leading-relaxed">
@@ -445,7 +446,7 @@ mobileMenu.classList.toggle("hidden")
 
 </script>
 <!-- Floating CTA Button -->
-<div id="floatingCta" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+<div id="floatingCta" class="fixed bottom-6 right-6 z-50 hidden sm:flex flex-col items-end gap-3">
 
   <!-- Tooltip -->
   <div id="ctaTooltip" class="hidden bg-gray-900 text-white text-xs rounded-xl px-4 py-3 shadow-xl max-w-[200px] text-center border border-gray-700">
