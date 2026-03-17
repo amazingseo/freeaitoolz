@@ -10,7 +10,10 @@ name: "AI Humanizer",
 slug: "ai-humanizer",
 description: "Transform AI text into natural human writing"
 },
-
+{ name: "AI Humanizer Scorecard", 
+slug: "ai-humanizer-scorecard", 
+description: "Score and audit AI text for human-like writing patterns" 
+},
 {
 name: "AI Content Detector",
 slug: "ai-content-detector",
@@ -48,6 +51,7 @@ name: "Schema Markup Generator",
 slug: "schema-markup-generator",
 description: "Generate JSON-LD structured data"
 },
+
 {
 name: "Robots.txt Generator",
 slug: "robots-txt-generator",
@@ -152,7 +156,10 @@ name: "SaaS Ghost Calculator",
 slug: "saas-ghost-calculator",
 description: "Calculate hidden SaaS costs"
 },
-
+{ name: "SaaS Free Tier Stack Builder", 
+slug: "saas-stack-builder", 
+description: "Build your complete startup tech stack using only free tier tools" 
+},
 {
 name: "Content Repurposing Multiplier",
 slug: "content-repurposing-multiplier",
@@ -172,7 +179,10 @@ name: "Programmatic SEO Generator",
 slug: "programmatic-seo-generator",
 description: "Generate scalable SEO templates"
 },
-
+{ name: "Information Nugget Extractor", 
+slug: "information-nugget-extractor", 
+description: "Extract AI-citeable facts and stats to optimize content for SGE" 
+},
 {
 name: "Vibe Coding Stack Suggester",
 slug: "vibe-coding-stack-suggester",
