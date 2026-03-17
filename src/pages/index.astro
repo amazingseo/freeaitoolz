@@ -5,6 +5,14 @@ import { toolCategories } from '../data/tools';
 
 const totalTools = toolCategories.reduce((sum, c) => sum + c.tools.length, 0);
 
+const categoriesWithUrls = toolCategories.map(cat => ({
+  ...cat,
+  tools: cat.tools.map(tool => ({
+    ...tool,
+    href: '/tools/' + tool.slug
+  }))
+}));
+
 const homepageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -79,7 +87,7 @@ const homepageSchema = {
 </section>
 
 <!-- DYNAMIC CATEGORY SECTIONS -->
-{toolCategories.map((cat, index) => (
+{categoriesWithUrls.map((cat, index) => (
   <section class={`py-20 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex items-center gap-3 mb-8">
@@ -89,7 +97,7 @@ const homepageSchema = {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {cat.tools.map(tool => (
           
-            href={'/tools/' + tool.slug}
+            href={tool.href}
             class="group border rounded-xl p-5 hover:border-blue-500 hover:shadow-md transition flex flex-col bg-white"
           >
             <h3 class="font-bold group-hover:text-blue-600">{tool.name}</h3>
