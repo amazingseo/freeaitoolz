@@ -62,6 +62,8 @@ const trendingTools = [
 
 <meta name="description" content={description} />
 <meta name="keywords" content={keywords} />
+<meta name="author" content="AI2Flows" />
+<meta name="publisher" content="FreeAIToolz" />
 
 <link rel="canonical" href={pageUrl} />
 
@@ -74,13 +76,28 @@ const trendingTools = [
 <meta property="og:description" content={description} />
 <meta property="og:image" content={`${siteUrl}${ogImage}`} />
 
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
 <link rel="icon" href="/favicon.svg" />
 
 <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
 
 {faqSchema && (
-<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 )}
+
+<script type="application/ld+json">{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "FreeAIToolz",
+  "url": "https://www.freeaitoolz.com",
+  "logo": "https://www.freeaitoolz.com/favicon.svg",
+  "founder": { "@type": "Organization", "name": "AI2Flows" },
+  "sameAs": ["https://www.ai2flows.com"]
+})}</script>
 
 </head>
 
