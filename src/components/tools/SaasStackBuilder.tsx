@@ -138,7 +138,7 @@ export default function SaasStackBuilder() {
                     rel="noopener noreferrer"
                     className="shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-all"
                   >
-                    Visit →
+                    {'Visit →'}
                   </a>
                 </div>
               </div>
