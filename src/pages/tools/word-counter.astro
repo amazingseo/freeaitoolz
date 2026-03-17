@@ -3,10 +3,13 @@ export const prerender = true;
 import ToolLayout from '../../layouts/ToolLayout.astro';
 import WordCounter from '../../components/tools/WordCounter';
 const faqs = [
-  { question: "Is this tool free?", answer: "Yes, completely free with no signup, no limits, no hidden charges." },
-  { question: "Is my data private?", answer: "Yes. Everything runs in your browser. No data is stored on our servers." },
-];
----
+  { question: "Is this word counter free?", answer: "Yes, completely free with no signup, no word limits, and no hidden charges. Use it as many times as you need." },
+  { question: "Is my text private and secure?", answer: "Yes. Everything runs entirely in your browser using JavaScript. No text is ever sent to our servers or stored anywhere." },
+  { question: "How is reading time calculated?", answer: "Reading time is calculated based on the average adult reading speed of 238 words per minute. Speak time uses 130 words per minute, which is the average conversational speaking pace." },
+  { question: "Does this tool count characters with or without spaces?", answer: "Our word counter shows both — characters with spaces and characters without spaces — so you can use whichever metric your platform requires." },
+  { question: "What is the word count limit?", answer: "There is no limit. You can paste any amount of text and get an instant count. The tool works entirely in your browser so performance depends only on your device." },
+  { question: "Can I use this for Twitter, LinkedIn or Instagram?", answer: "Yes. Twitter/X allows 280 characters, LinkedIn posts perform best at 150-300 words, and Instagram captions cap at 2,200 characters. Our counter tracks all these metrics simultaneously." },
+];---
 <ToolLayout title="Free Word & Character Counter - No Signup Required" description="Count words, characters, sentences, paragraphs with reading time and keyword density." keywords="word-counter, free online tool" toolName="Free Word & Character Counter" toolCategory="Text Utility" faqs={faqs}>
   <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
     <WordCounter client:visible />
