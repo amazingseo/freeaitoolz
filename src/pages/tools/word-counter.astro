@@ -3,14 +3,33 @@ export const prerender = true;
 import ToolLayout from '../../layouts/ToolLayout.astro';
 import WordCounter from '../../components/tools/WordCounter';
 const faqs = [
-  { question: "Is this word counter free?", answer: "Yes, completely free with no signup, no word limits, and no hidden charges. Use it as many times as you need." },
-  { question: "Is my text private and secure?", answer: "Yes. Everything runs entirely in your browser using JavaScript. No text is ever sent to our servers or stored anywhere." },
-  { question: "How is reading time calculated?", answer: "Reading time is calculated based on the average adult reading speed of 238 words per minute. Speak time uses 130 words per minute, which is the average conversational speaking pace." },
-  { question: "Does this tool count characters with or without spaces?", answer: "Our word counter shows both — characters with spaces and characters without spaces — so you can use whichever metric your platform requires." },
-  { question: "What is the word count limit?", answer: "There is no limit. You can paste any amount of text and get an instant count. The tool works entirely in your browser so performance depends only on your device." },
-  { question: "Can I use this for Twitter, LinkedIn or Instagram?", answer: "Yes. Twitter/X allows 280 characters, LinkedIn posts perform best at 150-300 words, and Instagram captions cap at 2,200 characters. Our counter tracks all these metrics simultaneously." },
-];---
-<ToolLayout title="Free Word & Character Counter - No Signup Required" description="Count words, characters, sentences, paragraphs with reading time and keyword density." keywords="word-counter, free online tool" toolName="Free Word Counter — Count Words & Characters Online" toolCategory="Text Utility" faqs={faqs}>
+  {
+    question: "How accurate is this word counter?",
+    answer: "Our word counter is 100% accurate for standard text. It counts words by splitting on whitespace, counts all characters including spaces separately, and calculates sentences by detecting punctuation endings. Numbers like '2026' count as one word."
+  },
+  {
+    question: "What is the ideal word count for a blog post?",
+    answer: "For SEO in 2026, blog posts should target 1,500 to 2,500 words for competitive topics. Pillar articles and guides should reach 3,000 to 5,000 words. Landing pages work best at 500 to 1,200 words. Google considers content under 300 words as thin content."
+  },
+  {
+    question: "How many characters are allowed in a Twitter post?",
+    answer: "Twitter/X allows 280 characters per post. Our character counter tracks this in real time so you never exceed the limit. For LinkedIn, posts perform best at 150 to 300 words. Instagram captions cap at 2,200 characters."
+  },
+  {
+    question: "How is reading time calculated?",
+    answer: "Reading time is based on the average adult reading speed of 238 words per minute. Speak time uses 130 words per minute — the average conversational pace. A 1,000-word article takes approximately 4 minutes to read and 8 minutes to present aloud."
+  },
+  {
+    question: "Does this tool work without internet?",
+    answer: "Once the page loads, the word counter works entirely in your browser using JavaScript. All counting happens locally on your device — no data is sent to servers, making it fully private and functional offline after the initial page load."
+  },
+  {
+    question: "Can I use this for SEO meta description writing?",
+    answer: "Yes. Google displays meta descriptions up to 155 characters and title tags up to 60 characters before truncating them in search results. Use our character counter to stay within these limits. Pair it with our free Meta Description Generator for best results."
+  },
+];
+---
+<ToolLayout title="Free Word & Character Counter - No Signup Required" description="Count words, characters, sentences, paragraphs with reading time and keyword density." keywords="word counter, character counter, online word count, count words free, word count checker, reading time calculator, character count tool" toolCategory="Text Utility" faqs={faqs}>
   <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
     <WordCounter client:visible />
   </div>
