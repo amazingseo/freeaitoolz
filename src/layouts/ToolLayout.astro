@@ -27,21 +27,37 @@ const {
 const siteUrl = "https://freeaitoolz.com";
 const pageUrl = `${siteUrl}${Astro.url.pathname}`;
 
-const toolSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": toolName,
-  "url": pageUrl,
-  "description": description,
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "Web Browser",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
+const toolSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": toolName,
+    "url": pageUrl,
+    "description": description,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": toolName,
+    "url": pageUrl,
+    "description": description,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
   }
-};
-
+];
 const faqSchema = faqs.length > 0 ? {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -90,7 +106,9 @@ const gradient = categoryGradients[toolCategory] || 'from-blue-600 to-violet-600
   ]}
 >
 
-<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+{toolSchema.map(schema => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
 
 <!-- TOOL HERO -->
 <section class="relative overflow-hidden bg-gray-950 py-12 text-white">
