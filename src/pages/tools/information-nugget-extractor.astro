@@ -1,0 +1,75 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import InformationNuggetExtractor from '../../components/tools/InformationNuggetExtractor';
+
+const faqs = [
+  {
+    question: "What is an Information Nugget Extractor?",
+    answer: "An Information Nugget Extractor analyzes your article and pulls out the core facts, statistics, definitions, and quotable statements that AI search engines (like Google SGE and Perplexity) prefer to cite. These 'nuggets' are the building blocks of AEO-optimized content."
+  },
+  {
+    question: "What is AEO and why does it matter?",
+    answer: "AEO stands for Answer Engine Optimization — the practice of structuring content so AI systems like Google's AI Overviews, Perplexity, and ChatGPT can easily extract and cite your content. Articles with clear, factual nuggets are significantly more likely to appear in AI-generated answers."
+  },
+  {
+    question: "What types of nuggets does the tool extract?",
+    answer: "The tool identifies four types: Facts (clear factual statements), Statistics (numbers and percentages), Definitions (what something is or means), and Key Insights (quotable, standalone statements that make sense out of context)."
+  },
+  {
+    question: "Is this free to use?",
+    answer: "Yes, completely free. The tool uses AI to analyze your content and extract nuggets. No signup required."
+  },
+  {
+    question: "How many nuggets should a well-optimized article have?",
+    answer: "Aim for at least 5-10 strong nuggets per article. Articles with fewer than 3 clear nuggets are unlikely to be cited by AI search engines. Each nugget should be a standalone, factual statement that makes sense without surrounding context."
+  }
+];
+---
+
+<ToolLayout
+  title="Information Nugget Extractor - AEO & SGE Content Optimizer Free"
+  description="Extract AI-citeable facts, stats, and definitions from your articles. Optimize content for Google SGE, Perplexity, and AI Overviews. Free, instant, no signup."
+  keywords="information nugget extractor, AEO optimizer, SGE content optimizer, AI overview optimization, answer engine optimization tool, extract facts from article"
+  toolName="Information Nugget Extractor"
+  toolCategory="AI Strategy Tool"
+  faqs={faqs}
+>
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <InformationNuggetExtractor client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article class="prose prose-gray max-w-none">
+      <h2 class="text-2xl font-bold text-gray-900">How to Optimize Content for AI Search Engines in 2026</h2>
+      <p>AI search engines like Google's AI Overviews, Perplexity, and ChatGPT don't read articles the way humans do. They scan for clear, extractable facts — "nuggets" — that can be cited directly in AI-generated answers. Articles without these nuggets are invisible to AI search, no matter how well-written they are.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">What Makes a Good Information Nugget</h3>
+      <p>A good nugget is a standalone statement that makes complete sense without surrounding context. "70% of marketers use AI tools" is a nugget. "This is increasingly common" is not. Good nuggets are specific, factual, and cite a clear subject. Our tool identifies these patterns automatically so you can see exactly what AI engines will extract from your content.</p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8">Why Your Article May Not Rank in AI Overviews</h3>
+      <p>The most common reason articles don't appear in Google AI Overviews is a lack of structured, extractable facts. Fluffy introductions, vague conclusions, and opinion-heavy paragraphs give AI engines nothing to cite. Use this tool to audit every article before publishing.</p>
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Related Free Tools</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/sge-readiness-score" class="tool-card group">
+          <span class="text-2xl">🧠</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">SGE Readiness Score</h4>
+          <p class="text-sm text-gray-600 mt-1">Check your AI search readiness</p>
+        </a>
+        <a href="/tools/meta-description-generator" class="tool-card group">
+          <span class="text-2xl">🏷️</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Meta Description Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Generate optimized meta descriptions</p>
+        </a>
+        <a href="/tools/schema-markup-generator" class="tool-card group">
+          <span class="text-2xl">🔧</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Schema Markup Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Add structured data to your pages</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
