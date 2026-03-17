@@ -96,15 +96,15 @@ const homepageSchema = {
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {cat.tools.map(tool => (
-          
-            href={tool.href}
-            class="group border rounded-xl p-5 hover:border-blue-500 hover:shadow-md transition flex flex-col bg-white"
-          >
-            <h3 class="font-bold group-hover:text-blue-600">{tool.name}</h3>
-            <p class="text-sm text-gray-500 mt-1 flex-1">{tool.description}</p>
-            <div class="mt-4 text-blue-600 font-semibold text-sm">Use Tool →</div>
-          </a>
-        ))}
+  <a
+    href={tool.href}
+    class="group border rounded-xl p-5 hover:border-blue-500 hover:shadow-md transition flex flex-col bg-white"
+  >
+    <h3 class="font-bold group-hover:text-blue-600">{tool.name}</h3>
+    <p class="text-sm text-gray-500 mt-1 flex-1">{tool.description}</p>
+    <div class="mt-4 text-blue-600 font-semibold text-sm">Use Tool →</div>
+  </a>
+))}
       </div>
     </div>
   </section>
