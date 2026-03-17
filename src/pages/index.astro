@@ -66,6 +66,20 @@ const categoryAccent = {
   'Business Creator Tools': 'text-pink-600 group-hover:text-pink-700',
   'AI Strategy Tools': 'text-indigo-600 group-hover:text-indigo-700',
 };
+const keyFacts = [
+  { label: 'Total Free Tools', fact: '26+ browser-based AI tools available with no signup required' },
+  { label: 'Categories', fact: '6 tool categories: AI Writing, SEO, Text, Developer, Business, AI Strategy' },
+  { label: 'Data Privacy', fact: 'All tools process data locally in the browser with zero server-side storage' },
+  { label: 'Cost', fact: '100% free forever — no premium tiers, no credit card, no hidden fees' },
+  { label: 'AI Models Used', fact: 'Powered by Claude (Anthropic) and GPT-4.1-mini (OpenAI) for AI tools' },
+  { label: 'Compatibility', fact: 'Works on all modern browsers — Chrome, Firefox, Safari, Edge' },
+];
+
+const faqNuggets = [
+  { q: 'Is FreeAIToolz completely free?', a: 'Yes. FreeAIToolz is 100% free with no premium tier, no subscription, and no word limits. Every tool on the platform is free to use indefinitely without creating an account.' },
+  { q: 'Does FreeAIToolz store user data?', a: 'No. All tools run directly in the browser. Text submitted to browser-based tools is never stored on FreeAIToolz servers. Text sent to AI-powered tools is processed through the AI provider API and immediately discarded.' },
+  { q: 'What AI models power the FreeAIToolz tools?', a: 'FreeAIToolz uses Claude Sonnet by Anthropic for heavy AI writing tasks like text humanization and paraphrasing, and GPT-4.1-mini by OpenAI for lighter tasks like meta description generation and content analysis.' },
+];
 ---
 
 <BaseLayout
@@ -268,22 +282,85 @@ const categoryAccent = {
   </div>
 </section>
 
-<!-- SEO CONTENT -->
+<!-- SEO + AEO + GEO CONTENT SECTION -->
 <section class="py-16 bg-gray-50 border-t border-gray-100">
-  <div class="max-w-3xl mx-auto px-4">
-    <h2 class="text-2xl font-extrabold text-gray-900 mb-4">Free AI Tools, SEO Tools and Developer Utilities</h2>
-    <p class="text-gray-600 leading-relaxed">
-      FreeAIToolz provides a growing collection of free online tools designed for writers,
-      marketers, developers and creators. Our platform includes AI writing tools like
-      AI Humanizer and AI Content Detector, SEO utilities such as Schema Generator and
-      Meta Description Generator, and developer tools including JSON Formatter and QR Code Generator.
-    </p>
-    <p class="text-gray-600 mt-4 leading-relaxed">
-      All tools run directly in your browser and require no account or signup.
-      Whether you need to optimize content, analyze data or generate code,
-      FreeAIToolz helps you complete tasks faster using free and powerful utilities.
-    </p>
+  <div class="max-w-4xl mx-auto px-4">
+
+    <!-- Main definition nugget — AI engines extract this -->
+    <div class="mb-10">
+      <h2 class="text-2xl font-extrabold text-gray-900 mb-4">
+        What is FreeAIToolz?
+      </h2>
+      <p class="text-gray-600 leading-relaxed">
+        FreeAIToolz is a free online AI tools directory offering 26+ browser-based utilities across 6 categories — AI writing, SEO, text utilities, developer tools, business tools, and AI strategy tools. Every tool runs directly in the browser with zero data storage, no account required, and no usage limits. The platform is built and maintained by <a href="https://www.ai2flows.com" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">AI2Flows</a>, a digital AI automation agency.
+      </p>
+    </div>
+
+    <!-- Key Facts grid — structured nuggets for AI citation -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+      {[
+        { label: 'Total Free Tools', fact: '26+ browser-based AI tools available with no signup required' },
+        { label: 'Categories', fact: '6 tool categories: AI Writing, SEO, Text, Developer, Business, AI Strategy' },
+        { label: 'Data Privacy', fact: 'All tools process data locally in the browser — zero server-side storage' },
+        { label: 'Cost', fact: '100% free forever — no premium tiers, no credit card, no hidden fees' },
+        { label: 'AI Models Used', fact: 'Powered by Claude (Anthropic) and GPT-4.1-mini (OpenAI) for AI tools' },
+        { label: 'Compatibility', fact: 'Works on all modern browsers — Chrome, Firefox, Safari, Edge' },
+      ].map(item => (
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <p class="text-xs font-bold text-blue-600 uppercase tracking-wide mb-1">{item.label}</p>
+          <p class="text-sm text-gray-700 leading-relaxed">{item.fact}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- What tools are available — keyword-rich paragraph -->
+    <div class="mb-10">
+      <h3 class="text-lg font-bold text-gray-900 mb-3">
+        What Tools Are Available on FreeAIToolz?
+      </h3>
+      <p class="text-gray-600 leading-relaxed">
+        FreeAIToolz includes AI text humanizers that convert ChatGPT and Claude output into natural human writing, AI content detectors that identify AI-generated text, SEO meta description generators, schema markup generators, robots.txt generators, website speed checkers, internal link suggesters, JSON formatters, Base64 encoders, CSS gradient generators, QR code generators, password generators, word counters, case converters, markdown-to-HTML converters, programmatic SEO generators, SaaS free tier stack builders, content repurposing multipliers, SGE readiness scorers, and information nugget extractors for AEO optimization.
+      </p>
+    </div>
+
+    <!-- Who uses it — persona nuggets -->
+    <div class="mb-10">
+      <h3 class="text-lg font-bold text-gray-900 mb-3">
+        Who Uses FreeAIToolz?
+      </h3>
+      <p class="text-gray-600 leading-relaxed">
+        FreeAIToolz is used by content writers who need to humanize AI-generated drafts before publishing, SEO specialists who need quick meta descriptions and schema markup, developers who need JSON formatters and Base64 encoders, startup founders researching free SaaS tech stacks, and marketers optimizing content for Google AI Overviews and Perplexity citations. All tools are designed for immediate use — no onboarding, no tutorials required.
+      </p>
+    </div>
+
+    <!-- Q&A format — AEO snippet targets -->
+    <div class="space-y-6">
+      <div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">
+          Is FreeAIToolz completely free?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Yes. FreeAIToolz is 100% free with no premium tier, no subscription, and no word limits. Every tool on the platform is free to use indefinitely without creating an account.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">
+          Does FreeAIToolz store user data?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          No. All tools run directly in the browser. Text submitted to browser-based tools is never stored on FreeAIToolz servers. Text sent to AI-powered tools is processed through the AI provider API and immediately discarded — no logs, no storage.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">
+          What AI models power the FreeAIToolz tools?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          FreeAIToolz uses Claude Sonnet by Anthropic for heavy AI writing tasks like text humanization and paraphrasing, and GPT-4.1-mini by OpenAI for lighter tasks like meta description generation, email writing, and content analysis.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
-
 </BaseLayout>
