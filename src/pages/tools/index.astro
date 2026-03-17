@@ -1,98 +1,162 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { toolCategories } from '../../data/tools'
-import ToolSearch from '../../components/ToolSearch.astro'
-
-/* count total tools */
 
 let totalTools = 0
+toolCategories.forEach(cat => { totalTools += cat.tools.length })
 
-toolCategories.forEach(cat=>{
-  totalTools += cat.tools.length
-})
+const categoriesWithUrls = toolCategories.map(cat => ({
+  name: cat.name,
+  icon: cat.icon,
+  tools: cat.tools.map(tool => ({
+    name: tool.name,
+    description: tool.description,
+    href: '/tools/' + tool.slug
+  }))
+}))
 
 const schema = {
- "@context":"https://schema.org",
- "@type":"ItemList",
- "name":"FreeAIToolz Tool Directory",
- "numberOfItems": totalTools
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "FreeAIToolz Tool Directory",
+  "numberOfItems": totalTools
+}
+
+const categoryColors = {
+  'AI Writing Tools': 'from-violet-500 to-purple-600',
+  'SEO Tools': 'from-blue-500 to-cyan-500',
+  'Text Utilities': 'from-emerald-500 to-teal-500',
+  'Developer Tools': 'from-orange-500 to-amber-500',
+  'Business Creator Tools': 'from-pink-500 to-rose-500',
+  'AI Strategy Tools': 'from-indigo-500 to-blue-600',
+}
+
+const categoryBg = {
+  'AI Writing Tools': 'bg-violet-50 border-violet-100',
+  'SEO Tools': 'bg-blue-50 border-blue-100',
+  'Text Utilities': 'bg-emerald-50 border-emerald-100',
+  'Developer Tools': 'bg-orange-50 border-orange-100',
+  'Business Creator Tools': 'bg-pink-50 border-pink-100',
+  'AI Strategy Tools': 'bg-indigo-50 border-indigo-100',
+}
+
+const categoryAccent = {
+  'AI Writing Tools': 'text-violet-600',
+  'SEO Tools': 'text-blue-600',
+  'Text Utilities': 'text-emerald-600',
+  'Developer Tools': 'text-orange-600',
+  'Business Creator Tools': 'text-pink-600',
+  'AI Strategy Tools': 'text-indigo-600',
 }
 ---
 
 <BaseLayout
-title={`${totalTools}+ Free AI, SEO & Developer Tools | FreeAIToolz`}
-description={`Browse ${totalTools}+ powerful free online tools including AI writing tools, SEO tools, developer tools and utilities.`}
-schema={schema}
-breadcrumbs={[
-{label:"Home",url:"/"},
-{label:"Tools"}
-]}
+  title={`${totalTools}+ Free AI, SEO & Developer Tools | FreeAIToolz`}
+  description={`Browse ${totalTools}+ powerful free online tools including AI writing tools, SEO tools, developer tools and utilities.`}
+  schema={schema}
+  breadcrumbs={[
+    { label: "Home", url: "/" },
+    { label: "Tools" }
+  ]}
 >
 
-<section class="max-w-7xl mx-auto px-4 py-16">
+<!-- HERO -->
+<section class="relative overflow-hidden bg-gray-950 py-16 text-white">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
+    <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-600 rounded-full opacity-10 blur-3xl"></div>
+  </div>
+  <div class="relative max-w-4xl mx-auto px-4 text-center">
+    <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
+      <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+      {totalTools}+ Tools — Always Free
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+      All Free
+      <span class="bg-gradient-to-r from-blue-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent"> AI Tools</span>
+    </h1>
+    <p class="mt-4 text-gray-400 max-w-xl mx-auto text-lg">
+      Browse {totalTools}+ powerful AI tools, SEO tools and developer utilities — all completely free.
+    </p>
+  </div>
+</section>
 
-<div class="text-center mb-12">
-
-<h1 class="text-4xl font-bold text-gray-900 mb-4">
-All Free Tools
-</h1>
-
-<p class="text-gray-600 max-w-2xl mx-auto">
-Browse {totalTools}+ powerful AI tools, SEO tools and developer utilities — all completely free.
-</p>
-
-</div>
-<!-- ADD SEARCH HERE -->
-<ToolSearch />
+<!-- CATEGORY QUICK NAV -->
+<section class="bg-white border-b border-gray-100 py-4 sticky top-16 z-40 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
+      {categoriesWithUrls.map(cat => (
+        <a
+          href={'#' + cat.name.toLowerCase().replace(/ /g, '-')}
+          class="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-blue-600 bg-gray-100 hover:bg-blue-50 px-3 py-1.5 rounded-full transition"
+        >
+          <span>{cat.icon}</span>
+          {cat.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
 
 <!-- CATEGORY SECTIONS -->
+{categoriesWithUrls.map((cat, index) => (
+  <section
+    id={cat.name.toLowerCase().replace(/ /g, '-')}
+    class={`py-14 border-t ${categoryBg[cat.name] || 'bg-white border-gray-100'}`}
+  >
+    <div class="max-w-6xl mx-auto px-4">
 
-{toolCategories.map(category => (
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+          <div class={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[cat.name] || 'from-gray-500 to-gray-600'} flex items-center justify-center text-lg shadow-sm`}>
+            {cat.icon}
+          </div>
+          <div>
+            <h2 class="text-xl font-extrabold text-gray-900">{cat.name}</h2>
+            <p class="text-xs text-gray-500">{cat.tools.length} free tools</p>
+          </div>
+        </div>
+      </div>
 
-<div class="mb-14">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {cat.tools.map(tool => (
+          <a
+            href={tool.href}
+            class="group bg-white border border-gray-200 rounded-2xl p-5 hover:border-transparent hover:shadow-lg transition-all duration-200 flex flex-col"
+          >
+            <h3 class={`font-bold text-sm text-gray-900 group-hover:${categoryAccent[cat.name] || 'text-blue-600'} transition`}>
+              {tool.name}
+            </h3>
+            <p class="text-xs text-gray-500 mt-1.5 flex-1 leading-relaxed">{tool.description}</p>
+            <div class={`mt-3 text-xs font-semibold flex items-center gap-1 ${categoryAccent[cat.name] || 'text-blue-600'}`}>
+              Use Tool <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+            </div>
+          </a>
+        ))}
+      </div>
 
-<div class="flex items-center gap-3 mb-6">
-
-<span class="text-2xl">{category.icon}</span>
-
-<h2 class="text-2xl font-bold text-gray-900">
-{category.name}
-</h2>
-
-</div>
-
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
-{category.tools.map(tool => (
-
-<a
-href={`/tools/${tool.slug}`}
-class="border rounded-xl p-5 hover:shadow-md hover:border-blue-500 transition flex flex-col"
->
-
-<h3 class="text-lg font-semibold text-gray-900">
-{tool.name}
-</h3>
-
-<p class="text-sm text-gray-500 mt-2 flex-1">
-{tool.description}
-</p>
-
-<div class="mt-4 text-blue-600 font-semibold text-sm">
-Use Tool →
-</div>
-
-</a>
-
+    </div>
+  </section>
 ))}
 
-</div>
-
-</div>
-
-))}
-
+<!-- TRUST STRIP -->
+<section class="py-12 bg-gray-950 text-white">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+      {[
+        { icon: '🔒', label: 'Privacy First', desc: 'No data stored' },
+        { icon: '⚡', label: 'Instant Results', desc: 'Browser-based' },
+        { icon: '♾️', label: 'Unlimited Use', desc: 'No word limits' },
+        { icon: '✅', label: 'No Signup', desc: 'Use immediately' },
+      ].map(trust => (
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-2xl">{trust.icon}</span>
+          <p class="font-bold text-white text-sm">{trust.label}</p>
+          <p class="text-xs text-gray-500">{trust.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
 </section>
 
 </BaseLayout>
