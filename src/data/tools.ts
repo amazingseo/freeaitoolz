@@ -48,7 +48,6 @@ name: "Schema Markup Generator",
 slug: "schema-markup-generator",
 description: "Generate JSON-LD structured data"
 },
-
 {
 name: "Robots.txt Generator",
 slug: "robots-txt-generator",
