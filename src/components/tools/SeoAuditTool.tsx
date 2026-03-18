@@ -1,5 +1,10 @@
 import { useState, useCallback, useRef } from 'react';
 
+// ─── Read API key baked in by Astro/Vercel at build time ──────────────────────
+const ENV_API_KEY: string = typeof import.meta !== 'undefined'
+  ? ((import.meta as any).env?.PUBLIC_PAGESPEED_API_KEY ?? '')
+  : '';
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface AuditItem {
   id: string;
@@ -93,19 +98,14 @@ function ScoreRing({ score, label, size = 80 }: { score: number | null; label: s
   const circ = 2 * Math.PI * r;
   const dash = circ * (1 - pct);
   const color = scoreColor(score);
-
   return (
     <div style={{ textAlign: 'center' }}>
       <svg width={size} height={size} style={{ display: 'block', margin: '0 auto' }}>
         <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#1e293b" strokeWidth={8} />
-        <circle
-          cx={size/2} cy={size/2} r={r} fill="none"
-          stroke={color} strokeWidth={8}
-          strokeDasharray={circ} strokeDashoffset={dash}
-          strokeLinecap="round"
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={8}
+          strokeDasharray={circ} strokeDashoffset={dash} strokeLinecap="round"
           transform={`rotate(-90 ${size/2} ${size/2})`}
-          style={{ transition: 'stroke-dashoffset 1s ease' }}
-        />
+          style={{ transition: 'stroke-dashoffset 1s ease' }} />
         <text x={size/2} y={size/2 + 1} textAnchor="middle" dominantBaseline="middle"
           fill={color} fontSize={size === 80 ? 17 : 14} fontWeight="800" fontFamily="inherit">
           {score !== null ? Math.round(score * 100) : '—'}
@@ -136,7 +136,7 @@ function StatusIcon({ status }: { status: 'pass' | 'warn' | 'fail' | 'info' }) {
 }
 
 // ─── CWV Metric ───────────────────────────────────────────────────────────────
-function CWVMetric({ label, value, unit, status, field, lab }: { label: string; value: string; unit?: string; status: string; field?: string; lab?: string }) {
+function CWVMetric({ label, value, status, field, lab }: { label: string; value: string; status: string; field?: string; lab?: string }) {
   const color = cwvColor(status);
   const bg = status === 'FAST' ? '#0f2a1a' : status === 'AVERAGE' ? '#2a1f0a' : '#2a0f0f';
   return (
@@ -159,7 +159,6 @@ const SEO_CHECKS = [
   'meta-description', 'document-title', 'hreflang', 'canonical', 'robots-txt',
   'viewport', 'http-status-code', 'link-text', 'crawlable-anchors', 'is-crawlable', 'structured-data',
 ];
-
 const PERFORMANCE_OPPS = [
   'render-blocking-resources', 'unused-css-rules', 'unused-javascript',
   'uses-optimized-images', 'uses-webp-images', 'uses-responsive-images',
@@ -167,13 +166,11 @@ const PERFORMANCE_OPPS = [
   'unminified-css', 'unminified-javascript', 'uses-rel-preconnect',
   'server-response-time', 'redirects', 'uses-http2',
 ];
-
 const ACCESSIBILITY_CHECKS = [
   'image-alt', 'button-name', 'link-name', 'color-contrast', 'document-title',
   'frame-title', 'heading-order', 'label', 'list-item', 'listitem',
   'html-has-lang', 'html-lang-valid', 'input-image-alt', 'aria-required-attr',
 ];
-
 const BEST_PRACTICE_CHECKS = [
   'is-on-https', 'no-vulnerable-libraries', 'csp-xss', 'geolocation-on-start',
   'notification-on-start', 'uses-http2', 'errors-in-console', 'inspector-issues',
@@ -186,7 +183,6 @@ function AuditRow({ audit, showSavings = false }: { audit: AuditItem; showSaving
   const status = auditScore(audit);
   const savings = audit.details?.overallSavingsMs || audit.details?.overallSavingsBytes;
   const hasSavings = savings && savings > 0;
-
   return (
     <div style={{ borderBottom: '1px solid #1e293b' }}>
       <div
@@ -198,9 +194,7 @@ function AuditRow({ audit, showSavings = false }: { audit: AuditItem; showSaving
         <StatusIcon status={status} />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#e2e8f0', lineHeight: 1.3 }}>{audit.title}</div>
-          {audit.displayValue && (
-            <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.15rem' }}>{audit.displayValue}</div>
-          )}
+          {audit.displayValue && <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.15rem' }}>{audit.displayValue}</div>}
           {showSavings && hasSavings && (
             <div style={{ fontSize: '0.7rem', color: '#f59e0b', marginTop: '0.15rem', fontWeight: 600 }}>
               {audit.details?.overallSavingsMs ? `Save ~${formatMs(audit.details.overallSavingsMs)}` : ''}
@@ -230,15 +224,13 @@ function AuditRow({ audit, showSavings = false }: { audit: AuditItem; showSaving
 }
 
 // ─── Section ──────────────────────────────────────────────────────────────────
-function Section({ title, icon, items, showSavings = false, passCount, failCount }: {
+function Section({ title, icon, items, showSavings = false }: {
   title: string; icon: string; items: AuditItem[]; showSavings?: boolean;
-  passCount?: number; failCount?: number;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const failed = items.filter(a => auditScore(a) === 'fail');
   const warned = items.filter(a => auditScore(a) === 'warn');
   const passed = items.filter(a => auditScore(a) === 'pass');
-
   return (
     <div style={{ border: '1px solid #1e293b', borderRadius: '12px', overflow: 'hidden', marginBottom: '1rem' }}>
       <div
@@ -271,6 +263,8 @@ function Section({ title, icon, items, showSavings = false, passCount, failCount
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function SeoAuditTool() {
   const [url, setUrl] = useState('');
+  const [apiKeyInput, setApiKeyInput] = useState(ENV_API_KEY);
+  const [showApiKey, setShowApiKey] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState('');
   const [progress, setProgress] = useState(0);
@@ -315,18 +309,29 @@ export default function SeoAuditTool() {
     }, 1800);
 
     try {
-      const base = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(target)}&category=performance&category=seo&category=accessibility&category=best-practices`;
+      const keyParam = apiKeyInput.trim() ? `&key=${encodeURIComponent(apiKeyInput.trim())}` : '';
+      const base = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(target)}&category=performance&category=seo&category=accessibility&category=best-practices${keyParam}`;
 
       const [mobileRes, desktopRes] = await Promise.all([
         fetch(`${base}&strategy=mobile`, { signal: abortRef.current.signal }),
         fetch(`${base}&strategy=desktop`, { signal: abortRef.current.signal }),
       ]);
 
-      if (!mobileRes.ok || !desktopRes.ok) throw new Error('Failed to fetch audit data. Check the URL and try again.');
-
       const [mobileData, desktopData] = await Promise.all([mobileRes.json(), desktopRes.json()]);
 
-      if (mobileData.error) throw new Error(mobileData.error.message || 'Audit failed');
+      const apiErr = mobileData?.error || desktopData?.error;
+      if (apiErr) {
+        const code = apiErr.code;
+        const reason = apiErr.errors?.[0]?.reason || '';
+        if (code === 429 || reason === 'rateLimitExceeded' || reason === 'RATE_LIMIT_EXCEEDED') {
+          throw new Error('QUOTA_EXCEEDED');
+        }
+        if (code === 400) throw new Error('Invalid URL — make sure the site is publicly accessible.');
+        if (code === 403) throw new Error('API key is invalid or missing required permissions.');
+        throw new Error(apiErr.message || 'Audit failed. Please try again.');
+      }
+
+      if (!mobileData.lighthouseResult) throw new Error('No audit data returned. The URL may be unreachable or blocked.');
 
       clearInterval(stepTimer);
       setProgress(100);
@@ -342,7 +347,7 @@ export default function SeoAuditTool() {
       setLoading(false);
       if (err.name !== 'AbortError') setError(err.message || 'Audit failed. Please try again.');
     }
-  }, [url]);
+  }, [url, apiKeyInput]);
 
   const handleKey = (e: React.KeyboardEvent) => { if (e.key === 'Enter') runAudit(); };
 
@@ -351,12 +356,9 @@ export default function SeoAuditTool() {
   const audits = lhr?.audits || {};
   const cats = lhr?.categories || {};
 
-  // Core Web Vitals
   const cwvField = current?.loadingExperience?.metrics;
   const lcpField = cwvField?.LARGEST_CONTENTFUL_PAINT_MS;
-  const fidField = cwvField?.FIRST_INPUT_DELAY_MS;
   const clsField = cwvField?.CUMULATIVE_LAYOUT_SHIFT_SCORE;
-  const inpField = cwvField?.INTERACTION_TO_NEXT_PAINT;
 
   const lcpLab = audits['largest-contentful-paint'];
   const clsLab = audits['cumulative-layout-shift'];
@@ -365,7 +367,6 @@ export default function SeoAuditTool() {
   const siLab = audits['speed-index'];
   const ttiLab = audits['interactive'];
 
-  // Filter audit items
   const seoAudits = SEO_CHECKS.map(id => audits[id]).filter(Boolean);
   const perfOpps = PERFORMANCE_OPPS.map(id => audits[id]).filter(Boolean).filter(a => a.score !== null && a.score < 1);
   const a11yAudits = ACCESSIBILITY_CHECKS.map(id => audits[id]).filter(Boolean);
@@ -386,12 +387,8 @@ export default function SeoAuditTool() {
           <div style={{ flex: 1, minWidth: '240px', position: 'relative' }}>
             <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', color: '#475569' }}>🌐</span>
             <input
-              type="url"
-              value={url}
-              onChange={e => setUrl(e.target.value)}
-              onKeyDown={handleKey}
-              placeholder="https://yourwebsite.com"
-              disabled={loading}
+              type="url" value={url} onChange={e => setUrl(e.target.value)} onKeyDown={handleKey}
+              placeholder="https://yourwebsite.com" disabled={loading}
               style={{
                 width: '100%', boxSizing: 'border-box',
                 padding: '0.75rem 1rem 0.75rem 2.5rem',
@@ -404,23 +401,21 @@ export default function SeoAuditTool() {
               onBlur={e => (e.target.style.borderColor = '#1e293b')}
             />
           </div>
-          <button
-            onClick={runAudit}
-            disabled={loading}
-            style={{
-              padding: '0.75rem 1.75rem', borderRadius: '10px', border: 'none',
-              background: loading ? '#1e293b' : 'linear-gradient(135deg, #3b82f6, #6366f1)',
-              color: '#fff', fontSize: '0.88rem', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'all 0.2s', whiteSpace: 'nowrap',
-              boxShadow: loading ? 'none' : '0 4px 15px rgba(59,130,246,0.4)',
-            }}
-          >
+          <button onClick={runAudit} disabled={loading} style={{
+            padding: '0.75rem 1.75rem', borderRadius: '10px', border: 'none',
+            background: loading ? '#1e293b' : 'linear-gradient(135deg, #3b82f6, #6366f1)',
+            color: '#fff', fontSize: '0.88rem', fontWeight: 700,
+            cursor: loading ? 'not-allowed' : 'pointer',
+            transition: 'all 0.2s', whiteSpace: 'nowrap',
+            boxShadow: loading ? 'none' : '0 4px 15px rgba(59,130,246,0.4)',
+          }}>
             {loading ? '⏳ Auditing...' : '⚡ Run Audit'}
           </button>
           {data && (
-            <button onClick={() => { setData(null); setUrl(''); }} style={{ padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #1e293b', background: 'transparent', color: '#64748b', fontSize: '0.8rem', cursor: 'pointer' }}>
-              ✕ Clear
-            </button>
+            <button onClick={() => { setData(null); setUrl(''); }} style={{
+              padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #1e293b',
+              background: 'transparent', color: '#64748b', fontSize: '0.8rem', cursor: 'pointer',
+            }}>✕ Clear</button>
           )}
         </div>
 
@@ -434,25 +429,68 @@ export default function SeoAuditTool() {
             <div style={{ height: '4px', background: '#1e293b', borderRadius: '2px', overflow: 'hidden' }}>
               <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, #3b82f6, #6366f1)', borderRadius: '2px', transition: 'width 0.6s ease' }} />
             </div>
-            <div style={{ marginTop: '0.75rem', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
-              {['Performance', 'SEO', 'Accessibility', 'Best Practices'].map(s => (
-                <div key={s} style={{ padding: '0.5rem', background: '#0a1628', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#1e293b', margin: '0 auto 0.25rem', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
-                  </div>
-                  <div style={{ fontSize: '0.65rem', color: '#475569' }}>{s}</div>
-                </div>
-              ))}
-            </div>
           </div>
         )}
 
-        {/* Error */}
-        {error && (
+        {/* API Key input — only shown when env key NOT set */}
+        {!ENV_API_KEY && (
+          <div style={{ marginTop: '0.75rem' }}>
+            <button onClick={() => setShowApiKey(p => !p)} style={{
+              fontSize: '0.72rem', color: '#475569', background: 'none',
+              border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline',
+            }}>
+              {showApiKey ? '▲ Hide' : '▼ Add free Google API key (fixes quota errors)'}
+            </button>
+            {apiKeyInput && <span style={{ fontSize: '0.68rem', color: '#22c55e', marginLeft: '0.5rem' }}>✓ Key set</span>}
+          </div>
+        )}
+        {!ENV_API_KEY && showApiKey && (
+          <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <input
+              type="text" value={apiKeyInput} onChange={e => setApiKeyInput(e.target.value)}
+              placeholder="AIzaSy... paste your free API key here"
+              style={{
+                flex: 1, minWidth: '260px', padding: '0.5rem 0.75rem',
+                background: '#0a1628', border: '1px solid #1e293b',
+                borderRadius: '8px', color: '#e2e8f0', fontSize: '0.78rem',
+                outline: 'none', fontFamily: 'monospace',
+              }}
+              onFocus={e => (e.target.style.borderColor = '#3b82f6')}
+              onBlur={e => (e.target.style.borderColor = '#1e293b')}
+            />
+            <a href="https://developers.google.com/speed/docs/insights/v5/get-started#key"
+              target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: '0.72rem', color: '#3b82f6', alignSelf: 'center', whiteSpace: 'nowrap' }}>
+              Get free key →
+            </a>
+          </div>
+        )}
+
+        {/* Error display */}
+        {error === 'QUOTA_EXCEEDED' ? (
+          <div style={{ marginTop: '0.75rem', padding: '1rem', background: '#1a1200', border: '1px solid #f59e0b', borderRadius: '10px' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f59e0b', marginBottom: '0.5rem' }}>
+              ⚠️ Google API Daily Quota Exceeded
+            </div>
+            <p style={{ fontSize: '0.78rem', color: '#92400e', margin: '0 0 0.75rem', lineHeight: 1.5 }}>
+              The shared anonymous Google PageSpeed quota has been exhausted for today. This resets at midnight UTC.
+              To fix immediately, add a free personal API key:
+            </p>
+            <ol style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.75rem', color: '#78350f', lineHeight: 1.8 }}>
+              <li>Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" style={{ color: '#f59e0b' }}>console.cloud.google.com/apis/credentials</a></li>
+              <li>Click <b>Create Credentials → API Key</b></li>
+              <li>Enable the <b>PageSpeed Insights API</b> in your project</li>
+              <li>Add it as <code style={{ background: '#2a1800', padding: '1px 4px', borderRadius: '3px' }}>PUBLIC_PAGESPEED_API_KEY</code> in Vercel env vars and redeploy</li>
+            </ol>
+            <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', color: '#78350f' }}>
+              💡 Your own free key gives you 25,000 audits per day at zero cost.
+            </div>
+          </div>
+        ) : error ? (
           <div style={{ marginTop: '0.75rem', padding: '0.75rem 1rem', background: '#2a0f0f', border: '1px solid #dc2626', borderRadius: '8px', color: '#f87171', fontSize: '0.8rem' }}>
             ⚠️ {error}
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* ── Empty State ── */}
@@ -463,7 +501,7 @@ export default function SeoAuditTool() {
           <div style={{ fontSize: '0.82rem', color: '#475569', maxWidth: '500px', margin: '0 auto 1.5rem', lineHeight: 1.6 }}>
             Enter any URL above to get a comprehensive SEO, performance, accessibility, and best practices report — the same data Google uses to rank your site.
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', maxWidth: '480px', margin: '0 auto', textAlign: 'left' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem', maxWidth: '480px', margin: '0 auto', textAlign: 'left' }}>
             {[
               { icon: '📊', t: 'Performance Score', d: 'LCP, CLS, FID, TBT, FCP, TTI' },
               { icon: '🔍', t: 'SEO Checks', d: 'Title, meta, canonical, robots, schema' },
@@ -478,7 +516,7 @@ export default function SeoAuditTool() {
             ))}
           </div>
           <p style={{ marginTop: '1.25rem', fontSize: '0.73rem', color: '#334155' }}>
-            Powered by Google PageSpeed Insights API · No API key required · 100% free
+            Powered by Google PageSpeed Insights API · 100% free
           </p>
         </div>
       )}
@@ -533,10 +571,9 @@ export default function SeoAuditTool() {
           {/* Tab content */}
           <div style={{ padding: '1.25rem' }}>
 
-            {/* ── Overview Tab ── */}
+            {/* Overview Tab */}
             {activeTab === 'overview' && (
               <div>
-                {/* Score rings */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
                   {[
                     { key: 'performance', label: 'Performance' },
@@ -550,20 +587,30 @@ export default function SeoAuditTool() {
                   ))}
                 </div>
 
-                {/* Core Web Vitals */}
                 <div style={{ marginBottom: '1.25rem' }}>
                   <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>Core Web Vitals</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '0.65rem' }}>
-                    <CWVMetric label="Largest Contentful Paint" value={lcpLab?.displayValue || '—'} status={lcpField?.category || (lcpLab?.score !== null && lcpLab?.score !== undefined ? (lcpLab.score >= 0.9 ? 'FAST' : lcpLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW')} field={lcpField ? `${lcpField.percentile}ms` : undefined} lab={lcpLab?.displayValue} />
-                    <CWVMetric label="Cumulative Layout Shift" value={clsLab?.displayValue || '—'} status={clsField?.category || (clsLab?.score !== null && clsLab?.score !== undefined ? (clsLab.score >= 0.9 ? 'FAST' : clsLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW')} lab={clsLab?.displayValue} />
-                    <CWVMetric label="Total Blocking Time" value={tbtLab?.displayValue || '—'} status={tbtLab?.score !== null && tbtLab?.score !== undefined ? (tbtLab.score >= 0.9 ? 'FAST' : tbtLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'} lab={tbtLab?.displayValue} />
-                    <CWVMetric label="First Contentful Paint" value={fcpLab?.displayValue || '—'} status={fcpLab?.score !== null && fcpLab?.score !== undefined ? (fcpLab.score >= 0.9 ? 'FAST' : fcpLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'} lab={fcpLab?.displayValue} />
-                    <CWVMetric label="Speed Index" value={siLab?.displayValue || '—'} status={siLab?.score !== null && siLab?.score !== undefined ? (siLab.score >= 0.9 ? 'FAST' : siLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'} lab={siLab?.displayValue} />
-                    <CWVMetric label="Time to Interactive" value={ttiLab?.displayValue || '—'} status={ttiLab?.score !== null && ttiLab?.score !== undefined ? (ttiLab.score >= 0.9 ? 'FAST' : ttiLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'} lab={ttiLab?.displayValue} />
+                    <CWVMetric label="Largest Contentful Paint" value={lcpLab?.displayValue || '—'}
+                      status={lcpField?.category || (lcpLab?.score != null ? (lcpLab.score >= 0.9 ? 'FAST' : lcpLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW')}
+                      field={lcpField ? `${lcpField.percentile}ms` : undefined} lab={lcpLab?.displayValue} />
+                    <CWVMetric label="Cumulative Layout Shift" value={clsLab?.displayValue || '—'}
+                      status={clsField?.category || (clsLab?.score != null ? (clsLab.score >= 0.9 ? 'FAST' : clsLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW')}
+                      lab={clsLab?.displayValue} />
+                    <CWVMetric label="Total Blocking Time" value={tbtLab?.displayValue || '—'}
+                      status={tbtLab?.score != null ? (tbtLab.score >= 0.9 ? 'FAST' : tbtLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'}
+                      lab={tbtLab?.displayValue} />
+                    <CWVMetric label="First Contentful Paint" value={fcpLab?.displayValue || '—'}
+                      status={fcpLab?.score != null ? (fcpLab.score >= 0.9 ? 'FAST' : fcpLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'}
+                      lab={fcpLab?.displayValue} />
+                    <CWVMetric label="Speed Index" value={siLab?.displayValue || '—'}
+                      status={siLab?.score != null ? (siLab.score >= 0.9 ? 'FAST' : siLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'}
+                      lab={siLab?.displayValue} />
+                    <CWVMetric label="Time to Interactive" value={ttiLab?.displayValue || '—'}
+                      status={ttiLab?.score != null ? (ttiLab.score >= 0.9 ? 'FAST' : ttiLab.score >= 0.5 ? 'AVERAGE' : 'SLOW') : 'SLOW'}
+                      lab={ttiLab?.displayValue} />
                   </div>
                 </div>
 
-                {/* Quick issues summary */}
                 <div style={{ background: '#060d1a', border: '1px solid #1e293b', borderRadius: '12px', overflow: 'hidden' }}>
                   <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #1e293b' }}>
                     <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#e2e8f0' }}>Critical Issues to Fix</span>
@@ -586,35 +633,25 @@ export default function SeoAuditTool() {
               </div>
             )}
 
-            {/* ── SEO Tab ── */}
-            {activeTab === 'seo' && (
-              <Section title="SEO Checks" icon="🔍" items={seoAudits} />
-            )}
+            {activeTab === 'seo' && <Section title="SEO Checks" icon="🔍" items={seoAudits} />}
 
-            {/* ── Performance Tab ── */}
             {activeTab === 'performance' && (
               <div>
                 <Section title="Performance Opportunities" icon="⚡" items={perfOpps} showSavings />
-                <Section title="All Performance Diagnostics" icon="🔧" items={[
-                  ...PERFORMANCE_OPPS.map(id => audits[id]).filter(Boolean).filter(a => auditScore(a) !== 'fail'),
-                ]} />
+                <Section title="All Performance Diagnostics" icon="🔧" items={
+                  PERFORMANCE_OPPS.map(id => audits[id]).filter(Boolean).filter(a => auditScore(a) !== 'fail')
+                } />
               </div>
             )}
 
-            {/* ── Accessibility Tab ── */}
-            {activeTab === 'accessibility' && (
-              <Section title="Accessibility Checks" icon="♿" items={a11yAudits} />
-            )}
+            {activeTab === 'accessibility' && <Section title="Accessibility Checks" icon="♿" items={a11yAudits} />}
 
-            {/* ── Best Practices Tab ── */}
-            {activeTab === 'bestpractices' && (
-              <Section title="Best Practices" icon="✔️" items={bpAudits} />
-            )}
+            {activeTab === 'bestpractices' && <Section title="Best Practices" icon="✔️" items={bpAudits} />}
           </div>
 
           {/* Footer */}
           <div style={{ padding: '0.75rem 1.25rem', borderTop: '1px solid #1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.68rem', color: '#334155' }}>Data from Google PageSpeed Insights (Lighthouse v12) · {device} · {fetchTime}</span>
+            <span style={{ fontSize: '0.68rem', color: '#334155' }}>Google PageSpeed Insights (Lighthouse v12) · {device} · {fetchTime}</span>
             <button onClick={runAudit} style={{ padding: '4px 12px', border: '1px solid #1e293b', borderRadius: '6px', background: 'transparent', color: '#64748b', fontSize: '0.72rem', cursor: 'pointer' }}>
               🔄 Re-run Audit
             </button>
