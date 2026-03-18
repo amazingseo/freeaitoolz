@@ -91,7 +91,12 @@ description: "Convert text into different case styles"
  slug: "character-counter", 
  description: "Count characters, words, sentences and readability with social media limits" 
 },
- 
+
+ { name: "Text Compare", 
+slug: "text-compare", 
+description: "Compare two texts side by side and highlight every difference instantly" 
+},
+
 {
 name: "Lorem Ipsum Generator",
 slug: "lorem-ipsum-generator",
