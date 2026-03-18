@@ -40,6 +40,11 @@ name: "SEO Tools",
 icon: "🔍",
 tools: [
 
+{ name: "SEO Audit Tool", 
+slug: "seo-audit-tool", 
+description: "Free real-time SEO audit powered by Google Lighthouse — check Core Web Vitals, SEO score and 40+ ranking factors" 
+},
+
 {
 name: "Meta Description Generator",
 slug: "meta-description-generator",
@@ -91,8 +96,8 @@ description: "Convert text into different case styles"
  slug: "character-counter", 
  description: "Count characters, words, sentences and readability with social media limits" 
 },
-
- { name: "Text Compare", 
+ 
+{ name: "Text Compare", 
 slug: "text-compare", 
 description: "Compare two texts side by side and highlight every difference instantly" 
 },
