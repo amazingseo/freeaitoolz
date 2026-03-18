@@ -1,0 +1,160 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import CharacterCounter from '../../components/tools/CharacterCounter';
+
+const faqs = [
+  {
+    question: "What is a character counter?",
+    answer: "A character counter is a tool that counts the total number of characters in a piece of text, including letters, numbers, spaces, and punctuation. It also provides related metrics such as word count, sentence count, reading time, and keyword frequency. Character counters are essential for writers, SEO professionals, social media managers, and developers who need to stay within platform-specific character limits."
+  },
+  {
+    question: "What is the character limit for Twitter/X?",
+    answer: "Twitter/X allows a maximum of 280 characters per post. Our character counter tracks this limit in real time and shows you exactly how many characters you have remaining. Instagram captions allow up to 2,200 characters, LinkedIn posts up to 3,000 characters, SMS messages up to 160 characters, and Google meta descriptions up to 155 characters."
+  },
+  {
+    question: "How many characters should a meta description be?",
+    answer: "A meta description should be between 120 and 155 characters for optimal display in Google search results. Google typically truncates meta descriptions beyond 155–160 characters, cutting off your message mid-sentence. Our character counter includes a built-in meta description limit indicator that turns red when you exceed 155 characters."
+  },
+  {
+    question: "What is the difference between characters with spaces and without spaces?",
+    answer: "Characters with spaces counts every character in your text including blank spaces between words. Characters without spaces counts only non-whitespace characters — letters, numbers, and punctuation. Twitter's 280-character limit counts spaces as characters. Some academic word processors and contract systems count characters without spaces. Our tool displays both counts simultaneously."
+  },
+  {
+    question: "What is a Flesch Reading Ease score?",
+    answer: "The Flesch Reading Ease score is a readability formula that measures how easy text is to understand. Scores range from 0 to 100. Scores above 70 are considered easy to read (suitable for general audiences). Scores between 60 and 70 are standard (8th to 9th grade level). Scores below 50 are difficult (college level or higher). The formula considers average sentence length and average syllables per word. SEO professionals aim for scores above 60 for web content."
+  },
+  {
+    question: "How is reading time calculated?",
+    answer: "Reading time is calculated by dividing your word count by the average adult reading speed of 238 words per minute. Speaking time uses 130 words per minute, which is the average conversational speaking pace. A 500-word article takes approximately 2 minutes to read and 4 minutes to present aloud. A 1,000-word article takes 4 minutes to read and 8 minutes to speak."
+  },
+  {
+    question: "Is this character counter free and private?",
+    answer: "Yes. This character counter is 100% free with no signup, no word limits, and no usage caps. All processing happens entirely in your browser using JavaScript — your text is never sent to any server, never stored, and never logged. This makes it safe to use with confidential documents, client content, and sensitive data."
+  },
+  {
+    question: "What does keyword density mean in a character counter?",
+    answer: "Keyword density shows how frequently specific words or phrases appear in your text, expressed as a percentage of total words. For SEO, keyword density between 1% and 3% for your primary keyword is generally recommended. Over-stuffing keywords (above 4–5%) can trigger Google spam filters. Our keyword frequency tool shows 1-word, 2-word, and 3-word phrase frequencies with the option to exclude common stop words."
+  },
+];
+---
+
+<ToolLayout
+  title="Free Character Counter — Count Characters, Words & More Online"
+  description="Free online character counter that counts characters, words, sentences, and paragraphs in real time. Includes social media limits, keyword density, readability scores, and speaking time. No signup required."
+  keywords="character counter, character count, count characters online, character counter online, word character counter, characters with spaces, characters without spaces, meta description character count, twitter character counter, free character counter"
+  toolName="Free Character Counter"
+  toolCategory="Text Utility"
+  faqs={faqs}
+>
+
+  <!-- Tool Interface -->
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <CharacterCounter client:visible />
+  </div>
+
+  <!-- SEO + AEO + GEO Content -->
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article>
+
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        Free Character Counter — Count Characters, Words & Readability Instantly
+      </h2>
+      <p class="text-gray-600 leading-relaxed mb-6">
+        Our free character counter gives you real-time statistics on every piece of text you write — characters with and without spaces, word count, sentence count, paragraph count, reading time, speaking time, keyword density, and Flesch readability score. Unlike basic counters, this tool includes a full social media limits panel so you can see exactly how your text fits across Twitter/X, Instagram, LinkedIn, SMS, and 9 other platforms simultaneously. No signup. No data stored. Works in any browser.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Why Character Count Matters for SEO and Social Media
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Every digital platform has character limits that directly affect whether your content gets seen. Google displays meta descriptions up to 155 characters — text beyond that is cut off with an ellipsis in search results, reducing click-through rates. Title tags display up to 60 characters on desktop. Twitter/X allows 280 characters per post, while SMS messages cap at 160 characters. LinkedIn headlines allow 220 characters, and Instagram bios stop at 150. Writing precisely within these limits is one of the most undervalued SEO skills. Our character counter tracks all 13 major platform limits in real time on a single screen, with color-coded indicators showing green (safe), yellow (approaching limit), and red (over limit).
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        How to Use the Social Media Character Limits Panel
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Switch to the "Social Limits" tab to see your text measured against every major platform simultaneously. As you type, all 13 platform bars update in real time. Each card shows your character count, the platform's limit, how many characters remain, and a progress bar. Use the quick-preset buttons (Twitter 280, SMS 160, Meta 155, Title 60) to instantly set a custom limit counter with a visual progress bar at the top of the editor. This workflow is particularly useful for social media managers and SEO specialists who write content for multiple platforms.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        What Is a Good Flesch Reading Ease Score for Web Content?
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The Flesch Reading Ease score measures how easy your text is to understand using two variables: average sentence length and average syllables per word. For web content and blog posts, aim for a score between 60 and 70 — this corresponds to an 8th to 9th grade reading level that is accessible to the widest audience. For landing pages and marketing copy, target 70–80 (fairly easy). Academic papers and technical documentation typically score 30–50. Google has confirmed that content clarity is a user experience signal, and pages with better readability tend to have lower bounce rates and longer session durations — both of which positively affect rankings. Our readability tab calculates your Flesch score in real time and shows exactly where your text falls on the 0–100 scale.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Keyword Density Analysis — What to Look For
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The keyword density tab shows the 15 most frequent words and phrases in your text, displayed as both raw counts and percentages. Use the 1-word, 2-word, and 3-word phrase filters to identify primary keywords, secondary keywords, and topic clusters. For SEO, your primary keyword should appear at a density of 1% to 2.5% — frequent enough for relevance signals without triggering keyword stuffing penalties. Enable "exclude stop words" to filter out common filler words (the, and, or, is) and focus on meaningful keywords. This feature is particularly valuable when optimizing existing content for target keywords before publishing. To generate optimized meta descriptions for your content, try our <a href="/tools/meta-description-generator" class="text-blue-600 hover:underline">free Meta Description Generator</a>.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Character Count vs Word Count — Which Should You Track?
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Both metrics serve different purposes. Character count matters most for platform-specific limits (Twitter, SMS, meta tags) and contract-based writing where payment is calculated per character. Word count matters most for SEO content length targets, academic submissions, and publishing requirements. Blog posts targeting competitive keywords typically need 1,500 to 2,500 words. Pillar pages and comprehensive guides perform best at 3,000 to 5,000 words. Landing pages work well between 500 and 1,200 words. Google considers content under 300 words as thin content — a signal that can suppress rankings. Our counter tracks both simultaneously so you never have to choose. For more granular text analysis tools, try our <a href="/tools/word-counter" class="text-blue-600 hover:underline">free Word Counter</a> which includes additional linguistic metrics.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Who Uses a Character Counter?
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Content writers use character counters to hit SEO word count targets and ensure meta descriptions stay within Google's display limits. Social media managers track post lengths across multiple platforms before publishing. SEO specialists check title tag and meta description lengths as part of on-page optimization audits. Email marketers verify subject lines stay under 60 characters to avoid mobile truncation. Students check essay and assignment word counts. Developers verify API payload sizes. Translators count source and target text lengths. Copywriters optimize ad headlines for character limit compliance. Our tool is built for all of these workflows with a clean interface that handles each use case.
+      </p>
+
+      <!-- Quick Facts for AEO -->
+      <div class="mt-10 p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <h3 class="text-base font-bold text-gray-900 mb-4">Quick Reference: Platform Character Limits</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {[
+            { platform: 'Twitter/X Post', limit: '280 characters' },
+            { platform: 'SMS Message', limit: '160 characters' },
+            { platform: 'Google Meta Description', limit: '155 characters' },
+            { platform: 'Google Title Tag', limit: '60 characters' },
+            { platform: 'LinkedIn Headline', limit: '220 characters' },
+            { platform: 'LinkedIn Post', limit: '3,000 characters' },
+            { platform: 'Instagram Bio', limit: '150 characters' },
+            { platform: 'Instagram Caption', limit: '2,200 characters' },
+            { platform: 'YouTube Title', limit: '100 characters' },
+            { platform: 'YouTube Description', limit: '5,000 characters' },
+            { platform: 'Pinterest Description', limit: '500 characters' },
+            { platform: 'Reddit Post Title', limit: '300 characters' },
+          ].map(item => (
+            <div class="flex justify-between items-center text-xs py-1.5 border-b border-gray-100">
+              <span class="text-gray-600">{item.platform}</span>
+              <span class="font-bold text-gray-900">{item.limit}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Related Tools -->
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Related Free Tools</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/word-counter" class="tool-card group">
+          <span class="text-2xl">📝</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Word Counter</h4>
+          <p class="text-sm text-gray-600 mt-1">Count words with advanced linguistic metrics</p>
+        </a>
+        <a href="/tools/meta-description-generator" class="tool-card group">
+          <span class="text-2xl">🏷️</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Meta Description Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Generate SEO-optimized meta descriptions</p>
+        </a>
+        <a href="/tools/ai-paraphraser" class="tool-card group">
+          <span class="text-2xl">🔄</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">AI Paraphraser</h4>
+          <p class="text-sm text-gray-600 mt-1">Rewrite text to hit word count targets</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</ToolLayout>
