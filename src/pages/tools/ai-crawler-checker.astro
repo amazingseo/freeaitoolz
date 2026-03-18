@@ -1,0 +1,167 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import AiCrawlerChecker from '../../components/tools/AiCrawlerChecker';
+
+const faqs = [
+  {
+    question: "What is an AI crawler checker?",
+    answer: "An AI crawler checker analyzes a website's robots.txt file and reports which AI platform crawlers are allowed or blocked. It checks for bot user agents from ChatGPT (GPTBot, OAI-SearchBot), Claude (ClaudeBot, Claude-SearchBot), Perplexity (PerplexityBot), Google Gemini (Google-Extended), Meta AI, Microsoft Copilot, DeepSeek, and others. The result tells you whether AI search engines can discover, index, and cite your content."
+  },
+  {
+    question: "Why is it important to allow AI crawlers?",
+    answer: "AI platforms like ChatGPT, Perplexity, and Claude are increasingly used as the first point of research for millions of users. If your robots.txt blocks these crawlers, your content will not appear in AI-generated answers, citations, or search results — even if your Google SEO is perfect. As AI search traffic grows, being invisible to AI platforms means losing a major and growing referral channel."
+  },
+  {
+    question: "What is the difference between a training crawler and a search crawler?",
+    answer: "Training crawlers (GPTBot, Google-Extended, ClaudeBot) collect data to train AI models. You can block these without affecting your visibility in AI search results. Search crawlers (OAI-SearchBot, PerplexityBot, Claude-SearchBot) index your content so it can appear as citations in AI answers. Blocking search crawlers removes you from AI search results. User-fetch crawlers (ChatGPT-User, Perplexity-User) are triggered by real users asking AI to visit a specific URL — blocking these prevents real-time browsing of your content."
+  },
+  {
+    question: "Can I block GPTBot without affecting ChatGPT Search?",
+    answer: "Yes. GPTBot is OpenAI's training data crawler — blocking it prevents your content from being used to train future GPT models. OAI-SearchBot is a separate crawler used for ChatGPT Search citations. You can safely block GPTBot and still appear in ChatGPT Search results, as long as OAI-SearchBot is allowed."
+  },
+  {
+    question: "Does Google-Extended affect Google Search rankings?",
+    answer: "No. Google-Extended is a separate crawler used only for Gemini AI training and Google AI features. Blocking Google-Extended has zero effect on Googlebot, which handles regular Search indexing. You can safely block Google-Extended if you do not want your content used for Gemini model training, and your Google Search rankings will be completely unaffected."
+  },
+  {
+    question: "What does Not Mentioned mean in robots.txt?",
+    answer: "Not Mentioned means the robots.txt file has no specific rule for that bot's user agent. In this case, the bot inherits the behavior from the wildcard User-agent: * rule. If the wildcard allows all crawlers, the bot is effectively allowed. If the wildcard blocks all crawlers with Disallow: /, the bot is effectively blocked. Our checker shows the inherited status clearly."
+  },
+  {
+    question: "Which AI crawlers respect robots.txt?",
+    answer: "Most major AI platforms officially respect robots.txt: OpenAI (GPTBot, OAI-SearchBot), Anthropic (ClaudeBot), Google (Google-Extended, Gemini crawlers), Apple (Applebot-Extended), Amazon (Amazonbot), DuckDuckGo (DuckAssistBot), and Common Crawl (CCBot). Perplexity-User (the user-triggered variant) and some smaller crawlers are reported to sometimes ignore robots.txt. For enforcement beyond robots.txt, Cloudflare Bot Management and similar WAF tools can be used."
+  },
+  {
+    question: "How do I allow AI search crawlers in robots.txt?",
+    answer: "To allow all AI search crawlers, add explicit Allow rules for each bot user agent. For example: User-agent: OAI-SearchBot followed by Allow: / allows ChatGPT Search. User-agent: PerplexityBot followed by Allow: / allows Perplexity. User-agent: ClaudeBot followed by Allow: / allows Claude citations. Place these rules before any broad Disallow directives. Use our Fix Generator button after running a check to get a ready-to-paste robots.txt snippet."
+  },
+];
+---
+
+<ToolLayout
+  title="Free AI Crawler Checker — Is Your Site Visible to ChatGPT, Claude & Perplexity?"
+  description="Check which AI platforms can crawl your website. Instantly analyze robots.txt for GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Meta AI and 20+ more AI crawlers. Free, no signup."
+  keywords="ai crawler checker, robots txt ai bots, gptbot checker, claudebot robots txt, perplexitybot checker, ai seo checker, is my site visible to chatgpt, block ai crawlers, ai search visibility, geo seo tool"
+  toolName="AI Crawler Checker"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+
+  <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
+    <AiCrawlerChecker client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article>
+
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        Free AI Crawler Checker — Analyze Your robots.txt for AI Search Visibility
+      </h2>
+      <p class="text-gray-600 leading-relaxed mb-6">
+        Our free AI crawler checker fetches your live robots.txt file and analyzes it against 25 AI bot user agents across 10 platforms — ChatGPT, Claude, Perplexity, Google Gemini, Meta AI, Microsoft Copilot, DeepSeek, Apple Intelligence, Amazon Alexa, and Common Crawl. For each crawler it shows whether it is explicitly allowed, explicitly blocked, inheriting from wildcard rules, or not mentioned at all. The built-in Fix Generator produces a ready-to-paste robots.txt snippet to restore access to any AI search crawlers that are accidentally blocked.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Why AI Crawler Access Is the New SEO Blind Spot
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Millions of websites are accidentally invisible to AI search engines — and Google Analytics will never show you why. When ChatGPT Search, Perplexity, or Claude answers a question, it pulls citations from pages that its crawlers have indexed. If your robots.txt blocks OAI-SearchBot, PerplexityBot, or ClaudeBot, your content never enters those citation pools — even if your Google SEO is excellent. AI search traffic grew over 6,900% year-over-year in 2025 according to HUMAN Security telemetry. Sites that are not indexed by AI platforms are already losing meaningful referral traffic they cannot even see.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Training Crawlers vs Search Crawlers — A Critical Distinction
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The single most important thing to understand about AI bots is that training crawlers and search crawlers are completely separate. GPTBot collects data to train future GPT models — blocking it has no effect on whether your content appears in ChatGPT Search results. OAI-SearchBot is what powers ChatGPT Search citations — blocking this removes you from AI search. Similarly, Google-Extended trains Gemini but has zero effect on Google Search rankings. Many website owners who blocked AI crawlers in 2023-2024 to protect their training data privacy unknowingly also blocked the search and citation crawlers, removing themselves from AI search results entirely. Our checker shows both categories clearly so you can make informed decisions.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        How to Read Your AI Crawler Check Results
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Results are grouped by platform and show one of five statuses. Explicitly Allowed means a specific User-agent rule grants access. Explicitly Blocked means a specific Disallow rule blocks the crawler. Allowed via wildcard means no specific rule exists but the wildcard User-agent: * rule allows crawling. Blocked via wildcard means the wildcard rule blocks this crawler — common on sites that used a blanket Disallow: / for all bots. Not Mentioned means no rule applies and the default (allow) is in effect. The AI Score at the top summarizes overall AI search visibility — a score of 100 means all search crawlers can access your content.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        The Fix Generator — One-Click robots.txt Repair
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        After running a check, click Fix Generator to see a ready-to-paste robots.txt block that grants access to all AI search and citation crawlers that are currently blocked. The snippet is organized by platform with comments explaining each rule. Paste it into your robots.txt file above any broad Disallow directives. After updating, re-run this checker to confirm all search crawlers show as Allowed. For sites using WordPress, the robots.txt is typically managed through your SEO plugin such as Yoast or RankMath. For static sites, edit the robots.txt file at the root of your domain. After fixing your robots.txt, also run our <a href="/tools/seo-audit-tool" class="text-blue-600 hover:underline">SEO Audit Tool</a> to check your overall on-page SEO health.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Which AI Crawlers Should You Allow vs Block?
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The strategic approach depends on your goals. If you want maximum AI search visibility and referral traffic, allow all search and citation crawlers: OAI-SearchBot, PerplexityBot, ClaudeBot, Claude-SearchBot, Bingbot, and DuckAssistBot. You can simultaneously block training-only crawlers if you want to opt out of AI model training: GPTBot, Google-Extended, Applebot-Extended, Amazonbot, and CCBot. If you want to completely opt out of all AI systems for copyright or competitive reasons, block all bot categories. Our checker shows the canBlockSafely status for each crawler — if it is marked as safe to block, doing so will not affect your AI search citations.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Does Blocking AI Crawlers Protect Your Copyright?
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Robots.txt is increasingly recognized as a valid machine-readable opt-out mechanism. The EU AI Act (2024) requires AI providers to document training data sources and respect copyright opt-outs. The EU Copyright Directive Article 4 establishes that text and data mining for commercial AI requires an opt-out mechanism — robots.txt is the de facto standard. OpenAI, Anthropic, and Google have all publicly committed to respecting robots.txt directives. Blocking training crawlers like GPTBot is the primary mechanism to prevent your content from entering future AI training datasets. However, robots.txt is a voluntary protocol — for stronger protection, combine it with Cloudflare Bot Management or similar WAF enforcement. After setting up your robots.txt correctly, use our <a href="/tools/robots-txt-generator" class="text-blue-600 hover:underline">Robots.txt Generator</a> if you need to build one from scratch.
+      </p>
+
+      <!-- AEO Quick Reference -->
+      <div class="mt-10 p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <h3 class="text-base font-bold text-gray-900 mb-4">AI Crawler Quick Reference — Key Bot User Agents</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-200">
+                <th class="text-left py-2 pr-3 font-semibold text-gray-500">Platform</th>
+                <th class="text-left py-2 pr-3 font-semibold text-gray-500">Bot Agent</th>
+                <th class="text-left py-2 pr-3 font-semibold text-gray-500">Purpose</th>
+                <th class="text-left py-2 font-semibold text-gray-500">Safe to Block?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['ChatGPT', 'OAI-SearchBot', 'ChatGPT Search citations', '❌ No — removes from ChatGPT Search'],
+                ['ChatGPT', 'GPTBot', 'Model training', '✅ Yes — no effect on ChatGPT Search'],
+                ['Claude', 'ClaudeBot', 'Training + citations', '⚠️ Partial — also blocks citations'],
+                ['Perplexity', 'PerplexityBot', 'Perplexity Search index', '❌ No — removes from Perplexity'],
+                ['Gemini', 'Google-Extended', 'Gemini training', '✅ Yes — no effect on Google Search'],
+                ['Meta AI', 'Meta-ExternalAgent', 'Training + search', '⚠️ Unclear — may affect Meta AI'],
+                ['Copilot', 'Bingbot', 'Bing + Copilot index', '❌ No — removes from Bing + Copilot'],
+                ['Apple', 'Applebot-Extended', 'Apple AI training', '✅ Yes — safe to block'],
+              ].map(([p, b, purpose, safe]) => (
+                <tr class="border-b border-gray-100">
+                  <td class="py-2 pr-3 font-semibold text-gray-700">{p}</td>
+                  <td class="py-2 pr-3 font-mono text-xs bg-gray-100 px-1 rounded">{b}</td>
+                  <td class="py-2 pr-3 text-gray-600">{purpose}</td>
+                  <td class="py-2 text-sm">{safe}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Complete Your AI SEO Workflow</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/robots-txt-generator" class="tool-card group">
+          <span class="text-2xl">🤖</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Robots.txt Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Build a new robots.txt with AI crawler rules</p>
+        </a>
+        <a href="/tools/seo-audit-tool" class="tool-card group">
+          <span class="text-2xl">🔍</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">SEO Audit Tool</h4>
+          <p class="text-sm text-gray-600 mt-1">Full Google Lighthouse audit of your site</p>
+        </a>
+        <a href="/tools/schema-markup-generator" class="tool-card group">
+          <span class="text-2xl">🔧</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Schema Markup Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Add structured data to improve AI citations</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</ToolLayout>
