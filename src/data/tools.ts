@@ -86,7 +86,12 @@ name: "Case Converter",
 slug: "case-converter",
 description: "Convert text into different case styles"
 },
-
+ 
+{ name: "Character Counter", 
+ slug: "character-counter", 
+ description: "Count characters, words, sentences and readability with social media limits" 
+},
+ 
 {
 name: "Lorem Ipsum Generator",
 slug: "lorem-ipsum-generator",
