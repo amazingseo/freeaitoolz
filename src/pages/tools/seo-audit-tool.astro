@@ -1,0 +1,175 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SeoAuditTool from '../../components/tools/SeoAuditTool';
+
+const faqs = [
+  {
+    question: "What does this SEO audit tool check?",
+    answer: "Our SEO audit tool checks over 40 factors across four categories. Performance: Core Web Vitals (LCP, CLS, TBT, FCP, TTI, Speed Index), page load speed, unused JavaScript, unused CSS, render-blocking resources, image optimization, text compression, and server response time. SEO: title tag, meta description, canonical tag, robots.txt, hreflang, viewport, HTTP status code, crawlability, structured data (schema markup), and link text quality. Accessibility: image alt attributes, button labels, color contrast, heading order, form labels, HTML language attribute, and ARIA attributes. Best Practices: HTTPS, vulnerable libraries, console errors, and deprecated APIs."
+  },
+  {
+    question: "Is this SEO audit tool really free?",
+    answer: "Yes, completely free with no signup, no daily limits on our platform, and no hidden charges. The tool is powered by Google PageSpeed Insights API, which Google provides for free. You get the same audit data that Google uses to evaluate your website — including the Lighthouse performance scores that directly influence Core Web Vitals ranking signals."
+  },
+  {
+    question: "What is a good SEO score?",
+    answer: "A Lighthouse SEO score of 90 or above is considered good. Scores between 50 and 89 need improvement. Scores below 50 are poor and indicate significant SEO issues. For performance, Google's Core Web Vitals benchmarks are: LCP under 2.5 seconds is good, CLS under 0.1 is good, and TBT under 200ms is good. Aim for green scores across all four categories: Performance, SEO, Accessibility, and Best Practices."
+  },
+  {
+    question: "What is the difference between mobile and desktop audit?",
+    answer: "The mobile audit simulates a Moto G4 device on a slow 4G connection (10 Mbps download, 4G latency) with CPU throttling at 4x. The desktop audit simulates a fast desktop connection (40 Mbps) with no CPU throttling. Since Google uses mobile-first indexing, your mobile score is the most important for rankings. It is normal for mobile scores to be 20-40 points lower than desktop scores due to the simulated slower connection and device."
+  },
+  {
+    question: "What is Largest Contentful Paint (LCP)?",
+    answer: "Largest Contentful Paint (LCP) measures how long it takes for the largest visible element on your page — typically a hero image or heading — to render. Google considers LCP good when it is under 2.5 seconds, needs improvement between 2.5 and 4 seconds, and poor when above 4 seconds. LCP is one of Google's Core Web Vitals and directly affects search rankings. To improve LCP: optimize images, use a CDN, eliminate render-blocking resources, and improve server response time."
+  },
+  {
+    question: "What is Cumulative Layout Shift (CLS)?",
+    answer: "Cumulative Layout Shift (CLS) measures how much your page layout shifts unexpectedly during loading — for example, when images load without defined dimensions and push text down. Google considers CLS good when below 0.1, needs improvement between 0.1 and 0.25, and poor when above 0.25. CLS is a Core Web Vital that affects rankings and user experience. To fix CLS: always set width and height attributes on images, avoid inserting content above existing content, and use CSS transform animations instead of layout-triggering properties."
+  },
+  {
+    question: "What is Total Blocking Time (TBT)?",
+    answer: "Total Blocking Time (TBT) measures the total time that the browser's main thread was blocked by JavaScript tasks longer than 50 milliseconds, preventing user input from being processed. Google considers TBT good when under 200ms, needs improvement between 200ms and 600ms, and poor when above 600ms. To reduce TBT: remove or defer unused JavaScript, split large JavaScript bundles into smaller chunks, use web workers for heavy computation, and minimize third-party scripts."
+  },
+  {
+    question: "How often should I run an SEO audit?",
+    answer: "Run an SEO audit after any significant change to your website — new pages, theme changes, plugin additions, or content updates. For regular monitoring, a monthly SEO audit is standard practice. For active sites making frequent changes, weekly audits are recommended. A sudden drop in your SEO or performance score often indicates a problem introduced in a recent update."
+  },
+];
+---
+
+<ToolLayout
+  title="Free SEO Audit Tool — Google Lighthouse Website Analysis Online"
+  description="Run a free real-time SEO audit powered by Google Lighthouse. Check Core Web Vitals, SEO score, meta tags, performance, accessibility, and 40+ ranking factors. No signup required."
+  keywords="free seo audit tool, website seo checker, seo analyzer, google lighthouse audit, core web vitals checker, seo score checker, website performance audit, seo audit online free, pagespeed insights, seo analysis tool"
+  toolName="Free SEO Audit Tool"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+
+  <!-- Tool Interface -->
+  <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
+    <SeoAuditTool client:visible />
+  </div>
+
+  <!-- SEO + AEO + GEO Rich Content -->
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article>
+
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        Free SEO Audit Tool — Real Google Lighthouse Data for Your Website
+      </h2>
+      <p class="text-gray-600 leading-relaxed mb-6">
+        Our free SEO audit tool runs a complete analysis of any URL using Google PageSpeed Insights (Lighthouse v12) — the exact same engine Google uses to evaluate websites for search rankings. Enter any URL and get a comprehensive report covering your SEO score, Core Web Vitals, performance opportunities, accessibility issues, and best practice violations across both mobile and desktop. No signup, no daily limits, no mock data. Every result is fetched live from Google's servers in real time.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        What Google Lighthouse Checks and Why It Matters for Rankings
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Google Lighthouse is the audit engine that powers Google's Core Web Vitals measurements — the ranking signals Google officially announced in 2021 that directly affect page experience scores in search results. Lighthouse audits four categories: Performance (how fast your page loads), SEO (how well search engines can crawl and understand your content), Accessibility (how usable your site is for everyone), and Best Practices (security and modern web standards). Each category produces a score from 0 to 100. Scores above 90 are green, 50-89 are yellow, and below 50 are red. Our tool runs Lighthouse on both mobile and desktop simultaneously and displays all results in a structured, actionable report.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Core Web Vitals — The Three Metrics That Directly Affect Rankings
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Google's Core Web Vitals are three specific performance metrics that form part of the Page Experience signal used in search ranking. Largest Contentful Paint (LCP) measures loading performance — how quickly the main content appears. Google's threshold is under 2.5 seconds for good. Cumulative Layout Shift (CLS) measures visual stability — how much the page unexpectedly shifts during loading. Under 0.1 is good. Total Blocking Time (TBT), which correlates with First Input Delay (FID) and Interaction to Next Paint (INP), measures interactivity — how quickly the page responds to user actions. Under 200ms is good. Our audit tool shows all three with real user field data (where available from Chrome User Experience Report) alongside lab data from the simulated Lighthouse test, giving you both views.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        SEO Checks — What On-Page Signals Google Evaluates
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The SEO audit section checks the technical on-page signals that search engine crawlers use to understand your content. A missing title tag, absent meta description, or blocked robots.txt can prevent a page from ranking entirely regardless of content quality. Canonical tags prevent duplicate content penalties when multiple URLs serve similar content. Viewport meta tags ensure mobile usability. Structured data (JSON-LD schema markup) enables rich results in Google Search. Our SEO tab checks all of these and flags any issues with a clear pass, warning, or fail status and a description of how to fix it. Use our <a href="/tools/schema-markup-generator" class="text-blue-600 hover:underline">free Schema Markup Generator</a> to add structured data to pages that are missing it.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Performance Opportunities — Specific Fixes with Estimated Savings
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The performance tab shows actionable opportunities with estimated time and byte savings for each fix. Common opportunities include eliminating render-blocking JavaScript and CSS (which delays FCP), removing unused JavaScript (often the largest opportunity on plugin-heavy WordPress sites), compressing images and converting to WebP format, enabling text compression (Gzip or Brotli), implementing proper caching, and reducing server response time. Each opportunity links to detailed documentation on how to fix it. Unlike tools that only show a score, our tool gives you the specific files and URLs causing the issues, so you know exactly what to change.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Mobile vs Desktop — Why Mobile Score Is More Important
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Google uses mobile-first indexing for all websites since 2023 — this means Google primarily uses the mobile version of your content for indexing and ranking. Your mobile Lighthouse score is therefore the more important of the two. It is normal for mobile scores to be 20-40 points lower than desktop because the mobile audit simulates a Moto G4 device on a slow 4G network with CPU throttling applied. If your mobile performance score is below 50, it is a strong signal that your site may be delivering a poor experience to mobile users, which Google penalizes in rankings. Use the device toggle to compare your mobile and desktop results side by side.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Accessibility Audits — Why They Matter for Both Users and SEO
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Accessibility and SEO are deeply interconnected. Many accessibility improvements — proper heading hierarchy, descriptive image alt text, meaningful link text, sufficient color contrast — also help search engines understand your content structure and meaning. Image alt text serves both screen readers and Google Image Search. Semantic HTML heading structure (H1 → H2 → H3) helps both users with assistive technology and Google's content understanding algorithms. A Lighthouse accessibility score below 70 often indicates structural problems that hurt both user experience and SEO simultaneously.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        How Often to Run an SEO Audit
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        For actively managed websites, run an SEO audit after every significant change: after publishing new content, after installing or updating plugins, after theme changes, after adding third-party scripts, or after any performance optimization work. A sudden drop in your SEO or performance score between audits pinpoints exactly when and what caused the regression. For minimal-change sites, a monthly audit establishes a health baseline. The most common cause of unexpected performance drops is a new third-party script (analytics, chat widgets, ad systems) added without performance review. After completing an audit and fixing issues, also update your meta descriptions using our <a href="/tools/meta-description-generator" class="text-blue-600 hover:underline">free Meta Description Generator</a> and validate your page schema using our <a href="/tools/schema-markup-generator" class="text-blue-600 hover:underline">Schema Markup Generator</a>.
+      </p>
+
+      <!-- AEO Answer Block -->
+      <div class="mt-10 p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <h3 class="text-base font-bold text-gray-900 mb-4">Core Web Vitals — Good vs Poor Thresholds</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-200">
+                <th class="text-left py-2 pr-4 text-gray-500 font-semibold">Metric</th>
+                <th class="text-left py-2 pr-4 font-semibold text-green-700">Good</th>
+                <th class="text-left py-2 pr-4 font-semibold text-yellow-700">Needs Improvement</th>
+                <th class="text-left py-2 font-semibold text-red-700">Poor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['LCP (Largest Contentful Paint)', '< 2.5s', '2.5s – 4s', '> 4s'],
+                ['CLS (Cumulative Layout Shift)', '< 0.1', '0.1 – 0.25', '> 0.25'],
+                ['INP (Interaction to Next Paint)', '< 200ms', '200ms – 500ms', '> 500ms'],
+                ['FCP (First Contentful Paint)', '< 1.8s', '1.8s – 3s', '> 3s'],
+                ['TBT (Total Blocking Time)', '< 200ms', '200ms – 600ms', '> 600ms'],
+                ['Speed Index', '< 3.4s', '3.4s – 5.8s', '> 5.8s'],
+              ].map(([m, g, n, p]) => (
+                <tr class="border-b border-gray-100">
+                  <td class="py-2 pr-4 font-medium text-gray-700">{m}</td>
+                  <td class="py-2 pr-4 text-green-700 font-semibold">{g}</td>
+                  <td class="py-2 pr-4 text-yellow-700 font-semibold">{n}</td>
+                  <td class="py-2 text-red-700 font-semibold">{p}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Related Tools -->
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Complete Your SEO Workflow</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/schema-markup-generator" class="tool-card group">
+          <span class="text-2xl">🔧</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Schema Markup Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Add structured data to fix schema audit fails</p>
+        </a>
+        <a href="/tools/meta-description-generator" class="tool-card group">
+          <span class="text-2xl">🏷️</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Meta Description Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Fix missing meta descriptions flagged in audit</p>
+        </a>
+        <a href="/tools/robots-txt-generator" class="tool-card group">
+          <span class="text-2xl">🤖</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Robots.txt Generator</h4>
+          <p class="text-sm text-gray-600 mt-1">Fix robots.txt issues found in SEO audit</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</ToolLayout>
