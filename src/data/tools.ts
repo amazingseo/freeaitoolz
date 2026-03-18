@@ -45,16 +45,9 @@ slug: "seo-audit-tool",
 description: "Free real-time SEO audit powered by Google Lighthouse — check Core Web Vitals, SEO score and 40+ ranking factors" 
 },
 
-{
-name: "Meta Description Generator",
-slug: "meta-description-generator",
-description: "Generate SEO optimized meta descriptions"
-},
-
-{
-name: "Schema Markup Generator",
-slug: "schema-markup-generator",
-description: "Generate JSON-LD structured data"
+{ name: "AI Crawler Checker", 
+slug: "ai-crawler-checker", 
+description: "Check if ChatGPT, Claude, Perplexity and Gemini can crawl your site — analyze robots.txt for all AI bots" 
 },
 
 {
@@ -68,6 +61,19 @@ name: "Website Speed Checker",
 slug: "website-speed-checker",
 description: "Analyze website performance and Core Web Vitals"
 },
+
+{
+name: "Meta Description Generator",
+slug: "meta-description-generator",
+description: "Generate SEO optimized meta descriptions"
+},
+
+{
+name: "Schema Markup Generator",
+slug: "schema-markup-generator",
+description: "Generate JSON-LD structured data"
+},
+
 { name: "Internal Link Suggester", 
  slug: "internal-link-suggester", 
  description: "Find internal linking opportunities for your new articles instantly"
