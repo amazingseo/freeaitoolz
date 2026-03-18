@@ -344,19 +344,82 @@ export default function AiCrawlerChecker() {
     } catch { return u; }
   };
 
+  // Try multiple CORS proxies in sequence, return first success
+  const fetchWithFallback = useCallback(async (targetUrl: string): Promise<string> => {
+    const PROXIES = [
+      // codetabs: free, reliable, no key needed
+      (u: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+      // allorigins raw (sometimes works, keep as fallback)
+      (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+      // allorigins get (returns JSON wrapper, extract contents)
+      (u: string) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+    ];
+
+    const isCloudflareChallenge = (text: string) =>
+      text.includes('Just a moment') || text.includes('cf-browser-verification') ||
+      text.includes('Checking your browser') || text.includes('DDoS protection by Cloudflare');
+
+    const isValidRobots = (text: string) =>
+      text.toLowerCase().includes('user-agent') ||
+      text.toLowerCase().includes('disallow') ||
+      text.toLowerCase().includes('sitemap') ||
+      text.toLowerCase().includes('allow');
+
+    let lastError = '';
+
+    for (let i = 0; i < PROXIES.length; i++) {
+      try {
+        const proxyUrl = PROXIES[i](targetUrl);
+        const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
+        if (!res.ok) { lastError = `Proxy ${i+1} returned ${res.status}`; continue; }
+
+        let text = await res.text();
+
+        // allorigins /get returns JSON: { contents: "..." }
+        if (proxyUrl.includes('/get?url=')) {
+          try { const json = JSON.parse(text); text = json.contents || text; } catch {}
+        }
+
+        if (!text || text.trim().length < 3) { lastError = 'Empty response'; continue; }
+
+        if (isCloudflareChallenge(text)) {
+          // Cloudflare is blocking the proxy — try next proxy
+          lastError = 'cloudflare';
+          continue;
+        }
+
+        // If it looks like valid robots.txt or is empty (site has no robots.txt directives)
+        return text;
+
+      } catch (e: any) {
+        lastError = e.name === 'TimeoutError' ? 'timeout' : e.message;
+        continue;
+      }
+    }
+
+    // All proxies failed — give specific error
+    if (lastError === 'cloudflare') {
+      throw new Error(
+        'This site uses Cloudflare protection which blocks CORS proxies. ' +
+        'To check this site, open DevTools → Network tab, navigate to ' +
+        `${targetUrl} directly, and inspect the robots.txt file manually.`
+      );
+    }
+    if (lastError === 'timeout') {
+      throw new Error('All fetch attempts timed out. The site may be slow, down, or blocking external requests.');
+    }
+    throw new Error(`Could not fetch robots.txt. ${lastError || 'Please check the URL and try again.'}`);
+  }, []);
+
   const runCheck = useCallback(async () => {
     if (!url.trim()) { setError('Please enter a URL'); return; }
     const base = normalizeUrl(url);
     setError(''); setResults(null); setParsed(null); setLoading(true);
 
     const robotsUrl = `${base}/robots.txt`;
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(robotsUrl)}`;
 
     try {
-      const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(15000) });
-      if (!res.ok) throw new Error(`Could not fetch robots.txt (${res.status})`);
-      const text = await res.text();
-      if (!text || text.trim().length < 3) throw new Error('robots.txt is empty or not found');
+      const text = await fetchWithFallback(robotsUrl);
 
       const p = parseRobotsTxt(text);
       const r: BotResult[] = BOT_DB.map(bot => {
@@ -368,12 +431,11 @@ export default function AiCrawlerChecker() {
       setResults(r);
       setCheckedUrl(robotsUrl);
     } catch (err: any) {
-      if (err.name === 'TimeoutError') setError('Request timed out. The server may be slow or blocking external requests.');
-      else setError(err.message || 'Failed to fetch robots.txt. Check the URL and try again.');
+      setError(err.message || 'Failed to fetch robots.txt. Check the URL and try again.');
     } finally {
       setLoading(false);
     }
-  }, [url]);
+  }, [url, fetchWithFallback]);
 
   const handleKey = (e: React.KeyboardEvent) => { if (e.key === 'Enter') runCheck(); };
 
