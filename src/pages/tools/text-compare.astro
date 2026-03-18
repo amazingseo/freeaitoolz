@@ -1,0 +1,153 @@
+---
+export const prerender = true;
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import TextCompare from '../../components/tools/TextCompare';
+
+const faqs = [
+  {
+    question: "What is a text compare tool?",
+    answer: "A text compare tool (also called a diff checker or difference checker) compares two pieces of text side by side and highlights exactly what has been added, removed, or changed between them. It is used by developers to review code changes, writers to compare document revisions, SEO professionals to track content edits, and students to check plagiarism between drafts. Our tool performs the comparison in real time as you type — no button click required."
+  },
+  {
+    question: "How does text comparison work?",
+    answer: "Text comparison uses a diff algorithm (based on the Longest Common Subsequence method) to find the minimum number of changes needed to transform the original text into the modified text. Changes are classified as insertions (new lines added), deletions (lines removed), or modifications (lines that changed). Our tool also performs word-level diff on modified lines, highlighting the exact words that changed within each line — not just which lines changed."
+  },
+  {
+    question: "What is the difference between split view and unified view?",
+    answer: "Split view shows the original text on the left and the modified text on the right in two columns. This makes it easy to compare longer texts and see both versions simultaneously. Unified view shows all changes in a single column — removed lines appear in red with a minus sign, added lines in green with a plus sign. Split view is best for reviewing longer documents; unified view is better for quick code reviews."
+  },
+  {
+    question: "What does the similarity percentage mean?",
+    answer: "The similarity percentage shows how much of the text is identical between the two versions, calculated by comparing common lines. A score of 100% means the texts are identical. A score of 0% means they share no common lines. This metric is useful for measuring how significantly a document has been revised."
+  },
+  {
+    question: "What does the ignore whitespace option do?",
+    answer: "When Ignore Whitespace is enabled, the comparison treats multiple consecutive spaces as a single space and ignores leading and trailing whitespace on each line. This is useful when comparing code that has been reformatted or when text was copied from different sources with inconsistent spacing."
+  },
+  {
+    question: "Is my text private when using this tool?",
+    answer: "Yes, completely private. All text comparison processing happens entirely in your browser using JavaScript. Your text is never sent to any server, never stored, and never logged. This makes it safe to compare confidential documents, source code, legal contracts, and sensitive data."
+  },
+  {
+    question: "Can I use this to compare code?",
+    answer: "Yes. Our text compare tool works with any plain text content including JavaScript, Python, HTML, CSS, JSON, XML, SQL, and any other programming language. Line numbers are displayed alongside each line to help developers track changes precisely."
+  },
+  {
+    question: "What is word-level diff highlighting?",
+    answer: "Word-level diff highlighting shows not just which lines changed, but exactly which words within those lines were added or removed. For example if a sentence changed from 'The deadline is Friday' to 'The deadline is Monday', word-level diff highlights only the changed word: Friday vs Monday. This feature is especially useful for proofreading and editing workflows."
+  },
+];
+---
+
+<ToolLayout
+  title="Free Text Compare Tool — Compare Two Texts & Find Differences Online"
+  description="Free online text compare tool that highlights differences between two texts in real time. Side-by-side and unified diff view, word-level highlighting, similarity score, and line numbers. No signup required."
+  keywords="text compare, diff checker, text difference, compare two texts, online diff tool, text diff, find differences in text, compare text online, diff checker free, document compare"
+  toolName="Free Text Compare & Diff Checker"
+  toolCategory="Text Utility"
+  faqs={faqs}
+>
+
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
+    <TextCompare client:visible />
+  </div>
+
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article>
+
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        Free Text Compare Tool — Find Differences Between Two Texts Instantly
+      </h2>
+      <p class="text-gray-600 leading-relaxed mb-6">
+        Our free text compare tool highlights every difference between two pieces of text in real time. Unlike most diff checkers that only show which lines changed, our tool also highlights the exact words that changed within each modified line. Choose between side-by-side split view or unified inline view, toggle case and whitespace sensitivity, and see a similarity percentage score alongside full statistics on added, removed, and modified lines. Works with plain text, code, articles, legal documents, and any other text-based content.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        How to Compare Two Texts Online — Step by Step
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Paste your original text into the left panel. Paste your modified text into the right panel. The diff output appears immediately — no button to click. Lines in red show content removed from the original. Lines in green show content added in the modified version. Lines in amber show lines that changed, with specific changed words marked in darker highlighting within each line. Use split view for longer documents or unified view for a compact Git-style single-column output.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Text Compare for Developers — Code Review and Git Diffs
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Developers use text comparison tools daily for code reviews, pull request previews, debugging configuration changes, and tracking API response differences. Our tool works with any programming language — JavaScript, TypeScript, Python, Java, Go, Rust, HTML, CSS, SQL, JSON, XML, and YAML. Line numbers are displayed alongside every line for precise reference. The Ignore Whitespace toggle is particularly useful for comparing code that was reformatted without changing its logic. For JSON comparison, paste minified and formatted versions to instantly see structural differences, then use our <a href="/tools/json-formatter" class="text-blue-600 hover:underline">free JSON Formatter</a> to clean up the result.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Text Compare for Writers, Editors, and Content Teams
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Writers and editors use text comparison to track revisions between document drafts, review editorial changes before publishing, verify sections were not modified during translation, and compare submitted content against published versions. The word-level diff highlighting makes proofreading significantly faster — instead of reading both versions word by word, your eye is immediately drawn to the changed words highlighted in each modified line. The similarity score helps content managers assess how substantially a draft was revised compared to the previous version.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Text Compare for SEO — Tracking Content Changes
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        SEO professionals use text comparison to track changes made to competitor pages over time, verify that on-page optimizations were correctly implemented, compare a page before and after a Google algorithm update, and audit content updated by a team member before republishing. Paste the before and after versions of any page to immediately see every word added or removed. This workflow is especially valuable when analyzing pages that gained or lost rankings — the diff shows exactly what content changed. Combine this with our <a href="/tools/word-counter" class="text-blue-600 hover:underline">Word Counter</a> to check whether content length changes contributed to ranking shifts.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Split View vs Unified View — When to Use Each
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Split view shows the original and modified texts in two columns side by side — best for comparing longer documents or prose where you need to read both versions in full context. It mirrors the two-panel format used in Microsoft Word's Compare Documents and VS Code's diff viewer. Unified view (inline diff) shows all changes in a single column with removed lines in red and added lines in green — this is the format produced by Git diff commands and is best for quickly scanning many small changes in code or configuration files.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Understanding the Diff Algorithm
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Our text compare tool uses the Longest Common Subsequence algorithm to find the minimum number of insertions and deletions needed to transform the original text into the modified version. This finds the optimal diff — preserving as much unchanged content as possible. For changed lines, a second pass runs at the word level to identify exactly which words changed. This two-pass approach gives you both line-level context and word-level precision in a single view.
+      </p>
+
+      <div class="mt-10 p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <h3 class="text-base font-bold text-gray-900 mb-4">Quick Reference: What Each Diff Color Means</h3>
+        <div class="space-y-2">
+          <div class="flex items-start gap-3 p-2.5 rounded-lg border bg-red-50 border-red-200">
+            <div class="w-3 h-3 rounded-full mt-0.5 flex-shrink-0 bg-red-400"></div>
+            <div><span class="text-sm font-bold text-gray-900">Red (−): </span><span class="text-sm text-gray-600">Content removed from the original — not present in the modified version</span></div>
+          </div>
+          <div class="flex items-start gap-3 p-2.5 rounded-lg border bg-green-50 border-green-200">
+            <div class="w-3 h-3 rounded-full mt-0.5 flex-shrink-0 bg-green-400"></div>
+            <div><span class="text-sm font-bold text-gray-900">Green (+): </span><span class="text-sm text-gray-600">Content added in the modified version — not present in the original</span></div>
+          </div>
+          <div class="flex items-start gap-3 p-2.5 rounded-lg border bg-orange-50 border-orange-200">
+            <div class="w-3 h-3 rounded-full mt-0.5 flex-shrink-0 bg-orange-400"></div>
+            <div><span class="text-sm font-bold text-gray-900">Amber (~): </span><span class="text-sm text-gray-600">Lines that changed — with specific changed words marked in darker highlight within the line</span></div>
+          </div>
+          <div class="flex items-start gap-3 p-2.5 rounded-lg border bg-gray-50 border-gray-200">
+            <div class="w-3 h-3 rounded-full mt-0.5 flex-shrink-0 bg-gray-300"></div>
+            <div><span class="text-sm font-bold text-gray-900">No highlight (=): </span><span class="text-sm text-gray-600">Lines identical in both texts — unchanged content</span></div>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Related Free Tools</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/json-formatter" class="tool-card group">
+          <span class="text-2xl">📋</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">JSON Formatter</h4>
+          <p class="text-sm text-gray-600 mt-1">Format and validate JSON before comparing</p>
+        </a>
+        <a href="/tools/word-counter" class="tool-card group">
+          <span class="text-2xl">📝</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Word Counter</h4>
+          <p class="text-sm text-gray-600 mt-1">Count words and characters in any text</p>
+        </a>
+        <a href="/tools/character-counter" class="tool-card group">
+          <span class="text-2xl">🔢</span>
+          <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 mt-2">Character Counter</h4>
+          <p class="text-sm text-gray-600 mt-1">Count characters with social media limits</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</ToolLayout>
