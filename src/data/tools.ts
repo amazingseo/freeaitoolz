@@ -50,6 +50,11 @@ slug: "ai-crawler-checker",
 description: "Check if ChatGPT, Claude, Perplexity and Gemini can crawl your site — analyze robots.txt for all AI bots" 
 },
 
+{ name: "AEO & GEO Audit Tool", 
+slug: "aeo-geo-audit", 
+description: "Check if your site is optimized for ChatGPT, Claude, Perplexity & Google AI Overviews — real schema, robots.txt, and live AI visibility test" 
+},
+
 {
 name: "Robots.txt Generator",
 slug: "robots-txt-generator",
