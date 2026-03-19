@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AeoGeoAuditTool from '../../components/tools/AeoGeoAuditTool';
+
+const title = "Free AEO & GEO Audit Tool — AI Visibility & Answer Engine Checker";
+const description = "Free AEO and GEO audit tool. Check if your site is optimized for ChatGPT, Claude, Perplexity & Google AI Overviews. Real robots.txt analysis, schema detection, and live AI visibility test.";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="tool-hero">
+    <div class="tool-badge">AEO + GEO Tool</div>
+    <h1>Free AEO &amp; GEO Audit Tool</h1>
+    <p>Check if your site is optimized for AI engines like ChatGPT, Claude, Perplexity &amp; Google AI Overviews. Real schema analysis, live robots.txt check, and actual AI visibility test.</p>
+    <div class="tool-badges">
+      <span>✅ Free Forever</span>
+      <span>🔒 No Signup</span>
+      <span>⚡ Real Data</span>
+      <span>🤖 Live AI Test</span>
+    </div>
+  </div>
+
+  <div class="tool-container">
+    <AeoGeoAuditTool client:load />
+  </div>
+
+  <section class="tool-content">
+    <h2>What is AEO and GEO?</h2>
+    <p>Answer Engine Optimization (AEO) is the practice of structuring your content so AI-powered answer engines like ChatGPT, Perplexity, Claude, and Google AI Overviews can extract, cite, and attribute your brand as a trusted source. Generative Engine Optimization (GEO) extends this further — ensuring AI crawlers can access your site, your brand entity is well-defined, and your content appears in AI-generated answers.</p>
+
+    <h2>Why AEO and GEO Matter in 2025</h2>
+    <p>AI-sourced sessions jumped 527% in the first half of 2025, with LLM-generated traffic converting at 27% compared to just 2.1% from traditional search. Meanwhile, organic click-through rates dropped from 1.41% to 0.64% when AI summaries appear. This tool checks the 23+ real signals that determine whether AI engines cite your site or ignore it.</p>
+
+    <h2>What This Tool Checks</h2>
+    <p>The audit fetches your live page HTML and robots.txt, then analyzes: FAQ and Article schema markup, question-format headings, author and date signals, E-E-A-T indicators, AI bot permissions (GPTBot, ClaudeBot, PerplexityBot, Google-Extended), Organization schema, sitemap presence, and canonical setup. The AI Visibility tab actually queries Claude and reports whether your brand is mentioned in the responses.</p>
+  </section>
+</BaseLayout>
