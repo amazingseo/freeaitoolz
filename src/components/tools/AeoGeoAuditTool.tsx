@@ -205,7 +205,7 @@ export default function AeoGeoAuditTool() {
   const abortRef = useRef<AbortController | null>(null);
 
   // ── Daily limit ──────────────────────────────────────────────────────────
-  const LIMIT = 3, LS_KEY = 'aeo_audit_usage';
+  const LIMIT = 5, LS_KEY = 'aeo_audit_usage';
   const todayStr = () => new Date().toISOString().slice(0, 10);
   const getUsage = () => { try { const r = localStorage.getItem(LS_KEY); return r ? JSON.parse(r) : { date: '', count: 0 }; } catch { return { date: '', count: 0 }; } };
   const getRem = () => { const u = getUsage(); return u.date !== todayStr() ? LIMIT : Math.max(0, LIMIT - u.count); };
@@ -331,6 +331,11 @@ export default function AeoGeoAuditTool() {
             <span style={{ fontSize: '0.68rem', color: remaining > 0 ? '#94a3b8' : '#f87171', fontWeight: 600 }}>
               {remaining > 0 ? `${remaining} of ${LIMIT} free audits remaining today` : 'Daily limit reached — resets at midnight'}
             </span>
+            <div style={{ marginLeft: 'auto', padding: '3px 10px', borderRadius: '20px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span style={{ fontSize: '0.6rem', color: '#475569', fontWeight: 600 }}>AI check cost:</span>
+              <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#10b981' }}>~$0.0023</span>
+              <span style={{ fontSize: '0.58rem', color: '#334155' }}>· ~525 tokens · Haiku 4.5</span>
+            </div>
           </div>
         )}
 
@@ -521,6 +526,24 @@ export default function AeoGeoAuditTool() {
             {/* ── AI Visibility Tab ── */}
             {activeTab === 'ai' && (
               <div>
+                {/* Cost breakdown card */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '0.75rem', padding: '1rem', background: T.gray50, border: `1px solid ${T.gray200}`, borderRadius: '12px', marginBottom: '1.25rem' }}>
+                  {[
+                    { label: 'Model', value: 'Haiku 4.5', sub: 'claude-haiku-4-5', icon: '🤖', color: T.violet },
+                    { label: 'API Calls', value: '3 prompts', sub: 'per check', icon: '📡', color: T.blue },
+                    { label: 'Input tokens', value: '~75 tokens', sub: '$1 / 1M = $0.000075', icon: '📥', color: T.emerald },
+                    { label: 'Output tokens', value: '~450 tokens', sub: '$5 / 1M = $0.00225', icon: '📤', color: T.amber },
+                    { label: 'Total / check', value: '~$0.0023', sub: '~525 tokens total', icon: '💰', color: T.green },
+                  ].map(s => (
+                    <div key={s.label} style={{ padding: '0.75rem', background: T.white, border: `1px solid ${T.gray200}`, borderRadius: '10px', borderLeft: `3px solid ${s.color}` }}>
+                      <div style={{ fontSize: '0.62rem', fontWeight: 700, color: T.gray400, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem' }}>
+                        {s.icon} {s.label}
+                      </div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 800, color: s.color }}>{s.value}</div>
+                      <div style={{ fontSize: '0.6rem', color: T.gray400, marginTop: '0.1rem', fontFamily: 'monospace' }}>{s.sub}</div>
+                    </div>
+                  ))}
+                </div>
                 {aiLoading && (
                   <div style={{ textAlign: 'center', padding: '3rem' }}>
                     <span style={{ display: 'inline-block', width: '32px', height: '32px', border: `3px solid ${T.blueMid}`, borderTopColor: T.blue, borderRadius: '50%', animation: 'spin 0.8s linear infinite', marginBottom: '1rem' }} />
