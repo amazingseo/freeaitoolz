@@ -1,217 +1,70 @@
-export const prerender = false;
-
-export async function POST({ request }: { request: Request }) {
-  try {
-    const body = await request.json();
-    const { businessName, location, category, website } = body as {
-      businessName: string;
-      location: string;
-      category: string;
-      website?: string;
-    };
-
-    if (!businessName || !location || !category) {
-      return new Response(
-        JSON.stringify({ error: 'MISSING_FIELDS', message: 'Business name, location and category are required' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const apiKey = import.meta.env.ANTHROPIC_API_KEY || '';
-    if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: 'NO_KEY', message: 'ANTHROPIC_API_KEY not configured' }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-const websiteNote = website ? ` Their website is ${website}.` : '';
-
-    // Normalize location — detect city-only input and append state hint
-    const normalizeLocation = (loc: string): string => {
-      const trimmed = loc.trim();
-      // Already has comma = assume "City, State" format
-      if (trimmed.includes(',')) return trimmed;
-      // All caps 2-letter = state only, not useful
-      if (/^[A-Z]{2}$/.test(trimmed)) return trimmed;
-      // Single word or city name without state — use as-is but flag it
-      return trimmed;
-    };
-    const normalizedLocation = normalizeLocation(location);
-    const bizLower = businessName.toLowerCase();
-    const websiteDomain = website ? website.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].toLowerCase() : '';
-
-    const queries = [
-      {
-        engine: 'Category Discovery',
-        engineKey: 'chatgpt',
-        prompt: `What ${category} businesses or companies do you know in ${normalizedLocation}? List specific business names you are aware of.`,
-        type: 'category_search',
-      },
-      {
-        engine: 'Recommendation Query',
-        engineKey: 'perplexity',
-        prompt: `I need a ${category} in ${normalizedLocation}. What specific local businesses would you recommend by name?`,
-        type: 'recommendation',
-      },
-      {
-        engine: 'Brand Recognition',
-        engineKey: 'google',
-        prompt: `Tell me about a ${category} called "${businessName}" based in ${normalizedLocation}.${websiteNote} What do you know about this specific business?`,
-        type: 'brand_query',
-      },
-      {
-        engine: 'Reputation Check',
-        engineKey: 'claude',
-        prompt: `Is "${businessName}" a well-known ${category} in ${normalizedLocation}? What can you tell me about this specific company?${websiteNote}`,
-        type: 'reputation_query',
-      },
-    ];
-
-    const results: {
-      engine: string;
-      engineKey: string;
-      prompt: string;
-      response: string;
-      mentioned: boolean;
-      type: string;
-    }[] = [];
-
-    for (const q of queries) {
-      try {
-        const r = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01',
-          },
-          body: JSON.stringify({
-            model: 'claude-haiku-4-5-20251001',
-            max_tokens: 250,
-            messages: [{ role: 'user', content: q.prompt }],
-          }),
-          signal: AbortSignal.timeout(15000),
-        });
-
-        const data = await r.json();
-        const text = data.content?.[0]?.text || '';
-        const textLower = text.toLowerCase();
-
-        const notFamiliarPhrases = [
-          "don't have information",
-          "not familiar",
-          "no information",
-          "i'm not aware",
-          "don't know",
-          "cannot find",
-          "no specific information",
-          "don't have specific",
-          "unable to verify",
-          "not in my",
-        ];
-
-        const isNotFamiliar = notFamiliarPhrases.some(p => textLower.includes(p));
-
-        const businessWords = bizLower.split(' ').filter(w => w.length > 2);
-        const nameMatch = textLower.includes(bizLower) ||
-          (websiteDomain !== '' && textLower.includes(websiteDomain)) ||
-          (businessWords.length >= 2 && businessWords.every(w => textLower.includes(w)));
-
-        const mentioned = !isNotFamiliar && text.length > 60 && nameMatch;
-
-        results.push({ ...q, response: text, mentioned });
-      } catch (e: any) {
-        results.push({ ...q, response: 'Request timed out or failed.', mentioned: false });
-      }
-    }
-
-    const mentionCount = results.filter(r => r.mentioned).length;
-    const brandMentions = results.filter(r => r.mentioned && (r.type === 'brand_query' || r.type === 'reputation_query')).length;
-    const discoveryMentions = results.filter(r => r.mentioned && (r.type === 'category_search' || r.type === 'recommendation')).length;
-    const score =
-      mentionCount === 4 ? 95 :
-      mentionCount === 3 ? 75 :
-      brandMentions === 2 ? 65 :
-      brandMentions === 1 && discoveryMentions >= 1 ? 50 :
-      discoveryMentions === 2 ? 38 :
-      discoveryMentions === 1 ? 22 :
-      brandMentions === 1 ? 18 : 5;
-
-    const visibility =
-      score >= 80 ? 'well-known' :
-      score >= 55 ? 'visible' :
-      score >= 25 ? 'emerging' : 'not-visible';
-
-    const recommendations: { title: string; description: string; priority: 'high' | 'medium' | 'low' }[] = [];
-
-    if (score < 80) {
-      recommendations.push({
-        title: 'Claim & Complete Google Business Profile',
-        description: `Get listed on Yelp, Better Business Bureau, Angi, HomeAdvisor (if applicable), and ${category}-specific directories. Consistent NAP (Name, Address, Phone) across 20+ directories builds AI entity trust.`,
-        priority: 'high',
-      });
-    }
-    if (score < 72) {
-      recommendations.push({
-       title: `Publish FAQ Content Targeting "${category} in ${normalizedLocation}" Queries`,
-      description: `Create a page answering questions like "How do I find a trusted ${category} in ${normalizedLocation}?" AI engines pull from FAQ-style content. Use FAQPage schema markup.`,
-        priority: 'high',
-      });
-    }
-    if (score < 55) {
-      recommendations.push({
-        title: 'Earn Citations on Yelp, BBB & Industry Directories',
-       description: `Earn mentions in ${normalizedLocation} local news, business journals or industry publications. AI models like ChatGPT train heavily on news content — a single quality press mention can establish brand recognition.`,
-        priority: 'high',
-      });
-    }
-    recommendations.push({
-      title: `Publish FAQ Content Targeting "${category} in ${location}" Queries`,
-      description: `Create a page answering questions like "How do I find a trusted ${category} in ${location}?" AI engines pull from FAQ-style content. Use FAQPage schema markup.`,
-      priority: score < 55 ? 'high' : 'medium',
-    });
-    if (!website) {
-      recommendations.push({
-        title: 'Build a Business Website',
-        description: 'A professional website with your business name, location, services and contact information is essential for AI engines to identify and recommend your business.',
-        priority: 'high',
-      });
-    }
-    recommendations.push({
-      title: 'Generate & Respond to Google Reviews',
-      description: 'Businesses with 50+ Google reviews and owner responses rank significantly higher in AI-generated recommendations. Ask every satisfied customer for a review.',
-      priority: 'medium',
-    });
-    recommendations.push({
-      title: 'Create a Wikipedia or Wikidata Entry',
-      description: 'If your business has been in operation for several years, a Wikipedia entry or Wikidata entity page dramatically improves AI knowledge graph recognition.',
-      priority: score < 48 ? 'medium' : 'low',
-    });
-    recommendations.push({
-      title: 'Get Featured in Local News & Press',
-      description: `Earn mentions in ${location} local news, business journals or industry publications. AI models like ChatGPT train heavily on news content — a single quality press mention can establish brand recognition.`,
-      priority: 'medium',
-    });
-
-    return new Response(
-      JSON.stringify({
-        businessName,
-        location: normalizedLocation,   // ← changed from location
-        category,
-        website: website || null,
-        results,
-        mentionCount,
-        score,
-        visibility,
-        recommendations: recommendations.slice(0, 6),
-      }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
-  } catch (err: any) {
-    return new Response(
-      JSON.stringify({ error: 'SERVER_ERROR', message: err.message || 'Unknown error' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+export const toolCategories = [
+  {
+    name: "AI Writing Tools",
+    icon: "✍️",
+    tools: [
+      { name: "AI Humanizer", slug: "ai-humanizer", description: "Transform AI text into natural human writing" },
+      { name: "AI Humanizer Scorecard", slug: "ai-humanizer-scorecard", description: "Score and audit AI text for human-like writing patterns" },
+      { name: "AI Content Detector", slug: "ai-content-detector", description: "Detect AI generated content" },
+      { name: "AI Paraphraser", slug: "ai-paraphraser", description: "Rewrite text with multiple styles" },
+      { name: "AI Email Writer", slug: "ai-email-writer", description: "Generate professional emails instantly" }
+    ]
+  },
+  {
+    name: "SEO Tools",
+    icon: "🔍",
+    tools: [
+      { name: "SEO Audit Tool", slug: "seo-audit-tool", description: "Free real-time SEO audit powered by Google Lighthouse — check Core Web Vitals, SEO score and 40+ ranking factors" },
+      { name: "AI Crawler Checker", slug: "ai-crawler-checker", description: "Check if ChatGPT, Claude, Perplexity and Gemini can crawl your site — analyze robots.txt for all AI bots" },
+      { name: "AEO & GEO Audit Tool", slug: "aeo-geo-audit", description: "Check if your site is optimized for ChatGPT, Claude, Perplexity & Google AI Overviews — real schema, robots.txt, and live AI visibility test" },
+      { name: "Local Business AI Visibility Checker", slug: "local-biz-visibility", description: "Check how your local business appears in ChatGPT, Perplexity, Google AI & Claude — free AI visibility checker for USA & Canada businesses" },
+      { name: "Robots.txt Generator", slug: "robots-txt-generator", description: "Generate robots.txt file" },
+      { name: "Website Speed Checker", slug: "website-speed-checker", description: "Analyze website performance and Core Web Vitals" },
+      { name: "Meta Description Generator", slug: "meta-description-generator", description: "Generate SEO optimized meta descriptions" },
+      { name: "Schema Markup Generator", slug: "schema-markup-generator", description: "Generate JSON-LD structured data" },
+      { name: "Internal Link Suggester", slug: "internal-link-suggester", description: "Find internal linking opportunities for your new articles instantly" }
+    ]
+  },
+  {
+    name: "Text Utilities",
+    icon: "📝",
+    tools: [
+      { name: "Word Counter", slug: "word-counter", description: "Count words and characters instantly" },
+      { name: "Case Converter", slug: "case-converter", description: "Convert text into different case styles" },
+      { name: "Character Counter", slug: "character-counter", description: "Count characters, words, sentences and readability with social media limits" },
+      { name: "Text Compare", slug: "text-compare", description: "Compare two texts side by side and highlight every difference instantly" },
+      { name: "Lorem Ipsum Generator", slug: "lorem-ipsum-generator", description: "Generate placeholder text" },
+      { name: "Markdown to HTML", slug: "markdown-to-html", description: "Convert markdown into HTML" }
+    ]
+  },
+  {
+    name: "Developer Tools",
+    icon: "⚡",
+    tools: [
+      { name: "JSON Formatter", slug: "json-formatter", description: "Format and validate JSON" },
+      { name: "Base64 Encoder Decoder", slug: "base64-encoder-decoder", description: "Encode and decode Base64" },
+      { name: "CSS Gradient Generator", slug: "css-gradient-generator", description: "Generate CSS gradients visually" },
+      { name: "Password Generator", slug: "password-generator", description: "Generate strong passwords" },
+      { name: "QR Code Generator", slug: "qr-code-generator", description: "Create QR codes instantly" }
+    ]
+  },
+  {
+    name: "Business Creator Tools",
+    icon: "💼",
+    tools: [
+      { name: "SGE Readiness Score", slug: "sge-readiness-score", description: "Check if your site is ready for Google AI Overview" },
+      { name: "SaaS Ghost Calculator", slug: "saas-ghost-calculator", description: "Calculate hidden SaaS costs" },
+      { name: "SaaS Free Tier Stack Builder", slug: "saas-stack-builder", description: "Build your complete startup tech stack using only free tier tools" },
+      { name: "Content Repurposing Multiplier", slug: "content-repurposing-multiplier", description: "Turn one piece of content into multiple formats" }
+    ]
+  },
+  {
+    name: "AI Strategy Tools",
+    icon: "🧠",
+    tools: [
+      { name: "Programmatic SEO Generator", slug: "programmatic-seo-generator", description: "Generate scalable SEO templates" },
+      { name: "Information Nugget Extractor", slug: "information-nugget-extractor", description: "Extract AI-citeable facts and stats to optimize content for SGE" },
+      { name: "Vibe Coding Stack Suggester", slug: "vibe-coding-stack-suggester", description: "Suggest the best modern development stack" }
+    ]
   }
-}
+];
