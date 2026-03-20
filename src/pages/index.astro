@@ -3,64 +3,69 @@ export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { toolCategories } from '../data/tools';
 
-const totalTools = toolCategories.reduce((sum, c) => sum + c.tools.length, 0);
+const totalTools      = toolCategories.reduce((sum, c) => sum + c.tools.length, 0);
 const totalCategories = toolCategories.length;
 
 const categoriesWithUrls = toolCategories.map(cat => ({
-  name: cat.name,
-  icon: cat.icon,
+  name:  cat.name,
+  icon:  cat.icon,
   tools: cat.tools.map(tool => ({
-    name: tool.name,
+    name:        tool.name,
     description: tool.description,
-    slug: tool.slug,
-    href: '/tools/' + tool.slug
-  }))
+    slug:        tool.slug,
+    href:        '/tools/' + tool.slug,
+  })),
 }));
 
 const homepageSchema = {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "FreeAIToolz",
-  "url": "https://www.freeaitoolz.com",
+  "@type":    "WebSite",
+  "name":     "FreeAIToolz",
+  "url":      "https://www.freeaitoolz.com",
   "description": `Free AI tools directory with ${totalTools}+ browser-based utilities. No signup required.`,
   "potentialAction": {
-    "@type": "SearchAction",
-    "target": { "@type": "EntryPoint", "urlTemplate": "https://www.freeaitoolz.com/tools?q={search_term_string}" },
-    "query-input": "required name=search_term_string"
-  }
+    "@type":  "SearchAction",
+    "target": {
+      "@type":       "EntryPoint",
+      "urlTemplate": "https://www.freeaitoolz.com/tools?q={search_term_string}",
+    },
+    "query-input": "required name=search_term_string",
+  },
 };
 
 const totalLabel = String(totalTools) + '+';
 const stats = [
-  { number: totalLabel, label: 'Free Tools' },
-  { number: '100%', label: 'Free Forever' },
-  { number: '0', label: 'Signup Needed' },
-  { number: String(totalCategories), label: 'Categories' },
+  { number: totalLabel,            label: 'Free Tools'     },
+  { number: '100%',                label: 'Free Forever'   },
+  { number: '0',                   label: 'Signup Needed'  },
+  { number: String(totalCategories), label: 'Categories'   },
 ];
 
 const categoryColors: Record<string, string> = {
-  'AI Writing Tools': 'from-violet-500 to-purple-600',
-  'SEO Tools': 'from-blue-500 to-cyan-500',
-  'Text Utilities': 'from-emerald-500 to-teal-500',
-  'Developer Tools': 'from-orange-500 to-amber-500',
+  'AI Writing Tools':       'from-violet-500 to-purple-600',
+  'SEO Tools':              'from-blue-500 to-cyan-500',
+  'Text Utilities':         'from-emerald-500 to-teal-500',
+  'Developer Tools':        'from-orange-500 to-amber-500',
   'Business Creator Tools': 'from-pink-500 to-rose-500',
-  'AI Strategy Tools': 'from-indigo-500 to-blue-600',
+  'AI Strategy Tools':      'from-indigo-500 to-blue-600',
 };
+
 const categoryBg: Record<string, string> = {
-  'AI Writing Tools': 'bg-violet-50 border-violet-100',
-  'SEO Tools': 'bg-blue-50 border-blue-100',
-  'Text Utilities': 'bg-emerald-50 border-emerald-100',
-  'Developer Tools': 'bg-orange-50 border-orange-100',
+  'AI Writing Tools':       'bg-violet-50 border-violet-100',
+  'SEO Tools':              'bg-blue-50 border-blue-100',
+  'Text Utilities':         'bg-emerald-50 border-emerald-100',
+  'Developer Tools':        'bg-orange-50 border-orange-100',
   'Business Creator Tools': 'bg-pink-50 border-pink-100',
-  'AI Strategy Tools': 'bg-indigo-50 border-indigo-100',
+  'AI Strategy Tools':      'bg-indigo-50 border-indigo-100',
 };
+
 const categoryAccent: Record<string, string> = {
-  'AI Writing Tools': 'text-violet-600 group-hover:text-violet-700',
-  'SEO Tools': 'text-blue-600 group-hover:text-blue-700',
-  'Text Utilities': 'text-emerald-600 group-hover:text-emerald-700',
-  'Developer Tools': 'text-orange-600 group-hover:text-orange-700',
+  'AI Writing Tools':       'text-violet-600 group-hover:text-violet-700',
+  'SEO Tools':              'text-blue-600 group-hover:text-blue-700',
+  'Text Utilities':         'text-emerald-600 group-hover:text-emerald-700',
+  'Developer Tools':        'text-orange-600 group-hover:text-orange-700',
   'Business Creator Tools': 'text-pink-600 group-hover:text-pink-700',
-  'AI Strategy Tools': 'text-indigo-600 group-hover:text-indigo-700',
+  'AI Strategy Tools':      'text-indigo-600 group-hover:text-indigo-700',
 };
 ---
 
@@ -71,7 +76,7 @@ const categoryAccent: Record<string, string> = {
   schema={homepageSchema}
 >
 
-  <!-- HERO -->
+  <!-- ── HERO ──────────────────────────────────────────────────── -->
   <section class="relative overflow-hidden bg-gray-950 py-24 text-white">
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
@@ -100,7 +105,6 @@ const categoryAccent: Record<string, string> = {
           Browse All Tools &rarr;
         </a>
       </div>
-      <!-- Stats -->
       <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
         {stats.map(s => (
           <div class="bg-white/5 border border-white/10 rounded-xl py-3 px-2">
@@ -112,23 +116,7 @@ const categoryAccent: Record<string, string> = {
     </div>
   </section>
 
-  <!-- SEARCH -->
-  <section class="py-10 bg-white border-b border-gray-100">
-    <div class="max-w-2xl mx-auto px-4">
-      <div class="relative">
-        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-        <input
-          type="text"
-          placeholder="Search tools (AI Humanizer, JSON Formatter, QR Code...)"
-          class="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 hover:bg-white transition"
-        />
-      </div>
-    </div>
-  </section>
-
-  <!-- POPULAR TOOLS -->
+  <!-- ── POPULAR TOOLS ─────────────────────────────────────────── -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex items-center justify-between mb-8">
@@ -140,9 +128,9 @@ const categoryAccent: Record<string, string> = {
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {[
-          { name: 'AI Humanizer', desc: 'Transform AI text to human writing', href: '/tools/ai-humanizer', gradient: 'from-violet-500 to-purple-600' },
-          { name: 'AI Content Detector', desc: 'Detect AI generated content instantly', href: '/tools/ai-content-detector', gradient: 'from-blue-500 to-cyan-500' },
-          { name: 'Internal Link Suggester', desc: 'Find SEO link opportunities fast', href: '/tools/internal-link-suggester', gradient: 'from-emerald-500 to-teal-500' },
+          { name: 'AI Humanizer',            desc: 'Transform AI text to human writing',       href: '/tools/ai-humanizer',            gradient: 'from-violet-500 to-purple-600' },
+          { name: 'AI Content Detector',     desc: 'Detect AI generated content instantly',    href: '/tools/ai-content-detector',     gradient: 'from-blue-500 to-cyan-500'     },
+          { name: 'Internal Link Suggester', desc: 'Find SEO link opportunities fast',         href: '/tools/internal-link-suggester', gradient: 'from-emerald-500 to-teal-500'  },
           { name: 'Meta Description Generator', desc: 'Generate optimized meta descriptions', href: '/tools/meta-description-generator', gradient: 'from-orange-500 to-amber-500' },
         ].map(tool => (
           <a href={tool.href} class="group relative bg-white border border-gray-200 rounded-2xl p-5 hover:border-transparent hover:shadow-xl transition-all duration-200 overflow-hidden flex flex-col">
@@ -158,7 +146,7 @@ const categoryAccent: Record<string, string> = {
     </div>
   </section>
 
-  <!-- CATEGORY SECTIONS - Dynamic, auto-updates from tools.ts -->
+  <!-- ── CATEGORY SECTIONS (dynamic from tools.ts) ─────────────── -->
   {categoriesWithUrls.map((cat) => (
     <section class={`py-16 border-t ${categoryBg[cat.name] || 'bg-white border-gray-100'}`}>
       <div class="max-w-6xl mx-auto px-4">
@@ -187,7 +175,7 @@ const categoryAccent: Record<string, string> = {
     </section>
   ))}
 
-  <!-- HOW IT WORKS -->
+  <!-- ── HOW IT WORKS ──────────────────────────────────────────── -->
   <section class="py-20 bg-gray-950 text-white">
     <div class="max-w-5xl mx-auto px-4 text-center">
       <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">Simple Process</div>
@@ -195,9 +183,9 @@ const categoryAccent: Record<string, string> = {
       <p class="text-gray-400 mb-12 max-w-xl mx-auto">Three steps to get the results you need &mdash; no friction, no signup.</p>
       <div class="grid md:grid-cols-3 gap-8">
         {[
-          { step: '01', title: 'Choose a Tool', desc: 'Select from AI writing, SEO, text utilities or developer tools.' },
-          { step: '02', title: 'Enter Your Content', desc: 'Paste your text or fill in the required fields in seconds.' },
-          { step: '03', title: 'Get Results Instantly', desc: 'Results appear immediately in your browser. Copy and use.' },
+          { step: '01', title: 'Choose a Tool',        desc: 'Select from AI writing, SEO, text utilities or developer tools.' },
+          { step: '02', title: 'Enter Your Content',   desc: 'Paste your text or fill in the required fields in seconds.'       },
+          { step: '03', title: 'Get Results Instantly', desc: 'Results appear immediately in your browser. Copy and use.'       },
         ].map(step => (
           <div class="relative bg-white/5 border border-white/10 rounded-2xl p-6 text-left">
             <div class="text-4xl font-black text-white/10 mb-3">{step.step}</div>
@@ -209,15 +197,15 @@ const categoryAccent: Record<string, string> = {
     </div>
   </section>
 
-  <!-- TRUST STRIP -->
+  <!-- ── TRUST STRIP ───────────────────────────────────────────── -->
   <section class="py-12 bg-white border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-4">
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
         {[
-          { label: 'Privacy First', desc: 'No data stored ever' },
-          { label: 'Instant Results', desc: 'Browser-based speed' },
-          { label: 'Unlimited Use', desc: 'No word limits' },
-          { label: 'No Signup', desc: 'Use immediately' },
+          { label: 'Privacy First',   desc: 'No data stored ever'   },
+          { label: 'Instant Results', desc: 'Browser-based speed'   },
+          { label: 'Unlimited Use',   desc: 'No word limits'        },
+          { label: 'No Signup',       desc: 'Use immediately'       },
         ].map(trust => (
           <div class="flex flex-col items-center gap-2">
             <p class="font-bold text-gray-900 text-sm">{trust.label}</p>
@@ -228,11 +216,10 @@ const categoryAccent: Record<string, string> = {
     </div>
   </section>
 
-  <!-- SEO + AEO CONTENT - fully dynamic, professional -->
+  <!-- ── SEO + AEO CONTENT ─────────────────────────────────────── -->
   <section class="py-16 bg-gray-50 border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-4">
 
-      <!-- What is FreeAIToolz - uses dynamic counts -->
       <div class="mb-10">
         <h2 class="text-2xl font-extrabold text-gray-900 mb-4">What is FreeAIToolz?</h2>
         <p class="text-gray-600 leading-relaxed">
@@ -240,15 +227,11 @@ const categoryAccent: Record<string, string> = {
         </p>
       </div>
 
-      <!-- Category cards - replaces raw tool name list -->
       <div class="mb-10">
         <h3 class="text-lg font-bold text-gray-900 mb-5">Tool Categories</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {categoriesWithUrls.map(cat => (
-            <a
-              href={'/tools/category/' + cat.name.toLowerCase().replace(/ /g, '-')}
-              class="group flex items-center gap-3 bg-white border border-gray-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-md transition-all"
-            >
+            <a href={'/tools/category/' + cat.name.toLowerCase().replace(/ /g, '-')} class="group flex items-center gap-3 bg-white border border-gray-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-md transition-all">
               <div class={`w-9 h-9 rounded-lg bg-gradient-to-br ${categoryColors[cat.name] || 'from-gray-400 to-gray-500'} flex items-center justify-center text-base shrink-0`}>{cat.icon}</div>
               <div class="min-w-0">
                 <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-600 transition truncate">{cat.name}</p>
@@ -259,15 +242,14 @@ const categoryAccent: Record<string, string> = {
         </div>
       </div>
 
-      <!-- Key facts - fully dynamic, no hardcoded numbers -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
         {[
           { label: 'Total Free Tools', fact: `${totalTools}+ browser-based AI tools available with no signup required` },
-          { label: 'Categories', fact: `${totalCategories} tool categories spanning AI writing, SEO, text, developer, business and strategy` },
-          { label: 'Data Privacy', fact: 'All tools process data locally in the browser — zero server-side storage' },
-          { label: 'Cost', fact: '100% free forever — no premium tiers, no credit card, no hidden fees' },
-          { label: 'AI Models Used', fact: 'Powered by Claude (Anthropic) and GPT-4.1-mini (OpenAI) for AI-powered tools' },
-          { label: 'Compatibility', fact: 'Works on all modern browsers — Chrome, Firefox, Safari, Edge' },
+          { label: 'Categories',       fact: `${totalCategories} tool categories spanning AI writing, SEO, text, developer, business and strategy` },
+          { label: 'Data Privacy',     fact: 'All tools process data locally in the browser — zero server-side storage' },
+          { label: 'Cost',             fact: '100% free forever — no premium tiers, no credit card, no hidden fees' },
+          { label: 'AI Models Used',   fact: 'Powered by Claude (Anthropic) and GPT-4.1-mini (OpenAI) for AI-powered tools' },
+          { label: 'Compatibility',    fact: 'Works on all modern browsers — Chrome, Firefox, Safari, Edge' },
         ].map(item => (
           <div class="bg-white border border-gray-200 rounded-xl p-4">
             <p class="text-xs font-bold text-blue-600 uppercase tracking-wide mb-1">{item.label}</p>
@@ -276,7 +258,6 @@ const categoryAccent: Record<string, string> = {
         ))}
       </div>
 
-      <!-- Who uses it -->
       <div class="mb-10">
         <h3 class="text-lg font-bold text-gray-900 mb-3">Who Uses FreeAIToolz?</h3>
         <p class="text-gray-600 leading-relaxed">
@@ -284,7 +265,6 @@ const categoryAccent: Record<string, string> = {
         </p>
       </div>
 
-      <!-- FAQ -->
       <div class="space-y-6">
         <div>
           <h3 class="text-base font-bold text-gray-900 mb-2">Is FreeAIToolz completely free?</h3>
@@ -299,7 +279,6 @@ const categoryAccent: Record<string, string> = {
           <p class="text-gray-600 text-sm leading-relaxed">FreeAIToolz uses Claude by Anthropic for heavy AI writing tasks like text humanization and paraphrasing, and GPT-4.1-mini by OpenAI for lighter tasks like meta description generation, email writing, and content analysis.</p>
         </div>
       </div>
-
     </div>
   </section>
 
