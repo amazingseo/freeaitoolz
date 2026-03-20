@@ -121,7 +121,7 @@ export default function AiIntentMap() {
       <div style={{background:`linear-gradient(135deg,${T.gray950} 0%,#1e1b4b 100%)`,padding:'1.75rem'}}>
         <div style={{display:'flex',alignItems:'center',gap:'0.5rem',marginBottom:'1.25rem'}}>
           <div style={{width:'7px',height:'7px',borderRadius:'50%',background:T.emerald,boxShadow:`0 0 6px ${T.emerald}`}} />
-          <span style={{fontSize:'0.7rem',fontWeight:700,color:'#94a3b8',textTransform:'uppercase',letterSpacing:'0.1em'}}>AI Search Intent Map &middot; Local Business AEO &middot; Claude Sonnet</span>
+          <span style={{fontSize:'0.7rem',fontWeight:700,color:'#94a3b8',textTransform:'uppercase',letterSpacing:'0.1em'}}>AI Search Intent Map &middot; Local Business AEO &middot; ai2flows</span>
         </div>
 
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem',marginBottom:'0.875rem'}}>
@@ -356,7 +356,7 @@ export default function AiIntentMap() {
           </div>
 
           <div style={{padding:'0.875rem 1.5rem',borderTop:`1px solid ${T.gray100}`,background:T.gray50,display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'0.5rem'}}>
-            <span style={{fontSize:'0.65rem',color:T.gray400}}>Powered by Claude Sonnet 4 &middot; {result.intents.length} intents &middot; 5 categories</span>
+            <span style={{fontSize:'0.65rem',color:T.gray400}}>Powered by ai2flows &middot; {result.intents.length} intents &middot; 5 categories</span>
             <button onClick={()=>{setResult(null);setBusinessType('');setLocation('');setWebsite('');setError('');}} style={{fontSize:'0.72rem',padding:'5px 14px',border:`1px solid ${T.blue}`,borderRadius:'20px',background:T.blueLight,color:T.blue,cursor:'pointer',fontWeight:700}}>← Map Another Business</button>
           </div>
         </div>
