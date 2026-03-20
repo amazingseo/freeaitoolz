@@ -1,58 +1,156 @@
 ---
 export const prerender = true;
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import SchemaValidator from "../../components/tools/SchemaValidator";
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import SchemaValidator from '../../components/tools/SchemaValidator';
+
+const faqs = [
+  {
+    question: "What is structured data and why does it matter for AEO?",
+    answer: "Structured data is machine-readable information added to your webpage using JSON-LD schema markup. It tells AI engines like ChatGPT, Google AI Overviews, and Perplexity exactly what your page is about — whether it's a FAQ, a local business, a product, an article, or a how-to guide. AI engines use structured data to extract and cite content in generated answers. Invalid or missing schema is silently ignored, meaning your content never gets cited even if it's excellent. A properly validated schema is the foundation of any AEO strategy."
+  },
+  {
+    question: "What schema errors does this tool detect?",
+    answer: "The validator checks every JSON-LD block on your live page against schema.org rules. It detects: missing @context and @type fields, missing required properties for each schema type (e.g. FAQPage requires mainEntity, LocalBusiness requires name and address, Article requires headline and author), wrong data types (e.g. address as a plain string instead of a PostalAddress object), malformed FAQPage structures where Question or Answer objects are missing required fields, and invalid JSON that can't be parsed at all. It also flags recommended fields that aren't required but significantly improve AI citation quality."
+  },
+  {
+    question: "How does the AI auto-fix work?",
+    answer: "When errors are detected, the tool sends the broken schema along with a list of specific errors to Claude Haiku AI. Claude rewrites the schema fixing all errors — adding missing required fields with appropriate placeholder values, correcting data type errors, restructuring malformed objects, and ensuring the output is valid JSON-LD. The fixed schema is returned as a ready-to-paste script tag. You review it, fill in any placeholder values specific to your business, then copy it to your website."
+  },
+  {
+    question: "Will fixing my schema immediately improve AI search citations?",
+    answer: "Not instantly, but the process is faster than most people expect. Google AI Overviews typically re-crawl and reflect schema changes within 2–4 weeks. Perplexity's real-time web search can reflect changes within days. ChatGPT's web browsing mode (when enabled) sees your site in near real-time. After fixing your schema, run the AEO & GEO Audit Tool to verify the corrected schema is detected, then re-check your AI visibility using the Local Business AI Visibility Checker. The full cycle from schema fix to measurable AI citation improvement is typically 2–6 weeks."
+  },
+  {
+    question: "What schema types does this tool validate?",
+    answer: "The validator handles all common schema types: FAQPage and Question/Answer pairs, LocalBusiness and PostalAddress, Organization and WebSite, Article, BlogPosting, and NewsArticle, HowTo and HowToStep, BreadcrumbList and ListItem, Product and Offer, Review and Rating, Event, and VideoObject. For each type it checks the required fields defined by schema.org and flags recommended fields that improve search and AI visibility. It also handles @graph containers that wrap multiple schema types in a single script block."
+  },
+  {
+    question: "Why does this tool need to fetch my live URL?",
+    answer: "Your website's actual JSON-LD schema only exists in the rendered HTML that browsers and AI crawlers receive. Unlike a text paste tool, this validator fetches the real page just as GPTBot and ClaudeBot would — seeing exactly what AI engines see. This catches issues that only exist in production: schema injected by plugins that doesn't appear in your code editor, schema that gets malformed during theme rendering, conflicting schema from multiple plugins, and schema that gets stripped by caching layers. ChatGPT and Claude cannot fetch your live URL — this tool can."
+  }
+];
 ---
 
-<BaseLayout title="Free Structured Data Validator & Auto-Fixer | Schema.org JSON-LD Checker" description="Fetch your live URL, validate every JSON-LD schema block against schema.org rules, see exact errors with line numbers, and get Claude AI auto-fixed schema ready to copy-paste. Free.">
-  <section class="relative overflow-hidden bg-gray-950 py-12 text-white">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-0 left-1/3 w-72 h-72 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
-      <div class="absolute bottom-0 right-1/3 w-64 h-64 bg-violet-600 rounded-full opacity-10 blur-3xl"></div>
-    </div>
-    <div class="relative max-w-4xl mx-auto px-4 text-center">
-      <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white px-4 py-1.5 rounded-full text-xs font-bold mb-5 shadow-sm">SEO Tool</div>
-      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">Structured Data Validator & Auto-Fixer</h1>
-      <p class="mt-4 text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">Fetch your live page, find every broken JSON-LD schema, see exact errors, and get Claude AI-fixed schema ready to copy-paste — free, no signup.</p>
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-        <span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">Free Forever</span>
-<span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">No Signup</span>
-<span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">Live URL Fetch</span>
-<span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">AI Auto-Fix</span>
+<ToolLayout
+  title="Free Structured Data Validator & Auto-Fixer — JSON-LD Schema Checker"
+  description="Fetch your live URL, validate every JSON-LD schema block against schema.org rules, see exact errors with line numbers, and get Claude AI auto-fixed schema ready to copy-paste. Free, no signup."
+  keywords="structured data validator, schema markup validator, json-ld validator, schema.org checker, free schema validator, schema error checker, aeo schema tool"
+  toolName="Structured Data Validator & Auto-Fixer"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+  <!-- Tool -->
+  <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
+    <SchemaValidator client:load />
+  </div>
+
+  <!-- Article content -->
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article>
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        Structured Data Validator & Auto-Fixer — Find and Fix Broken Schema Markup
+      </h2>
+      <p class="text-gray-600 leading-relaxed mb-6">
+        Most websites have structured data errors they don't know about. A plugin adds LocalBusiness schema but forgets the required address object. A FAQPage schema has questions missing their acceptedAnswer. An Article schema has no author or datePublished. These errors are silently ignored by Google AI, ChatGPT, and Perplexity — your content never gets cited because your schema is technically invalid. This tool fetches your live page, extracts every JSON-LD block, validates each one against official schema.org rules, shows the exact fields causing errors, and then uses Claude AI to generate a corrected version ready to copy and paste directly onto your site.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Why Invalid Schema Silently Kills Your AI Search Visibility
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Search engines and AI crawlers process structured data through strict validation pipelines. A single missing required field — like a FAQPage without <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">mainEntity</code>, or a LocalBusiness where <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">address</code> is a plain string instead of a PostalAddress object — causes the entire schema block to be discarded. Google's Rich Results Test will show "no rich results eligible." ChatGPT's crawler will skip the structured signals entirely. Perplexity won't cite you for location-based queries. The most dangerous part: your site looks fine to human visitors, so the problem goes undetected for months or years. This tool makes the invisible visible.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        The Most Common Structured Data Errors in 2026
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Based on analysis of thousands of local business websites, the most common schema errors are: (1) FAQPage schemas where each Question is missing <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">acceptedAnswer.text</code> — often generated by WordPress plugins that export empty answer fields. (2) LocalBusiness schemas where <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">address</code> is set to a plain string like "123 Main St Austin TX" instead of a PostalAddress object with <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">addressLocality</code> and <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">addressRegion</code> properties. (3) Article schemas missing <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">author</code> and <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">datePublished</code>. (4) Organization schemas with no <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">url</code> or <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">sameAs</code> links to social profiles — critical for AI knowledge graph recognition. (5) Completely invalid JSON caused by special characters, curly quotes, or encoding issues introduced by CMS editors.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Why This Tool Fetches Your Live URL Instead of Accepting a Text Paste
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Most schema validators accept a text paste or a code snippet. This approach misses real-world errors. Your actual schema errors exist in the rendered HTML that AI crawlers receive — not in your source code. WordPress plugins inject schema at render time that never appears in your editor. Caching plugins sometimes strip or corrupt JSON-LD blocks. Theme updates override schema settings. Multiple plugins can output conflicting schemas that cancel each other out. By fetching your live page exactly as GPTBot and ClaudeBot would, this tool shows you the exact schema situation that AI engines encounter — not what you think is there.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Required vs Recommended Fields — What's the Difference?
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Schema.org defines required fields and recommended fields separately. Required fields — like <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">name</code> for LocalBusiness or <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">mainEntity</code> for FAQPage — must be present or the schema is invalid. Recommended fields are technically optional but significantly improve your AI citation quality. For LocalBusiness, recommended fields include <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">telephone</code>, <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">openingHours</code>, <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">description</code>, and <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">sameAs</code> links. For Article, recommended fields include <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">image</code>, <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">publisher</code>, and <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">description</code>. This validator flags both — errors in red, warnings in amber — so you know which fixes are critical and which are enhancements.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        How to Use the Auto-Fixed Schema
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        After the validator identifies errors and Claude generates a fixed version, you'll see a "Fixed Schema" tab on each block with errors. The fixed schema is wrapped in a proper <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">&lt;script type="application/ld+json"&gt;</code> tag ready to paste. Review the fixed schema and replace any placeholder values (like "Your Business Name" or "Your City") with your real business details. Then locate your existing broken schema in your website's source code or CMS settings and replace it with the corrected version. After deploying, use Google's Rich Results Test at <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">search.google.com/test/rich-results</a> to confirm no errors remain, then run our <a href="/tools/aeo-geo-audit" class="text-blue-600 hover:underline">AEO & GEO Audit Tool</a> to verify the corrected schema is detected.
+      </p>
+
+      <!-- Schema types table -->
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-4">Schema Types Validated — Required Fields</h3>
+      <div class="overflow-x-auto rounded-xl border border-gray-200 mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-gray-50 border-b border-gray-200">
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">Schema Type</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">Required Fields</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">AEO Impact</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {[
+              ['FAQPage', 'mainEntity (array of Questions)', 'Very High'],
+              ['LocalBusiness', 'name, address (PostalAddress object)', 'Very High'],
+              ['Article / BlogPosting', 'headline, author, datePublished', 'High'],
+              ['Organization', 'name', 'High'],
+              ['HowTo', 'name, step (array of HowToStep)', 'High'],
+              ['BreadcrumbList', 'itemListElement (ListItem array)', 'Medium'],
+              ['Product', 'name', 'Medium'],
+              ['Event', 'name, startDate, location', 'Medium'],
+              ['VideoObject', 'name, description, thumbnailUrl, uploadDate', 'Medium'],
+            ].map(([type, fields, impact]) => (
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3"><code class="text-xs bg-violet-50 text-violet-700 px-2 py-0.5 rounded font-mono">{type}</code></td>
+                <td class="px-4 py-3 text-gray-600 text-xs">{fields}</td>
+                <td class="px-4 py-3">
+                  <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${impact === 'Very High' ? 'bg-green-50 text-green-700' : impact === 'High' ? 'bg-blue-50 text-blue-700' : 'bg-gray-100 text-gray-600'}`}>{impact}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- Related tools -->
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Complete Your AEO Schema Workflow</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/local-faq-schema" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+          <span class="text-xl mt-0.5">❓</span>
+          <div>
+            <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">FAQ & Schema Generator</p>
+            <p class="text-xs text-gray-500 mt-0.5">Generate valid FAQPage + LocalBusiness schema</p>
+          </div>
+        </a>
+        <a href="/tools/aeo-geo-audit" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+          <span class="text-xl mt-0.5">📊</span>
+          <div>
+            <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">AEO & GEO Audit Tool</p>
+            <p class="text-xs text-gray-500 mt-0.5">Verify schema is detected after fixing</p>
+          </div>
+        </a>
+        <a href="/tools/local-biz-visibility" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+          <span class="text-xl mt-0.5">🔍</span>
+          <div>
+            <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">Local Business Visibility</p>
+            <p class="text-xs text-gray-500 mt-0.5">Test AI engine recognition after schema fix</p>
+          </div>
+        </a>
       </div>
     </div>
-  </section>
-  <section class="py-10 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
-        <SchemaValidator client:load />
-      </div>
-      <div class="mt-12 pt-8 border-t border-gray-200 max-w-3xl mx-auto">
-        <h3 class="text-base font-bold text-gray-900 mb-4">Complete Your AEO Workflow</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <a href="/tools/aeo-geo-audit" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
-            <span class="text-xl mt-0.5">&#128202;</span>
-            <div><p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">AEO &amp; GEO Audit Tool</p><p class="text-xs text-gray-500 mt-0.5">Full website AEO/GEO audit</p></div>
-          </a>
-          <a href="/tools/local-biz-visibility" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
-            <span class="text-xl mt-0.5">&#128269;</span>
-            <div><p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">Local Business Visibility</p><p class="text-xs text-gray-500 mt-0.5">Test if AI engines know your business</p></div>
-          </a>
-          <a href="/tools/local-faq-schema" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
-            <span class="text-xl mt-0.5">&#10067;</span>
-            <div><p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">FAQ &amp; Schema Generator</p><p class="text-xs text-gray-500 mt-0.5">Generate FAQPage + LocalBusiness schema</p></div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="py-12 bg-gray-950 text-white">
-    <div class="max-w-3xl mx-auto px-4 text-center">
-      <p class="text-gray-400 text-sm mb-4">Need done-for-you AEO strategy and implementation?</p>
-      <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 shadow-lg text-sm">
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        Get Custom AI Solutions from AI2Flows
-      </a>
-    </div>
-  </section>
-</BaseLayout>
+  </div>
+</ToolLayout>
