@@ -1,58 +1,152 @@
 ---
 export const prerender = true;
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import AiIntentMap from "../../components/tools/AiIntentMap";
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import AiIntentMap from '../../components/tools/AiIntentMap';
+
+const faqs = [
+  {
+    question: "What is an AI search intent map?",
+    answer: "An AI search intent map is a structured breakdown of every type of question real customers ask AI engines (ChatGPT, Perplexity, Google AI Overviews) when searching for your business type. Unlike traditional keyword research which focuses on Google search volume, an AI intent map focuses on conversational query patterns — the natural language prompts people type into AI assistants. Each intent is mapped to the best content format to answer it (FAQ page, How-To, Service page), the schema type that helps AI extract and cite it, and the likelihood that AI engines will cite that content in their answers."
+  },
+  {
+    question: "How is this different from regular keyword research?",
+    answer: "Traditional keyword research identifies search terms with measurable Google search volume. AI intent mapping identifies conversational patterns — how people phrase questions to AI assistants, which is fundamentally different. Someone searching Google might type 'Austin plumber.' The same person asking ChatGPT says 'Can you recommend a trustworthy licensed plumber in Austin TX who does emergency repairs?' AI intent mapping captures these full natural language patterns and tells you exactly what content structure and schema type is needed to be cited in the AI's answer. You cannot get this from traditional keyword tools."
+  },
+  {
+    question: "What do the 5 intent categories mean?",
+    answer: "The 5 categories reflect different customer mindsets: INFORMATIONAL covers general questions about your service type (costs, processes, timelines). LOCAL covers location-specific queries directly looking for businesses in your area — the highest conversion intent. EMERGENCY covers urgent queries like '24/7 plumber near me' or 'emergency AC repair tonight' — highest citation potential because AI engines prioritize actionable recommendations. COMPARISON covers queries evaluating options between businesses or services. TRUST covers queries about credentials, licensing, and reputation — particularly important because AI engines increasingly surface trust-based answers for service businesses."
+  },
+  {
+    question: "What does Citation Potential mean?",
+    answer: "Citation Potential estimates how likely an AI engine is to actually cite your business or content when a user asks that specific query. High potential means the query has a clear, specific answer that AI engines want to provide and your content (with the right schema) would be a prime source. Medium potential means your content could be cited but faces competition. Low potential means the query is too generic or competitive for a local business to dominate in AI answers. Focus your content creation on High potential intents first — they deliver the fastest path from content creation to AI citation."
+  },
+  {
+    question: "What is the gap analysis feature?",
+    answer: "When you provide your website URL, the tool fetches your page and analyzes your headings and existing schema. It then compares the 18 AI search intents against what your site currently covers. Each intent gets a coverage status: Covered (your site addresses this), Partial (you have related content but not specifically this query format), or Missing (no content addresses this intent). This tells you exactly which content pieces to create first for maximum impact. Businesses with websites that have been neglected typically find 12–16 of 18 intents missing — a clear content roadmap."
+  },
+  {
+    question: "How long does it take for new content to appear in AI search?",
+    answer: "The timeframe varies by AI engine and content type. Google AI Overviews: 2–4 weeks after a crawl, assuming you've added FAQPage schema to the new content. Perplexity AI: days to a few weeks since it uses real-time web search. ChatGPT Browse (web search mode): near real-time once indexed by Bing. The base ChatGPT model (without browsing): model update cycles, which happen periodically but less predictably. Publishing content that directly answers High potential intents with proper FAQ schema is the fastest path. Most businesses see measurable improvement in AI citations within 4–8 weeks of publishing their first intent-based content pages."
+  }
+];
 ---
 
-<BaseLayout title="Free AI Search Intent Map for Local Businesses | AEO Content Gap Analysis" description="Generate a complete map of 18 AI search intents for your local business — with content format, schema type, citation potential, and gap analysis vs your existing site. Free.">
-  <section class="relative overflow-hidden bg-gray-950 py-12 text-white">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-0 left-1/3 w-72 h-72 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
-      <div class="absolute bottom-0 right-1/3 w-64 h-64 bg-violet-600 rounded-full opacity-10 blur-3xl"></div>
-    </div>
-    <div class="relative max-w-4xl mx-auto px-4 text-center">
-      <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white px-4 py-1.5 rounded-full text-xs font-bold mb-5 shadow-sm">SEO Tool</div>
-      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">AI Search Intent Map for Local Businesses</h1>
-      <p class="mt-4 text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">Generate 18 AI search intents your customers use — mapped to content format, schema type, and citation potential. Includes gap analysis if you provide your website URL.</p>
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-        <span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">Free Forever</span>
-<span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">No Signup</span>
-<span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">18 Intents</span>
-<span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">Gap Analysis</span>
+<ToolLayout
+  title="Free AI Search Intent Map for Local Businesses — AEO Content Gap Analysis"
+  description="Generate 18 AI search intents for your local business mapped to content format, schema type and citation potential. Includes gap analysis vs your existing website. Free, no signup."
+  keywords="ai search intent map, aeo content planning, local business aeo, ai search optimization, chatgpt local business visibility, content gap analysis aeo"
+  toolName="AI Search Intent Map"
+  toolCategory="SEO Tool"
+  faqs={faqs}
+>
+  <!-- Tool -->
+  <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
+    <AiIntentMap client:load />
+  </div>
+
+  <!-- Article content -->
+  <div class="mt-12 max-w-3xl mx-auto">
+    <article>
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        AI Search Intent Map — Know Exactly What Content to Create for AI Visibility
+      </h2>
+      <p class="text-gray-600 leading-relaxed mb-6">
+        The fundamental shift in local search is this: people no longer type keywords — they ask questions. A homeowner doesn't search "HVAC Austin TX" anymore. They ask ChatGPT "who are the most trusted HVAC companies in Austin for emergency AC repair?" These two inputs look similar but require completely different content strategies. This tool maps every question type real customers ask AI engines about your business category, tells you the best content format and schema type for each, and scores the likelihood that AI engines will cite your content. If you provide your website URL, it cross-references your existing content to show exactly what's missing.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Why Local Businesses Need an AI Intent Map in 2026
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        AI-generated local business recommendations now account for an estimated 30–35% of local business discovery in the USA and Canada. When a user asks Perplexity "best electrician in Denver," the AI doesn't run a real-time search and return links — it synthesizes an answer from its knowledge base, structured data it has crawled, and live web results. The businesses that appear in those answers are the ones that have content specifically structured to answer the question types AI engines encounter most frequently. A traditional SEO content strategy optimized for Google keyword rankings will miss most AI search traffic entirely, because the query formats are fundamentally different.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        The 5 AI Intent Categories — What They Mean for Your Business
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Every local business query falls into one of five categories. INFORMATIONAL intents are questions about your service type — costs, processes, and timelines. These convert slower but establish your content as a trusted source. LOCAL intents are location-specific queries directly seeking businesses in your area — the highest commercial intent category. EMERGENCY intents are urgent queries like "24/7 plumber near me" — the most time-sensitive and highest conversion category. COMPARISON intents evaluate options between providers, services, or approaches — critical for businesses competing in crowded local markets. TRUST intents ask about credentials, licensing, reviews, and reputation — particularly important for health, legal, and home service categories where AI engines surface trust-based answers.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        Content Format Mapping — What to Create for Each Intent
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The content format that wins in AI citations is different from what wins in traditional SEO. For INFORMATIONAL intents, FAQ pages with FAQPage schema directly answer the question in a format AI can extract. For LOCAL intents, dedicated location service pages with LocalBusiness schema and local references in the copy work best. For EMERGENCY intents, a page specifically about emergency services with clear availability information, phone number, and Service schema performs well. For COMPARISON intents, How-To guides comparing options with HowTo schema get cited. For TRUST intents, a page about credentials, certifications and experience with Organization schema builds entity authority that AI engines use to recommend your business.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        How the Gap Analysis Works
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        When you provide your website URL, the tool fetches your page and analyzes your existing headings (H1, H2, H3) and schema markup. It then compares these signals against the 18 AI search intents generated for your business type and location. Intents where your headings address the query pattern directly are marked Covered. Intents where you have related content but not in the right format or specificity are marked Partial. Intents with no corresponding content or schema are marked Missing. Most local business websites score 12–16 Missing out of 18 — a clear, prioritized content roadmap. The gap analysis also identifies which schema types you need to add to make your existing content more AI-citable.
+      </p>
+
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">
+        From Intent Map to AI Citations — The Implementation Path
+      </h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The intent map is the research layer. The implementation layer is straightforward: take each High citation potential intent marked Missing, create a dedicated content piece in the recommended format (FAQ page, service page, how-to article), add the recommended schema type, and ensure your business name, city, and service are mentioned naturally throughout. For a local business with no existing AEO content, starting with the 3–5 LOCAL and EMERGENCY intents with High citation potential delivers the fastest return. These intents have the shortest path from content creation to AI citation — typically 2–4 weeks with proper schema — and the highest conversion value when a customer finds you through an AI recommendation.
+      </p>
+
+      <!-- Intent categories table -->
+      <h3 class="text-xl font-bold text-gray-900 mt-8 mb-4">Intent Categories — Content & Schema Mapping</h3>
+      <div class="overflow-x-auto rounded-xl border border-gray-200 mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-gray-50 border-b border-gray-200">
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">Category</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">Example Query</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">Best Format</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700">Schema Type</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {[
+              ['📖 INFORMATIONAL', '"How much does AC repair cost?"', 'FAQ Page', 'FAQPage'],
+              ['📍 LOCAL', '"Best plumber in Austin TX"', 'Location Service Page', 'LocalBusiness'],
+              ['🚨 EMERGENCY', '"Emergency electrician near me 24/7"', 'Emergency Service Page', 'Service + LocalBusiness'],
+              ['⚖️ COMPARISON', '"Licensed vs unlicensed contractor checklist"', 'How-To Guide', 'HowTo'],
+              ['🏆 TRUST', '"Is [Business] licensed in Texas?"', 'About / Credentials Page', 'Organization'],
+            ].map(([cat, query, format, schema]) => (
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 font-semibold text-gray-800 text-xs">{cat}</td>
+                <td class="px-4 py-3 text-gray-600 text-xs italic">{query}</td>
+                <td class="px-4 py-3 text-gray-600 text-xs">{format}</td>
+                <td class="px-4 py-3"><code class="text-xs bg-violet-50 text-violet-700 px-1.5 py-0.5 rounded font-mono">{schema}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- Related tools -->
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-lg font-bold text-gray-900 mb-4">Turn Your Intent Map Into Action</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/tools/local-faq-schema" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+          <span class="text-xl mt-0.5">❓</span>
+          <div>
+            <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">FAQ & Schema Generator</p>
+            <p class="text-xs text-gray-500 mt-0.5">Generate FAQPage schema for High intents</p>
+          </div>
+        </a>
+        <a href="/tools/schema-validator" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+          <span class="text-xl mt-0.5">✅</span>
+          <div>
+            <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">Schema Validator</p>
+            <p class="text-xs text-gray-500 mt-0.5">Validate schema after adding to your pages</p>
+          </div>
+        </a>
+        <a href="/tools/local-biz-visibility" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+          <span class="text-xl mt-0.5">🔍</span>
+          <div>
+            <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">Local Business Visibility</p>
+            <p class="text-xs text-gray-500 mt-0.5">Track AI citation improvement over time</p>
+          </div>
+        </a>
       </div>
     </div>
-  </section>
-  <section class="py-10 bg-white">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
-        <AiIntentMap client:load />
-      </div>
-      <div class="mt-12 pt-8 border-t border-gray-200 max-w-3xl mx-auto">
-        <h3 class="text-base font-bold text-gray-900 mb-4">Complete Your AEO Workflow</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <a href="/tools/aeo-geo-audit" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
-            <span class="text-xl mt-0.5">&#128202;</span>
-            <div><p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">AEO &amp; GEO Audit Tool</p><p class="text-xs text-gray-500 mt-0.5">Full website AEO/GEO audit</p></div>
-          </a>
-          <a href="/tools/local-biz-visibility" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
-            <span class="text-xl mt-0.5">&#128269;</span>
-            <div><p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">Local Business Visibility</p><p class="text-xs text-gray-500 mt-0.5">Test if AI engines know your business</p></div>
-          </a>
-          <a href="/tools/local-faq-schema" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
-            <span class="text-xl mt-0.5">&#10067;</span>
-            <div><p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">FAQ &amp; Schema Generator</p><p class="text-xs text-gray-500 mt-0.5">Generate FAQPage + LocalBusiness schema</p></div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="py-12 bg-gray-950 text-white">
-    <div class="max-w-3xl mx-auto px-4 text-center">
-      <p class="text-gray-400 text-sm mb-4">Need done-for-you AEO strategy and implementation?</p>
-      <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 shadow-lg text-sm">
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        Get Custom AI Solutions from AI2Flows
-      </a>
-    </div>
-  </section>
-</BaseLayout>
+  </div>
+</ToolLayout>
