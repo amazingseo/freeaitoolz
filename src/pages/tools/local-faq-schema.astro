@@ -1,0 +1,240 @@
+---
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LocalFaqSchemaGenerator from "../../components/tools/LocalFaqSchemaGenerator";
+---
+
+<BaseLayout
+  title="Free Local Business FAQ & Schema Generator — FAQPage + LocalBusiness JSON-LD"
+  description="Generate 10 AEO-optimized FAQ questions and ready-to-paste FAQPage + LocalBusiness JSON-LD schema for your local business. Free. No signup. Get cited by ChatGPT, Perplexity & Google AI."
+>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-gray-950 py-12 text-white">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 left-1/3 w-72 h-72 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
+      <div class="absolute bottom-0 right-1/3 w-64 h-64 bg-violet-600 rounded-full opacity-10 blur-3xl"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 text-center">
+      <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white px-4 py-1.5 rounded-full text-xs font-bold mb-5 shadow-sm">
+        SEO Tool
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+        Local Business FAQ &amp; Schema Generator
+      </h1>
+      <p class="mt-4 text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
+        Generate 10 AI-optimized FAQ questions + ready-to-paste FAQPage and LocalBusiness JSON-LD schema.
+        Get your business cited by ChatGPT, Perplexity &amp; Google AI Overviews &mdash; no signup required.
+      </p>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">Free Forever</span>
+        <span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">No Signup</span>
+        <span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">FAQPage + LocalBusiness Schema</span>
+        <span class="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-full">Claude Sonnet 4</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section class="py-10 bg-white">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-800">
+        <LocalFaqSchemaGenerator client:load />
+      </div>
+
+      <!-- Content article -->
+      <div class="mt-12 max-w-3xl mx-auto">
+        <article>
+          <h2 class="text-2xl font-extrabold text-gray-900 mb-4">Local Business FAQ &amp; Schema Generator &mdash; Get Cited in AI Search</h2>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            When a potential customer asks ChatGPT &ldquo;best plumber in Austin TX&rdquo; or Google AI &ldquo;how much does HVAC repair cost?&rdquo;, the businesses that get cited are the ones with properly structured FAQ schema and LocalBusiness entity markup. This tool generates both &mdash; customized for your specific business, category and location &mdash; using Claude Sonnet to write questions that match real AI search queries, and outputs copy-paste-ready JSON-LD schema you can add to your website in minutes.
+          </p>
+
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Why FAQPage Schema Is the #1 AEO Action for Local Businesses in 2026</h3>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            FAQPage JSON-LD is the single highest-impact structured data type for local businesses targeting AI search. When ChatGPT, Perplexity and Google AI Overviews crawl your website, they specifically look for FAQPage schema to extract authoritative question-and-answer pairs. A page with FAQPage schema is significantly more likely to be cited as a source in AI-generated answers than an identical page without it. Princeton University research shows that properly structured FAQ content can boost AI visibility by up to 40%. For local businesses competing in categories like HVAC, plumbing, dental, legal and real estate, this is the fastest path from &ldquo;not found&rdquo; to &ldquo;actively recommended.&rdquo;
+          </p>
+
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">What Makes an FAQ Question AEO-Optimized?</h3>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Not all FAQ questions are equal. Generic questions like &ldquo;What services do you offer?&rdquo; have no AI search value &mdash; nobody asks that in ChatGPT. AEO-optimized questions match the exact conversational prompts that real customers type into AI engines: &ldquo;What is the average cost of AC repair in Phoenix AZ?&rdquo;, &ldquo;How do I find an emergency plumber near me at night?&rdquo;, &ldquo;Is [Business Name] licensed and insured in Texas?&rdquo; Each answer must be 60&ndash;120 words &mdash; short enough for AI to extract as a standalone answer block, but long enough to establish context and trust. The answers generated by this tool include your business name and location naturally, follow the answer-first structure that AI engines prefer, and establish E-E-A-T signals like experience, licensing and service area.
+          </p>
+
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">LocalBusiness Schema &mdash; Define Your Entity for AI Knowledge Graphs</h3>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            The LocalBusiness JSON-LD schema is how you tell AI knowledge graphs exactly who you are. It establishes your business as a named entity with a specific type, address, service area, and set of attributes. When ChatGPT or Claude encounters a query about a business in your category and location, they cross-reference their knowledge graph &mdash; which is built from sources including structured data crawled from websites. A complete LocalBusiness schema with <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">name</code>, <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">address</code>, <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">telephone</code>, <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">areaServed</code> and <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">sameAs</code> links to your Google Business Profile, Yelp, and social media dramatically increases the chance that AI engines can identify and recommend your specific business.
+          </p>
+
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">The Funnel: From Schema to AI Citation</h3>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            The path from adding schema to being cited by AI follows a predictable sequence. First, AI crawlers (GPTBot, ClaudeBot, PerplexityBot) visit your site and extract your FAQPage and LocalBusiness schema. Second, this structured data enters the training or retrieval index used by each AI engine. Third, when a user asks a relevant question, the AI surfaces your business as a cited source. The timeline varies: Google AI Overviews typically reflect schema changes within 2&ndash;4 weeks after a crawl. Perplexity&apos;s real-time search can surface you within days. Training-based models like the base version of ChatGPT reflect changes on model update cycles, but ChatGPT Search (with web browsing) can see your site in near real-time.
+          </p>
+
+          <!-- What gets generated table -->
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-4">What This Tool Generates</h3>
+          <div class="overflow-x-auto rounded-xl border border-gray-200 mb-6">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-200">
+                  <th class="px-4 py-3 text-left font-semibold text-gray-700">Output</th>
+                  <th class="px-4 py-3 text-left font-semibold text-gray-700">Format</th>
+                  <th class="px-4 py-3 text-left font-semibold text-gray-700">AI Impact</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-semibold text-gray-800">10 AEO-Optimized FAQ Questions</td>
+                  <td class="px-4 py-3 text-gray-600">Plain text Q&amp;A pairs</td>
+                  <td class="px-4 py-3"><span class="text-xs font-bold bg-green-50 text-green-700 px-2 py-1 rounded-full">Very High</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-semibold text-gray-800">FAQPage JSON-LD Schema</td>
+                  <td class="px-4 py-3 text-gray-600">Copy-paste &lt;script&gt; tag</td>
+                  <td class="px-4 py-3"><span class="text-xs font-bold bg-green-50 text-green-700 px-2 py-1 rounded-full">Very High</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-semibold text-gray-800">LocalBusiness JSON-LD Schema</td>
+                  <td class="px-4 py-3 text-gray-600">Copy-paste &lt;script&gt; tag</td>
+                  <td class="px-4 py-3"><span class="text-xs font-bold bg-green-50 text-green-700 px-2 py-1 rounded-full">High</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-semibold text-gray-800">FAQ Page SEO Title + Meta</td>
+                  <td class="px-4 py-3 text-gray-600">Plain text, copy-ready</td>
+                  <td class="px-4 py-3"><span class="text-xs font-bold bg-blue-50 text-blue-700 px-2 py-1 rounded-full">Medium</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-semibold text-gray-800">Platform-specific add instructions</td>
+                  <td class="px-4 py-3 text-gray-600">Step-by-step for 6 platforms</td>
+                  <td class="px-4 py-3"><span class="text-xs font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Guidance</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- Related tools -->
+        <div class="mt-12 pt-8 border-t border-gray-200">
+          <h3 class="text-base font-bold text-gray-900 mb-4">Complete Your AEO Workflow</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/tools/aeo-geo-audit" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+              <span class="text-xl mt-0.5">&#128202;</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">AEO &amp; GEO Audit Tool</p>
+                <p class="text-xs text-gray-500 mt-0.5">Verify your schema was detected after adding</p>
+              </div>
+            </a>
+            <a href="/tools/local-biz-visibility" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+              <span class="text-xl mt-0.5">&#128269;</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">Local Business Visibility Checker</p>
+                <p class="text-xs text-gray-500 mt-0.5">Test if AI engines know your business</p>
+              </div>
+            </a>
+            <a href="/tools/ai-crawler-checker" class="group flex items-start gap-3 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all">
+              <span class="text-xl mt-0.5">&#129302;</span>
+              <div>
+                <p class="font-semibold text-sm text-gray-900 group-hover:text-blue-700">AI Crawler Checker</p>
+                <p class="text-xs text-gray-500 mt-0.5">Ensure AI bots can access your site</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Facts -->
+  <section class="w-full bg-gray-50 border-t border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 py-12">
+      <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
+        </svg>
+        Quick Facts
+      </h2>
+      <div class="divide-y divide-gray-200">
+        {[
+          { label: 'Tool Name',      value: 'Local Business FAQ & Schema Generator' },
+          { label: 'Category',       value: 'SEO Tools', badge: true },
+          { label: 'Output',         value: '10 FAQs + FAQPage Schema + LocalBusiness Schema' },
+          { label: 'Price',          value: 'Free', green: true },
+          { label: 'Login Required', value: 'No', green: true },
+          { label: 'Daily Limit',    value: '5 generations / day' },
+          { label: 'AI Model',       value: 'Claude Sonnet 4 (higher quality than Haiku)' },
+          { label: 'Schema Types',   value: 'FAQPage JSON-LD + LocalBusiness JSON-LD' },
+          { label: 'Platforms',      value: 'WordPress, Wix, Squarespace, Shopify, HTML + more' },
+        ].map(item => (
+          <div class="flex items-center justify-between py-3">
+            <span class="text-sm font-medium text-gray-600">{item.label}</span>
+            <span class={`text-sm font-semibold ${item.green ? 'text-green-700 bg-green-50 px-3 py-1 rounded-full' : item.badge ? 'text-blue-600 bg-blue-50 px-3 py-1 rounded-full' : 'text-gray-800'}`}>{item.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How to use -->
+  <section class="py-14 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold text-gray-900 mb-8">How to Use the FAQ &amp; Schema Generator</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { n: 1, title: 'Enter Business Details',    desc: 'Type your business name, select category, enter city &amp; state. Add website, phone and a short description for more accurate results.' },
+          { n: 2, title: 'Click Generate',            desc: 'Claude Sonnet analyzes your business type and writes 10 questions that match real AI search queries in ~15 seconds.' },
+          { n: 3, title: 'Review &amp; Copy Schemas', desc: 'Review your FAQ questions, then copy the FAQPage and LocalBusiness JSON-LD schema from tabs 2 and 3.' },
+          { n: 4, title: 'Add to Your Website',       desc: 'Paste the schema into your website &lt;head&gt;. The How to Add tab has step-by-step instructions for every major platform.' },
+        ].map(step => (
+          <div class="flex flex-col items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-sm">{step.n}</div>
+            <div>
+              <p class="font-bold text-gray-900 text-sm">{step.title}</p>
+              <p class="text-sm text-gray-500 mt-1 leading-relaxed" set:html={step.desc}></p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-14 bg-white border-t border-gray-100">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold text-gray-900 mb-2 text-center">Frequently Asked Questions</h2>
+      <p class="text-gray-500 text-sm text-center mb-8">About FAQPage schema and local business AEO</p>
+      <div class="space-y-3">
+        {[
+          { q: 'Will adding this schema immediately get my business cited in ChatGPT?', a: 'Not instantly — but it starts the process. GPTBot (ChatGPT\'s crawler) and ClaudeBot typically crawl websites within 2–4 weeks of publishing. Google AI Overviews reflect schema changes faster, often within days. ChatGPT\'s web search (Browse with Bing) can see your site in near real-time. The key is combining this schema with consistent directory listings, Google Business Profile completion, and allowing AI crawlers in your robots.txt.' },
+          { q: 'Does this replace my existing FAQ page content?', a: 'No. The FAQ schema should be added in addition to your existing page content, not instead of it. The best approach is: (1) create or update an FAQ page on your website with these questions and answers as visible text, (2) add the FAQPage JSON-LD schema to that page\'s head section. AI engines look for alignment between the visible page content and the schema, so both should match.' },
+          { q: 'Why use Claude Sonnet instead of Haiku for this tool?', a: 'FAQ generation requires nuanced understanding of your specific business type, local market context, and the exact phrasing customers use when asking AI engines. Claude Sonnet produces significantly better question quality — more specific to your location, more aligned with real search intent, and with answers that follow AEO best practices. The slightly higher cost (~$0.008 vs $0.002) is worth it for content you\'ll be using on your website long-term.' },
+          { q: 'Can I use this for multiple pages or just one FAQ page?', a: 'You can generate separate FAQ schemas for different pages — for example, one for your homepage FAQ, one for a specific service page (e.g., "Emergency HVAC Repair FAQ"), and one for a location page if you serve multiple cities. Generate a separate schema for each page, customizing the description field to reflect that page\'s specific focus.' },
+          { q: 'What is the difference between FAQPage schema and LocalBusiness schema?', a: 'FAQPage schema structures your Q&A content for AI extraction — it tells AI engines "these questions have authoritative answers here." LocalBusiness schema establishes your entity — it tells AI engines "this is who we are, where we are, and what we do." Both are needed: FAQPage gets your content cited, LocalBusiness gets your business recognized. Add FAQPage to your FAQ page; add LocalBusiness to every page.' },
+        ].map(item => (
+          <details class="group border border-gray-200 rounded-2xl overflow-hidden bg-white hover:border-blue-200 transition-colors">
+            <summary class="flex items-center justify-between px-5 py-4 cursor-pointer font-semibold text-gray-900 text-sm list-none select-none">
+              <span>{item.q}</span>
+              <svg class="w-4 h-4 text-gray-400 shrink-0 ml-3 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-12 bg-gray-950 text-white">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <p class="text-gray-400 text-sm mb-4">Want done-for-you AEO strategy and schema implementation for your business?</p>
+      <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 shadow-lg text-sm">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        Get Custom AI Solutions from AI2Flows
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
