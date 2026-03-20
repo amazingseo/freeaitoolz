@@ -16,30 +16,22 @@ interface Props {
 }
 
 const {
-  title,
-  description,
+  title, description,
   keywords = 'free AI tools, SEO tools, developer tools',
   ogImage = '/og-default.png',
-  canonical,
-  type = 'website',
-  schema,
-  faqSchema,
-  breadcrumbs,
-  noindex = false
+  canonical, type = 'website',
+  schema, faqSchema, breadcrumbs, noindex = false
 } = Astro.props;
 
-const siteUrl = 'https://www.freeaitoolz.com';
-const pageUrl = canonical || `${siteUrl}${Astro.url.pathname}`;
-const fullTitle = title.includes('FreeAIToolz') ? title : `${title} | FreeAIToolz`;
+const siteUrl    = 'https://www.freeaitoolz.com';
+const pageUrl    = canonical || `${siteUrl}${Astro.url.pathname}`;
+const fullTitle  = title.includes('FreeAIToolz') ? title : `${title} | FreeAIToolz`;
 
 const defaultSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "FreeAIToolz",
-  "url": siteUrl,
+  "@context": "https://schema.org", "@type": "WebSite",
+  "name": "FreeAIToolz", "url": siteUrl,
   "description": "Free AI tools for writing, SEO and developers."
 };
-
 const pageSchema = schema || defaultSchema;
 
 const trendingTools = [
@@ -48,445 +40,626 @@ const trendingTools = [
   toolCategories[5].tools[0],
   toolCategories[4].tools[0]
 ];
+
+const totalTools = toolCategories.reduce((s, c) => s + c.tools.length, 0);
+
+// Category accent colours for mega menu columns
+const catColors: Record<string, string> = {
+  'AI Writing Tools':       'text-violet-600 bg-violet-50',
+  'SEO Tools':              'text-blue-600 bg-blue-50',
+  'Text Utilities':         'text-emerald-600 bg-emerald-50',
+  'Developer Tools':        'text-orange-600 bg-orange-50',
+  'Business Creator Tools': 'text-pink-600 bg-pink-50',
+  'AI Strategy Tools':      'text-indigo-600 bg-indigo-50',
+};
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<title>{fullTitle}</title>
-
-<meta name="description" content={description} />
-<meta name="keywords" content={keywords} />
-<meta name="author" content="AI2Flows" />
-<meta name="publisher" content="FreeAIToolz" />
-
-<link rel="canonical" href={pageUrl} />
-
-{noindex && <meta name="robots" content="noindex,nofollow" />}
-<meta name="robots" content="index, follow" />
-
-<meta property="og:type" content={type} />
-<meta property="og:url" content={pageUrl} />
-<meta property="og:title" content={fullTitle} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={`${siteUrl}${ogImage}`} />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={fullTitle} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
-
-<link rel="icon" href="/favicon.svg" />
-
-<script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
-
-{faqSchema && (
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-)}
-
-<script type="application/ld+json">{JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "FreeAIToolz",
-  "url": "https://www.freeaitoolz.com",
-  "logo": "https://www.freeaitoolz.com/favicon.svg",
-  "founder": { "@type": "Organization", "name": "AI2Flows" },
-  "sameAs": ["https://www.ai2flows.com"]
-})}
-</script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content={keywords} />
+  <meta name="author" content="AI2Flows" />
+  <meta name="publisher" content="FreeAIToolz" />
+  <link rel="canonical" href={pageUrl} />
+  {noindex && <meta name="robots" content="noindex,nofollow" />}
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={pageUrl} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+  <link rel="icon" href="/favicon.svg" />
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  <script type="application/ld+json">{JSON.stringify({
+    "@context": "https://schema.org", "@type": "Organization",
+    "name": "FreeAIToolz", "url": "https://www.freeaitoolz.com",
+    "logo": "https://www.freeaitoolz.com/favicon.svg",
+    "founder": { "@type": "Organization", "name": "AI2Flows" },
+    "sameAs": ["https://www.ai2flows.com"]
+  })}</script>
 </head>
 
 <body class="min-h-screen flex flex-col bg-white">
 
-<!-- Announcement -->
-
-<div class="bg-gray-950 text-gray-400 text-xs py-2 text-center">
-All tools are <span class="text-emerald-400 font-bold">100% free</span>
-</div>
-
-<!-- NAVBAR -->
-
-<nav class="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-gray-200/60 shadow-sm">
-
-<div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-
-<!-- Logo -->
-
-<a href="/" class="flex items-center gap-2">
-<img src="/favicon.svg" class="w-8 h-8" alt="FreeAIToolz logo" />
-<span class="text-xl font-bold">
-Free<span class="text-blue-600">AI</span>Toolz
-</span>
-</a>
-
-<!-- Desktop Menu -->
-
-<div class="hidden lg:flex items-center gap-8 text-sm font-semibold">
-
-<a href="/" class="text-gray-700 hover:text-blue-600 transition">
-Home
-</a>
-
-<!-- Tools Dropdown -->
-
-<div class="relative">
-
-<button
-id="toolsButton"
-class="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition">
-
-Tools
-
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round"
-d="M19 9l-7 7-7-7"/>
-</svg>
-
-</button>
-
-<!-- Dropdown -->
-
-<div
-id="toolsDropdown"
-class="absolute left-1/2 -translate-x-1/2 mt-4 w-[380px] hidden opacity-0 scale-95 transition-all duration-200">
-
-<div class="rounded-xl bg-white/90 backdrop-blur-xl shadow-xl border border-gray-200 p-3">
-{toolCategories.map((cat,index)=> (
-
-<div class="mb-1">
-
-<button
-class="categoryBtn w-full text-left flex items-center gap-3 px-3 py-2 font-semibold text-gray-800 hover:bg-gray-50 rounded-lg transition"
-data-index={index}>
-
-<span class="text-lg">{cat.icon}</span>
-
-<span>{cat.name}</span>
-
-</button>
-
-<div class="toolList hidden pl-8 pb-1 space-y-1">
-
-{cat.tools.map(tool=> (
-
-<a
-href={`/tools/${tool.slug}`}
-class="block py-1 text-sm text-gray-600 hover:text-blue-600 hover:translate-x-1 transition">
-
-{tool.name}
-
-</a>
-
-))}
-
-</div>
-
-</div>
-
-))}
-
-</div>
-
-</div>
-
-</div>
-
-<a href="/tools" class="text-gray-700 hover:text-blue-600 transition">
-All Tools
-</a>
-
-<a href="/about" class="text-gray-700 hover:text-blue-600 transition">
-About
-</a>
-
-</div>
-
-<!-- Mobile Button -->
-
-<button
-id="mobileMenuBtn"
-class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
-
-<svg xmlns="http://www.w3.org/2000/svg"
-class="w-6 h-6 text-gray-700"
-fill="none"
-viewBox="0 0 24 24"
-stroke="currentColor">
-
-<path stroke-linecap="round"
-stroke-linejoin="round"
-stroke-width="2"
-d="M4 6h16M4 12h16M4 18h16"/>
-
-</svg>
-
-</button>
-
-</div>
-
-</nav>
-
-<!-- MOBILE MENU -->
-
-<div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-gray-200">
-
-<div class="px-4 py-4 space-y-3">
-
-<a href="/" class="block font-semibold text-gray-700">
-Home
-</a>
-
-<a href="/tools" class="block font-semibold text-gray-700">
-All Tools
-</a>
-
-<a href="/about" class="block font-semibold text-gray-700">
-About
-</a>
-
-</div>
-
-</div>
-
-<!-- SEARCH -->
-
-<section class="border-b bg-gray-50 py-6">
-
-<div class="max-w-4xl mx-auto px-4">
-
-<form action="/tools">
-
-<input
-type="text"
-name="q"
-placeholder="Search tools..."
-class="w-full border border-gray-200 rounded-xl px-4 py-3"
-/>
-
-</form>
-
-</div>
-
-</section>
-
-<!-- TRENDING -->
-
-<section class="py-6 border-b">
-
-<div class="max-w-6xl mx-auto px-4">
-
-<h3 class="text-sm font-semibold text-gray-500 mb-3">
-Trending Tools
-</h3>
-
-<div class="flex flex-wrap gap-3">
-
-{trendingTools.map(tool => (
-
-<a
-href={`/tools/${tool.slug}`}
-class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100 transition"
->
-{tool.name}
-</a>
-
-))}
-
-</div>
-
-</div>
-
-</section>
-
-<!-- BREADCRUMBS -->
-
-{breadcrumbs && (
-
-<div class="max-w-7xl mx-auto px-4 mt-6 text-sm text-gray-500">
-
-{breadcrumbs.map((item,i)=>(
-
-<>
-
-{i>0 && <span class="mx-2">›</span>}
-
-{item.url ? (
-<a href={item.url} class="hover:text-blue-600">{item.label}</a>
-):(
-<span>{item.label}</span>
-)}
-
-</>
-
-))}
-
-</div>
-
-)}
-
-<main class="flex-1">
-<slot />
-</main>
-
-<!-- FOOTER -->
-
-<footer class="bg-gray-950 text-gray-400 mt-20">
-  <div class="max-w-7xl mx-auto px-4 py-12">
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-gray-800">
-
-      <div>
-        <a href="/" class="flex items-center gap-2 mb-3">
-          <img src="/favicon.svg" class="w-7 h-7" alt="FreeAIToolz logo" loading="lazy" />
-          <span class="text-white font-bold text-lg">Free<span class="text-blue-400">AI</span>Toolz</span>
-        </a>
-        <p class="text-sm text-gray-500 leading-relaxed">
-          Free AI tools, SEO utilities and developer tools. No signup required. Everything runs in your browser.
-        </p>
-      </div>
-
-      <div>
-        <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="/" class="hover:text-white transition">Home</a></li>
-          <li><a href="/tools" class="hover:text-white transition">All Tools</a></li>
-          <li><a href="/about" class="hover:text-white transition">About</a></li>
-          <li><a href="/privacy" class="hover:text-white transition">Privacy Policy</a></li>
-          <li><a href="/terms" class="hover:text-white transition">Terms & Conditions</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="text-white font-semibold text-sm mb-4">Need Custom AI?</h4>
-        <a
-          href="https://www.ai2flows.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition"
+  <!-- Announcement bar -->
+  <div class="bg-gray-950 text-gray-400 text-xs py-2 text-center">
+    All tools are <span class="text-emerald-400 font-bold">100% free</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 backdrop-blur-xl bg-white/90 border-b border-gray-200/60 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 shrink-0">
+        <img src="/favicon.svg" class="w-8 h-8" alt="FreeAIToolz logo" />
+        <span class="text-xl font-bold">Free<span class="text-blue-600">AI</span>Toolz</span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <div class="hidden lg:flex items-center gap-8 text-sm font-semibold">
+        <a href="/" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+
+        <!-- Tools trigger -->
+        <button
+          id="megaMenuBtn"
+          aria-expanded="false"
+          aria-controls="megaMenu"
+          class="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition group"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          Tools
+          <svg id="megaChevron" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
-          Visit AI2Flows
-        </a>
-        <p class="text-xs text-gray-500 mt-3">
-          Custom AI automations, GHL funnels, chatbots and more.
-        </p>
+        </button>
+
+        <a href="/tools" class="text-gray-700 hover:text-blue-600 transition">All Tools</a>
+        <a href="/about" class="text-gray-700 hover:text-blue-600 transition">About</a>
+      </div>
+
+      <!-- Desktop right: search + badge -->
+      <div class="hidden lg:flex items-center gap-3">
+        <button id="searchTrigger" aria-label="Search tools" class="flex items-center gap-2 text-sm text-gray-500 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <span>Search tools</span>
+          <kbd class="hidden xl:inline-flex items-center gap-0.5 bg-white border border-gray-200 rounded px-1.5 text-xs text-gray-400 font-mono">⌘K</kbd>
+        </button>
+        <span class="text-xs font-bold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full border border-blue-100">
+          {totalTools}+ Free
+        </span>
+      </div>
+
+      <!-- Mobile right: search icon + hamburger -->
+      <div class="flex lg:hidden items-center gap-2">
+        <button id="searchTriggerMobile" aria-label="Search" class="p-2 rounded-lg hover:bg-gray-100">
+          <svg class="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+        <button id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false" class="p-2 rounded-lg hover:bg-gray-100">
+          <!-- hamburger icon (shown when closed) -->
+          <svg id="iconOpen" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <!-- close icon (shown when open) -->
+          <svg id="iconClose" class="w-6 h-6 text-gray-700 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
     </div>
+  </nav>
 
-    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
-      <p>© {new Date().getFullYear()} FreeAIToolz. All rights reserved. Built by <a href="https://www.ai2flows.com/" class="text-blue-400 hover:text-blue-300" target="_blank">AI2Flows</a></p>
-      <div class="flex gap-4">
-        <a href="/privacy" class="hover:text-gray-400 transition">Privacy Policy</a>
-        <a href="/terms" class="hover:text-gray-400 transition">Terms & Conditions</a>
-        <a href="/about" class="hover:text-gray-400 transition">About</a>
-      </div>
-    </div>
-
-  </div>
-</footer>
-<script>
-
-/* Desktop Dropdown */
-
-const btn = document.getElementById("toolsButton")
-const menu = document.getElementById("toolsDropdown")
-
-btn.addEventListener("mouseenter", () => {
-menu.classList.remove("hidden","opacity-0","scale-95")
-})
-
-menu.addEventListener("mouseenter", () => {
-menu.classList.remove("hidden")
-})
-
-btn.addEventListener("mouseleave", () => {
-setTimeout(() => {
-if (!menu.matches(":hover")) {
-menu.classList.add("opacity-0","scale-95")
-setTimeout(()=>menu.classList.add("hidden"),150)
-}
-},150)
-})
-
-menu.addEventListener("mouseleave", () => {
-menu.classList.add("opacity-0","scale-95")
-setTimeout(()=>menu.classList.add("hidden"),150)
-})
-
-/* Category Hover */
-
-const categories = document.querySelectorAll(".categoryBtn")
-const lists = document.querySelectorAll(".toolList")
-
-categories.forEach((btn,i)=>{
-btn.addEventListener("mouseenter", ()=>{
-lists.forEach(l=>l.classList.add("hidden"))
-lists[i].classList.remove("hidden")
-})
-})
-
-/* Mobile Menu */
-
-const mobileBtn = document.getElementById("mobileMenuBtn")
-const mobileMenu = document.getElementById("mobileMenu")
-
-mobileBtn.addEventListener("click", ()=>{
-mobileMenu.classList.toggle("hidden")
-})
-
-</script>
-<!-- Floating CTA Button -->
-<div id="floatingCta" class="fixed bottom-6 right-6 z-50 hidden sm:flex flex-col items-end gap-3">
-
-  <!-- Tooltip -->
-  <div id="ctaTooltip" class="hidden bg-gray-900 text-white text-xs rounded-xl px-4 py-3 shadow-xl max-w-[200px] text-center border border-gray-700">
-    <p class="font-semibold text-white mb-1">Need Custom AI Solutions?</p>
-    <p class="text-gray-400">GHL funnels, chatbots, automations & more</p>
-  </div>
-
-  <!-- Button -->
-  <a
-    href="https://www.ai2flows.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm px-5 py-3 rounded-2xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200 hover:scale-105"
-    id="ctaBtn"
+  <!-- ═══════════════════════════════════════════════════════════════════
+       DESKTOP MEGA MENU — full-width panel below navbar
+  ═══════════════════════════════════════════════════════════════════ -->
+  <div
+    id="megaMenu"
+    role="dialog"
+    aria-label="Tools menu"
+    class="fixed top-[calc(4rem+1.5rem)] left-0 right-0 z-40 hidden"
   >
-    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-    </svg>
-    Custom AI Solutions
-  </a>
+    <!-- Backdrop -->
+    <div id="megaBackdrop" class="fixed inset-0 bg-black/20 backdrop-blur-sm -z-10"></div>
 
-</div>
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
 
-<script>
-  const ctaBtn = document.getElementById('ctaBtn');
-  const ctaTooltip = document.getElementById('ctaTooltip');
+        <!-- Header row -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50">
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-bold text-gray-900">Browse {totalTools}+ Free Tools</span>
+            <span class="text-xs text-gray-400">{toolCategories.length} categories</span>
+          </div>
+          <a href="/tools" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+            View all tools
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
 
-  ctaBtn.addEventListener('mouseenter', () => {
-    ctaTooltip.classList.remove('hidden');
-  });
+        <!-- 6-column grid — one per category -->
+        <div class="grid grid-cols-6 divide-x divide-gray-100">
+          {toolCategories.map((cat) => {
+            const cc = catColors[cat.name] || 'text-blue-600 bg-blue-50';
+            const [textCls, bgCls] = cc.split(' ');
+            return (
+              <div class="p-4">
+                <!-- Category header -->
+                <a
+                  href={`/tools/category/${cat.name.toLowerCase().replace(/ /g, '-')}`}
+                  class={`flex items-center gap-2 mb-3 group`}
+                >
+                  <div class={`w-7 h-7 rounded-lg ${bgCls} flex items-center justify-center text-sm shrink-0`}>
+                    {cat.icon}
+                  </div>
+                  <span class={`text-xs font-bold ${textCls} group-hover:underline leading-tight`}>{cat.name}</span>
+                </a>
+                <!-- Tool list -->
+                <ul class="space-y-0.5">
+                  {cat.tools.map(tool => (
+                    <li>
+                      <a
+                        href={`/tools/${tool.slug}`}
+                        class="block text-xs text-gray-600 hover:text-blue-600 py-1 px-1 rounded hover:bg-gray-50 transition leading-snug"
+                      >
+                        {tool.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <!-- View all link -->
+                <a
+                  href={`/tools/category/${cat.name.toLowerCase().replace(/ /g, '-')}`}
+                  class={`mt-3 block text-xs font-semibold ${textCls} hover:underline`}
+                >
+                  All {cat.name} &rarr;
+                </a>
+              </div>
+            );
+          })}
+        </div>
 
-  ctaBtn.addEventListener('mouseleave', () => {
-    ctaTooltip.classList.add('hidden');
-  });
+        <!-- Footer row — popular picks -->
+        <div class="px-6 py-3 border-t border-gray-100 bg-gray-50 flex items-center gap-4 flex-wrap">
+          <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Popular:</span>
+          {[
+            { name: 'AI Humanizer', slug: 'ai-humanizer' },
+            { name: 'SEO Audit Tool', slug: 'seo-audit-tool' },
+            { name: 'AEO & GEO Audit', slug: 'aeo-geo-audit' },
+            { name: 'AI Content Detector', slug: 'ai-content-detector' },
+            { name: 'Schema Generator', slug: 'schema-markup-generator' },
+            { name: 'JSON Formatter', slug: 'json-formatter' },
+          ].map(t => (
+            <a href={`/tools/${t.slug}`} class="text-xs font-medium text-gray-600 hover:text-blue-600 bg-white border border-gray-200 px-2.5 py-1 rounded-full hover:border-blue-300 transition">
+              {t.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
 
-  // Auto show tooltip once after 3 seconds
-  setTimeout(() => {
-    ctaTooltip.classList.remove('hidden');
-    setTimeout(() => ctaTooltip.classList.add('hidden'), 4000);
-  }, 3000);
-</script>
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MOBILE DRAWER — slides in from right
+  ═══════════════════════════════════════════════════════════════════ -->
+  <!-- Backdrop -->
+  <div id="mobileBackdrop" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+  <!-- Drawer panel -->
+  <div
+    id="mobileDrawer"
+    class="fixed top-0 right-0 bottom-0 w-80 max-w-full bg-white z-50 shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-in-out lg:hidden"
+  >
+    <!-- Drawer header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 shrink-0">
+      <span class="font-bold text-gray-900">Browse Tools</span>
+      <button id="mobileDrawerClose" aria-label="Close menu" class="p-1.5 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable content -->
+    <div class="flex-1 overflow-y-auto">
+
+      <!-- Top links -->
+      <div class="px-5 py-3 border-b border-gray-100 space-y-1">
+        <a href="/" class="flex items-center gap-2 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Home
+        </a>
+        <a href="/tools" class="flex items-center gap-2 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          All {totalTools}+ Tools
+        </a>
+        <a href="/about" class="flex items-center gap-2 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
+          About
+        </a>
+      </div>
+
+      <!-- Categories accordion -->
+      <div class="px-4 py-3">
+        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider px-1 mb-2">Categories</p>
+        {toolCategories.map((cat, idx) => {
+          const cc = catColors[cat.name] || 'text-blue-600 bg-blue-50';
+          const [textCls, bgCls] = cc.split(' ');
+          return (
+            <div class="mb-1">
+              <!-- Accordion trigger -->
+              <button
+                class="mobileAccordionBtn w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition text-left"
+                data-idx={idx}
+                aria-expanded="false"
+              >
+                <div class="flex items-center gap-2.5">
+                  <div class={`w-8 h-8 rounded-lg ${bgCls} flex items-center justify-center text-base shrink-0`}>{cat.icon}</div>
+                  <div>
+                    <div class="text-sm font-semibold text-gray-800">{cat.name}</div>
+                    <div class="text-xs text-gray-400">{cat.tools.length} tools</div>
+                  </div>
+                </div>
+                <svg class="mobileAccordionChevron w-4 h-4 text-gray-400 transition-transform duration-200 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+
+              <!-- Accordion panel -->
+              <div class="mobileAccordionPanel hidden pl-14 pr-3 pb-2">
+                <ul class="space-y-0.5">
+                  {cat.tools.map(tool => (
+                    <li>
+                      <a href={`/tools/${tool.slug}`} class={`block text-sm ${textCls} py-1.5 hover:underline`}>
+                        {tool.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a href={`/tools/category/${cat.name.toLowerCase().replace(/ /g, '-')}`} class={`inline-block mt-1.5 text-xs font-bold ${textCls} hover:underline`}>
+                  View all &rarr;
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- Drawer footer CTA -->
+    <div class="shrink-0 px-5 py-4 border-t border-gray-100">
+      <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer"
+        class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-4 py-3 rounded-xl transition w-full">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        Custom AI Solutions – AI2Flows
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SEARCH MODAL — cmd+k / search icon
+  ═══════════════════════════════════════════════════════════════════ -->
+  <div id="searchModal" class="fixed inset-0 z-60 hidden">
+    <div id="searchBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="relative max-w-xl mx-auto mt-24 px-4">
+      <div class="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-100">
+          <svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input
+            id="searchModalInput"
+            type="text"
+            placeholder="Search tools..."
+            autocomplete="off"
+            class="flex-1 text-sm outline-none text-gray-800 placeholder-gray-400"
+          />
+          <kbd class="text-xs text-gray-400 bg-gray-100 border border-gray-200 px-1.5 py-0.5 rounded font-mono">Esc</kbd>
+        </div>
+        <div id="searchResults" class="max-h-80 overflow-y-auto divide-y divide-gray-50"></div>
+        <div id="searchEmpty" class="hidden px-4 py-8 text-center text-sm text-gray-400">No tools found</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRENDING -->
+  <section class="py-5 border-b bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center gap-4 flex-wrap">
+        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider shrink-0">Trending</span>
+        {trendingTools.map(tool => (
+          <a href={`/tools/${tool.slug}`} class="text-sm bg-white border border-gray-200 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-50 hover:border-blue-200 transition">
+            {tool.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BREADCRUMBS -->
+  {breadcrumbs && (
+    <div class="max-w-7xl mx-auto px-4 mt-6 text-sm text-gray-500">
+      {breadcrumbs.map((item, i) => (
+        <>
+          {i > 0 && <span class="mx-2">›</span>}
+          {item.url
+            ? <a href={item.url} class="hover:text-blue-600">{item.label}</a>
+            : <span>{item.label}</span>}
+        </>
+      ))}
+    </div>
+  )}
+
+  <main class="flex-1"><slot /></main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-950 text-gray-400 mt-20">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-gray-800">
+        <div>
+          <a href="/" class="flex items-center gap-2 mb-3">
+            <img src="/favicon.svg" class="w-7 h-7" alt="FreeAIToolz logo" loading="lazy" />
+            <span class="text-white font-bold text-lg">Free<span class="text-blue-400">AI</span>Toolz</span>
+          </a>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            Free AI tools, SEO utilities and developer tools. No signup required. Everything runs in your browser.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-white transition">Home</a></li>
+            <li><a href="/tools" class="hover:text-white transition">All Tools</a></li>
+            <li><a href="/about" class="hover:text-white transition">About</a></li>
+            <li><a href="/privacy" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="/terms" class="hover:text-white transition">Terms & Conditions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Need Custom AI?</h4>
+          <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            Visit AI2Flows
+          </a>
+          <p class="text-xs text-gray-500 mt-3">Custom AI automations, GHL funnels, chatbots and more.</p>
+        </div>
+      </div>
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
+        <p>© {new Date().getFullYear()} FreeAIToolz. All rights reserved. Built by <a href="https://www.ai2flows.com/" class="text-blue-400 hover:text-blue-300" target="_blank">AI2Flows</a></p>
+        <div class="flex gap-4">
+          <a href="/privacy" class="hover:text-gray-400 transition">Privacy Policy</a>
+          <a href="/terms" class="hover:text-gray-400 transition">Terms</a>
+          <a href="/about" class="hover:text-gray-400 transition">About</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating CTA -->
+  <div id="floatingCta" class="fixed bottom-6 right-6 z-50 hidden sm:flex flex-col items-end gap-3">
+    <div id="ctaTooltip" class="hidden bg-gray-900 text-white text-xs rounded-xl px-4 py-3 shadow-xl max-w-[200px] text-center border border-gray-700">
+      <p class="font-semibold text-white mb-1">Need Custom AI Solutions?</p>
+      <p class="text-gray-400">GHL funnels, chatbots, automations & more</p>
+    </div>
+    <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer" id="ctaBtn"
+      class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm px-5 py-3 rounded-2xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200 hover:scale-105">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+      </svg>
+      Custom AI Solutions
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       ALL SCRIPTS
+  ═══════════════════════════════════════════════════════════════════ -->
+  <script>
+    // ── Floating CTA tooltip ──────────────────────────────────────
+    const ctaBtn     = document.getElementById('ctaBtn');
+    const ctaTooltip = document.getElementById('ctaTooltip');
+    ctaBtn?.addEventListener('mouseenter', () => ctaTooltip?.classList.remove('hidden'));
+    ctaBtn?.addEventListener('mouseleave', () => ctaTooltip?.classList.add('hidden'));
+    setTimeout(() => {
+      ctaTooltip?.classList.remove('hidden');
+      setTimeout(() => ctaTooltip?.classList.add('hidden'), 4000);
+    }, 3000);
+
+    // ── MEGA MENU (desktop) ────────────────────────────────────────
+    const megaBtn      = document.getElementById('megaMenuBtn')  as HTMLButtonElement;
+    const megaMenu     = document.getElementById('megaMenu')     as HTMLElement;
+    const megaBackdrop = document.getElementById('megaBackdrop') as HTMLElement;
+    const megaChevron  = document.getElementById('megaChevron')  as SVGElement;
+    let megaOpen = false;
+
+    function openMega() {
+      megaMenu.classList.remove('hidden');
+      megaChevron.style.transform = 'rotate(180deg)';
+      megaBtn.setAttribute('aria-expanded', 'true');
+      megaOpen = true;
+    }
+    function closeMega() {
+      megaMenu.classList.add('hidden');
+      megaChevron.style.transform = '';
+      megaBtn.setAttribute('aria-expanded', 'false');
+      megaOpen = false;
+    }
+
+    megaBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      megaOpen ? closeMega() : openMega();
+    });
+
+    megaBackdrop?.addEventListener('click', closeMega);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeMega(); closeSearch(); }
+    });
+
+    // Close mega when clicking any link inside it
+    megaMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMega));
+
+    // ── MOBILE DRAWER ──────────────────────────────────────────────
+    const mobileBtn      = document.getElementById('mobileMenuBtn')    as HTMLButtonElement;
+    const mobileDrawer   = document.getElementById('mobileDrawer')     as HTMLElement;
+    const mobileBackdrop = document.getElementById('mobileBackdrop')   as HTMLElement;
+    const drawerClose    = document.getElementById('mobileDrawerClose') as HTMLButtonElement;
+    const iconOpen       = document.getElementById('iconOpen')         as SVGElement;
+    const iconClose      = document.getElementById('iconClose')        as SVGElement;
+
+    function openDrawer() {
+      mobileDrawer.classList.remove('translate-x-full');
+      mobileBackdrop.classList.remove('hidden');
+      iconOpen.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+      mobileBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      mobileDrawer.classList.add('translate-x-full');
+      mobileBackdrop.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      mobileBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    mobileBtn?.addEventListener('click', openDrawer);
+    drawerClose?.addEventListener('click', closeDrawer);
+    mobileBackdrop?.addEventListener('click', closeDrawer);
+
+    // Close drawer when navigating
+    mobileDrawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    // ── MOBILE ACCORDION ──────────────────────────────────────────
+    document.querySelectorAll('.mobileAccordionBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel   = btn.nextElementSibling as HTMLElement;
+        const chevron = btn.querySelector('.mobileAccordionChevron') as HTMLElement;
+        const isOpen  = !panel.classList.contains('hidden');
+
+        // Close all others
+        document.querySelectorAll('.mobileAccordionPanel').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.mobileAccordionChevron').forEach(c => (c as HTMLElement).style.transform = '');
+
+        if (!isOpen) {
+          panel.classList.remove('hidden');
+          chevron.style.transform = 'rotate(180deg)';
+          btn.setAttribute('aria-expanded', 'true');
+        } else {
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // ── SEARCH MODAL ──────────────────────────────────────────────
+    const searchModal    = document.getElementById('searchModal')    as HTMLElement;
+    const searchBackdrop = document.getElementById('searchBackdrop') as HTMLElement;
+    const searchInput    = document.getElementById('searchModalInput') as HTMLInputElement;
+    const searchResults  = document.getElementById('searchResults')  as HTMLElement;
+    const searchEmpty    = document.getElementById('searchEmpty')    as HTMLElement;
+
+    // Build a flat index of all tools at boot
+    const allTools: { name: string; slug: string; description: string; category: string }[] = [];
+    // We inline the tool data directly into the script via a data attribute on the body
+    // Instead, we'll read from a hidden JSON element injected below
+    const toolDataEl = document.getElementById('toolDataJson');
+    if (toolDataEl) {
+      const parsed = JSON.parse(toolDataEl.textContent || '[]');
+      allTools.push(...parsed);
+    }
+
+    function openSearch() {
+      searchModal.classList.remove('hidden');
+      searchInput?.focus();
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSearch() {
+      searchModal.classList.add('hidden');
+      if (searchInput) searchInput.value = '';
+      if (searchResults) searchResults.innerHTML = '';
+      if (searchEmpty) searchEmpty.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('searchTrigger')?.addEventListener('click', openSearch);
+    document.getElementById('searchTriggerMobile')?.addEventListener('click', openSearch);
+    searchBackdrop?.addEventListener('click', closeSearch);
+
+    // cmd+k / ctrl+k
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+    });
+
+    searchInput?.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) { searchResults.innerHTML = ''; searchEmpty?.classList.add('hidden'); return; }
+
+      const hits = allTools.filter(t =>
+        t.name.toLowerCase().includes(q) ||
+        t.description.toLowerCase().includes(q) ||
+        t.category.toLowerCase().includes(q)
+      ).slice(0, 8);
+
+      if (hits.length === 0) {
+        searchResults.innerHTML = '';
+        searchEmpty?.classList.remove('hidden');
+        return;
+      }
+      searchEmpty?.classList.add('hidden');
+      searchResults.innerHTML = hits.map(t => `
+        <a href="/tools/${t.slug}" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition block">
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-semibold text-gray-800">${t.name}</div>
+            <div class="text-xs text-gray-400 mt-0.5 truncate">${t.description}</div>
+          </div>
+          <span class="text-xs text-gray-300 bg-gray-50 border border-gray-100 px-2 py-0.5 rounded-full shrink-0 mt-0.5">${t.category.split(' ')[0]}</span>
+        </a>
+      `).join('');
+
+      // Close search when a result is clicked
+      searchResults.querySelectorAll('a').forEach(a => a.addEventListener('click', closeSearch));
+    });
+
+    // keyboard navigation in search results
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSearch();
+    });
+  </script>
+
+  <!-- Hidden tool data for search -->
+  <script id="toolDataJson" type="application/json">
+    {JSON.stringify(
+      toolCategories.flatMap(cat =>
+        cat.tools.map(t => ({
+          name: t.name,
+          slug: t.slug,
+          description: t.description,
+          category: cat.name,
+        }))
+      )
+    )}
+  </script>
+
 </body>
 </html>
