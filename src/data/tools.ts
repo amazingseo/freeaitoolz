@@ -55,6 +55,11 @@ slug: "aeo-geo-audit",
 description: "Check if your site is optimized for ChatGPT, Claude, Perplexity & Google AI Overviews — real schema, robots.txt, and live AI visibility test" 
 },
 
+{ name: "Local Business AI Visibility Checker", 
+slug: "local-biz-visibility", 
+description: "Check how your local business appears in ChatGPT, Perplexity, Google AI & Claude — free AI visibility checker for USA & Canada businesses" 
+},
+
 {
 name: "Robots.txt Generator",
 slug: "robots-txt-generator",
