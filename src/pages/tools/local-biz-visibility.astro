@@ -50,24 +50,29 @@ import LocalBizVisibilityTool from "../../components/tools/LocalBizVisibilityToo
             When someone asks ChatGPT &ldquo;best HVAC company in Austin TX&rdquo; or Perplexity &ldquo;dentist near me in Vancouver&rdquo;, does your business appear? This tool runs live queries to Claude AI using the same types of prompts real users ask, revealing exactly how visible your local business is to AI-powered answer engines. Every result is a real API call &mdash; not simulated data.
           </p>
 
-          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Why AI Visibility Matters for Local Businesses in 2025</h3>
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Why AI Visibility Matters for Local Businesses in 2026</h3>
           <p class="text-gray-600 leading-relaxed mb-4">
-            AI search engines are now the first stop for millions of consumers looking for local services. ChatGPT receives over 100 million queries per day, Perplexity processes tens of millions more, and Google AI Overviews now appear at the top of roughly 25% of all searches. When a homeowner asks &ldquo;who are the best plumbers in Seattle?&rdquo; and ChatGPT doesn&apos;t mention your business, you&apos;ve lost that customer before they ever visited your website or Yelp page.
+            In 2026, AI search engines have become the dominant first touchpoint for consumers researching local services. ChatGPT now processes over 200 million queries per day, Perplexity has surpassed 100 million monthly active users, and Google AI Overviews appear at the top of nearly 40% of all searches &mdash; up from 25% in 2025. With voice AI assistants and AI-native mobile apps further accelerating the shift, traditional map pack and directory rankings are no longer enough. When a homeowner asks their AI assistant &ldquo;who are the best plumbers in Seattle?&rdquo; and your business is not in the response, you have lost that customer before they ever opened a browser tab.
           </p>
 
           <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">The Four Signals AI Engines Use to Recommend Local Businesses</h3>
           <p class="text-gray-600 leading-relaxed mb-4">
-            AI engines don&apos;t browse Yelp in real time &mdash; they draw on structured knowledge built from web crawling, training data and knowledge graphs. The four most impactful signals are: (1) Google Business Profile completeness and review volume, which feeds Google&apos;s knowledge graph that other AI systems reference; (2) LocalBusiness schema markup on your website, which AI crawlers like GPTBot and ClaudeBot extract directly; (3) NAP (Name, Address, Phone) consistency across 20+ business directories including Yelp, BBB, Angi and industry-specific directories; and (4) citation mentions in local news, press releases and authoritative web content that gets included in LLM training datasets.
+            AI engines do not browse Yelp in real time &mdash; they draw on structured knowledge built from web crawling, training data and knowledge graphs. The four most impactful signals are: (1) Google Business Profile completeness and review volume, which feeds Google&apos;s knowledge graph that other AI systems reference; (2) LocalBusiness schema markup on your website, which AI crawlers like GPTBot and ClaudeBot extract directly on every crawl; (3) NAP (Name, Address, Phone) consistency across 20+ business directories including Yelp, BBB, Angi and industry-specific directories; and (4) citation mentions in local news, press releases and authoritative web content that enters LLM training datasets during model update cycles.
+          </p>
+
+          <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">How AI Search Has Changed Local Discovery in 2026</h3>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            The local search landscape shifted dramatically between 2024 and 2026. AI-generated recommendations now account for an estimated 30&ndash;35% of local business discovery in the USA and Canada, according to multiple industry studies. Consumers no longer just search &mdash; they ask. They ask their phones, their smart speakers, their AI assistants and their AI-powered browsers. Each of these systems draws from a shared pool of knowledge graph data, web-crawled content and structured signals. Businesses that optimized only for keyword rankings are now invisible to an entire generation of AI-first consumers.
           </p>
 
           <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">USA vs Canada &mdash; AI Visibility Differences</h3>
           <p class="text-gray-600 leading-relaxed mb-4">
-            Canadian businesses face a unique challenge: AI training data skews heavily toward US sources, meaning a business in Toronto or Calgary may require significantly more citation volume to match the AI visibility of a comparable business in a mid-sized US city. Canadian businesses should prioritize listings on Yellow Pages Canada, Canada411, LocalStack, the Better Business Bureau Canada, and provincial business registries. French-language businesses in Quebec should additionally target francophone directories and news sources.
+            Canadian businesses face a persistent challenge in 2026: LLM training data still skews heavily toward US sources, meaning a business in Toronto or Calgary requires significantly more citation volume to match the AI visibility of a comparable business in a mid-sized US city. Canadian businesses should prioritize listings on Yellow Pages Canada, Canada411, LocalStack, the Better Business Bureau Canada, and provincial business registries. French-language businesses in Quebec should additionally target francophone directories, Le Devoir, and Radio-Canada news mentions, as these sources carry disproportionate weight in French-language LLM training data.
           </p>
 
           <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">What This Tool Checks</h3>
           <p class="text-gray-600 leading-relaxed mb-4">
-            The checker runs four live Claude AI queries that simulate how different AI engines respond to local business searches: a category discovery query (&ldquo;what HVAC businesses do you know in [location]?&rdquo;), a recommendation query (&ldquo;I need a trusted plumber in [location], any suggestions?&rdquo;), a brand query (&ldquo;tell me about [business name] in [location]&rdquo;), and a reputation query (&ldquo;is [business name] well-known in [location]?&rdquo;). Your visibility score is calculated from how many queries result in recognition or recommendation.
+            The checker runs four live Claude AI queries that simulate how different AI engines respond to local business searches: a category discovery query (&ldquo;what [category] businesses do you know in [location]?&rdquo;), a recommendation query (&ldquo;I need a trusted [category] in [location], any suggestions?&rdquo;), a brand query (&ldquo;tell me about [business name] in [location]&rdquo;), and a reputation query (&ldquo;is [business name] well-known in [location]?&rdquo;). Your visibility score is calculated only when your actual business name appears in the AI response &mdash; no false positives from generic long answers.
           </p>
 
           <!-- Score table -->
@@ -85,22 +90,22 @@ import LocalBizVisibilityTool from "../../components/tools/LocalBizVisibilityToo
                 <tr class="hover:bg-gray-50">
                   <td class="px-4 py-3 font-bold text-green-700">80 &ndash; 100</td>
                   <td class="px-4 py-3"><span class="text-xs font-bold bg-green-50 text-green-700 px-2 py-1 rounded-full">Well Known</span></td>
-                  <td class="px-4 py-3 text-gray-600">AI engines actively recommend your business. Strong entity recognition.</td>
+                  <td class="px-4 py-3 text-gray-600">AI engines actively recognize and recommend your business. Strong entity knowledge.</td>
                 </tr>
                 <tr class="hover:bg-gray-50">
                   <td class="px-4 py-3 font-bold text-blue-700">55 &ndash; 79</td>
                   <td class="px-4 py-3"><span class="text-xs font-bold bg-blue-50 text-blue-700 px-2 py-1 rounded-full">Visible</span></td>
-                  <td class="px-4 py-3 text-gray-600">Some AI engines recognize your business. Good foundation to build on.</td>
+                  <td class="px-4 py-3 text-gray-600">AI engines recognize your brand in direct queries. Good foundation — expand category coverage.</td>
                 </tr>
                 <tr class="hover:bg-gray-50">
                   <td class="px-4 py-3 font-bold text-amber-700">25 &ndash; 54</td>
                   <td class="px-4 py-3"><span class="text-xs font-bold bg-amber-50 text-amber-700 px-2 py-1 rounded-full">Emerging</span></td>
-                  <td class="px-4 py-3 text-gray-600">Minimal AI recognition. Business exists in some data but not reliably recommended.</td>
+                  <td class="px-4 py-3 text-gray-600">Minimal AI recognition. Business exists in some data but not reliably surfaced in recommendations.</td>
                 </tr>
                 <tr class="hover:bg-gray-50">
                   <td class="px-4 py-3 font-bold text-red-700">0 &ndash; 24</td>
                   <td class="px-4 py-3"><span class="text-xs font-bold bg-red-50 text-red-700 px-2 py-1 rounded-full">Not Visible</span></td>
-                  <td class="px-4 py-3 text-gray-600">AI engines have no data about your business. Immediate action required.</td>
+                  <td class="px-4 py-3 text-gray-600">AI engines have no data about your business. Missing 30&ndash;35% of local discovery in 2026.</td>
                 </tr>
               </tbody>
             </table>
@@ -149,14 +154,15 @@ import LocalBizVisibilityTool from "../../components/tools/LocalBizVisibilityToo
       </h2>
       <div class="divide-y divide-gray-200">
         {[
-          { label: 'Tool Name', value: 'Local Business AI Visibility Checker' },
-          { label: 'Category', value: 'SEO Tools', badge: true },
-          { label: 'Coverage', value: 'USA & Canada' },
-          { label: 'Price', value: 'Free', green: true },
-          { label: 'Login Required', value: 'No', green: true },
-          { label: 'Daily Limit', value: '5 checks / day' },
-          { label: 'AI Engines Tested', value: 'ChatGPT, Perplexity, Google AI, Claude' },
-          { label: 'AI Model', value: 'Claude Haiku 4.5' },
+          { label: 'Tool Name',         value: 'Local Business AI Visibility Checker' },
+          { label: 'Category',          value: 'SEO Tools',    badge: true },
+          { label: 'Coverage',          value: 'USA & Canada' },
+          { label: 'Price',             value: 'Free',         green: true },
+          { label: 'Login Required',    value: 'No',           green: true },
+          { label: 'Daily Limit',       value: '5 checks / day' },
+          { label: 'Query Types',       value: 'Category, Recommendation, Brand, Reputation' },
+          { label: 'AI Model',          value: 'Claude Haiku 4.5' },
+          { label: 'Location Input',    value: 'Smart city autocomplete (OpenStreetMap)' },
         ].map(item => (
           <div class="flex items-center justify-between py-3">
             <span class="text-sm font-medium text-gray-600">{item.label}</span>
@@ -173,10 +179,10 @@ import LocalBizVisibilityTool from "../../components/tools/LocalBizVisibilityToo
       <h2 class="text-2xl font-extrabold text-gray-900 mb-8">How to Use the Local Business AI Visibility Checker</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { n: 1, title: 'Enter Your Business Info', desc: 'Type your business name, city/state or province, and select your business category.' },
-          { n: 2, title: 'Add Website (Optional)', desc: 'Including your website helps the tool test for direct brand recognition across AI engines.' },
-          { n: 3, title: 'Click Check AI Visibility', desc: 'The tool runs 4 live AI queries simultaneously and returns results in 15&ndash;30 seconds.' },
-          { n: 4, title: 'Review Your Score & Recommendations', desc: 'See your visibility score, which engines recognize you, actual AI responses, and prioritized action steps.' },
+          { n: 1, title: 'Enter Your Business Info',          desc: 'Type your business name, then start typing your city &mdash; autocomplete suggests the correct City, State / Province format.' },
+          { n: 2, title: 'Select Category & Add Website',     desc: 'Choose your business category from 46 options. Adding your website URL improves brand recognition accuracy.' },
+          { n: 3, title: 'Click Check AI Visibility',         desc: 'The tool runs 4 live AI queries and returns your full visibility report in 15&ndash;30 seconds.' },
+          { n: 4, title: 'Review Score & Recommendations',    desc: 'See your score, which query types matched, actual AI responses, and a prioritized action plan.' },
         ].map(step => (
           <div class="flex flex-col items-start gap-3">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-sm">{step.n}</div>
@@ -198,30 +204,36 @@ import LocalBizVisibilityTool from "../../components/tools/LocalBizVisibilityToo
       <div class="space-y-3">
         {[
           {
-            q: 'Why doesn\'t my business show up in AI search results?',
-            a: 'The most common reasons are: (1) no Google Business Profile or an incomplete one, (2) missing LocalBusiness schema markup on your website, (3) fewer than 10 citation mentions across business directories, and (4) insufficient online reviews. AI engines build their knowledge of local businesses primarily from Google\'s knowledge graph, structured data on your website, and high-authority directory listings.'
+            q: "Why doesn't my business show up in AI search results?",
+            a: "The most common reasons in 2026 are: (1) no Google Business Profile or an incomplete one with fewer than 20 reviews, (2) missing LocalBusiness schema markup on your website, (3) fewer than 10 consistent citation mentions across business directories, and (4) AI crawlers blocked in your robots.txt. AI engines build their knowledge of local businesses primarily from Google's knowledge graph, structured data on your website, and high-authority directory listings — not from real-time web browsing."
           },
           {
-            q: 'Does this tool actually check ChatGPT and Google AI?',
-            a: 'The tool uses Claude AI (Anthropic) to simulate the types of queries users ask different AI engines. Since ChatGPT, Perplexity and Google AI share significant training data overlap and respond similarly to local business queries, Claude responses are a reliable proxy. For the most accurate picture, we recommend also testing your business directly in ChatGPT and Perplexity after using this tool.'
+            q: "Does this tool actually check ChatGPT and Google AI?",
+            a: "The tool uses Claude AI (Anthropic) to run four different query types that simulate how different AI engines respond to local business searches. The four queries test category discovery, recommendation requests, direct brand queries, and reputation checks. Since major AI engines share significant training data overlap, Claude responses are a reliable proxy for general AI visibility. For a complete picture, test your business directly in ChatGPT and Perplexity after using this tool."
           },
           {
-            q: 'How long does it take to improve AI visibility?',
-            a: 'Quick wins (1-2 weeks): completing your Google Business Profile and adding LocalBusiness schema to your website. Medium-term (1-3 months): building 20+ consistent directory citations and earning 30+ Google reviews. Long-term (3-12 months): earning press mentions and organic backlinks that enter AI training datasets on their update cycles. Most businesses see measurable improvement within 60-90 days of implementing the high-priority recommendations.'
+            q: "How long does it take to improve AI visibility in 2026?",
+            a: "Quick wins (1-2 weeks): completing your Google Business Profile and adding LocalBusiness schema to your website. Medium-term (1-3 months): building 20+ consistent directory citations and earning 50+ Google reviews. Long-term (3-12 months): earning press mentions and organic backlinks that enter AI training datasets on their update cycles. Most businesses see measurable improvement within 60-90 days of implementing high-priority recommendations. AI models update their knowledge bases more frequently in 2026 than in previous years, so improvements appear faster."
           },
           {
-            q: 'Is this tool relevant for businesses outside the USA and Canada?',
-            a: 'The tool works for any English-language local business query globally. However, the recommendations are optimized for USA and Canada directories (Yelp US/Canada, BBB, Angi, etc.). For UK businesses, we recommend targeting Yell.com, Checkatrade, and Thomson Local in addition to the recommendations shown.'
+            q: "Is this tool relevant for businesses outside the USA and Canada?",
+            a: "The tool works for any English-language local business query globally. However, the recommendations are optimized for USA and Canada directories (Yelp US/Canada, BBB, Angi, etc.). For UK businesses, target Yell.com, Checkatrade, and Thomson Local. For Australian businesses, target True Local, Word of Mouth, and hipages. For all markets, the core signals — Google Business Profile, LocalBusiness schema, and NAP consistency — apply universally."
           },
           {
-            q: 'Why is the daily limit 5 checks?',
-            a: 'Each check makes 4 live Claude API calls, which costs approximately $0.0015 per check. At 5 checks per day per user, the maximum cost is under $0.01/day per user, keeping the tool free for everyone. The limit resets at midnight and is tracked locally in your browser.'
+            q: "Why is the daily limit 5 checks?",
+            a: "Each check makes 4 live Claude API calls, which costs approximately $0.0015 per check. At 5 checks per day per user, the maximum cost is under $0.01/day per user, keeping the tool free for everyone. The limit resets at midnight and is tracked locally in your browser — no account needed."
+          },
+          {
+            q: "What does the clickable hook link to after my results?",
+            a: "After your visibility score is calculated, a short contextual prompt appears linking to AI2Flows — the agency behind FreeAIToolz. If your score is low, it links with a message about fixing your AI visibility. If your score is high, it links with a message about scaling with automation. AI2Flows offers done-for-you GHL CRM setup, AI automation, and local business AEO strategy for clients across the USA, UK, Canada and beyond."
           },
         ].map(item => (
           <details class="group border border-gray-200 rounded-2xl overflow-hidden bg-white hover:border-blue-200 transition-colors">
             <summary class="flex items-center justify-between px-5 py-4 cursor-pointer font-semibold text-gray-900 text-sm list-none select-none">
               <span>{item.q}</span>
-              <svg class="w-4 h-4 text-gray-400 shrink-0 ml-3 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+              <svg class="w-4 h-4 text-gray-400 shrink-0 ml-3 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
             </summary>
             <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">{item.a}</div>
           </details>
@@ -233,7 +245,7 @@ import LocalBizVisibilityTool from "../../components/tools/LocalBizVisibilityToo
   <!-- CTA -->
   <section class="py-12 bg-gray-950 text-white">
     <div class="max-w-3xl mx-auto px-4 text-center">
-      <p class="text-gray-400 text-sm mb-4">Need full AI visibility strategy for your local business?</p>
+      <p class="text-gray-400 text-sm mb-4">Need a full AI visibility strategy for your local business?</p>
       <a href="https://www.ai2flows.com/" target="_blank" rel="noopener noreferrer"
         class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 shadow-lg text-sm">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
