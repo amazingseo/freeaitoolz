@@ -65,6 +65,21 @@ slug: "local-faq-schema",
 description: "Generate 10 AEO-optimized FAQ questions + FAQPage and LocalBusiness JSON-LD schema for your local business — get cited by ChatGPT, Perplexity & Google AI" 
 },
 
+{ name: "Structured Data Validator", 
+slug: "schema-validator", 
+description: "Fetch your live URL, validate every JSON-LD schema block against schema.org rules, see exact errors with line numbers, and get Claude AI auto-fixed schema ready to copy-paste" 
+},
+
+{ name: "AI Search Intent Map", 
+slug: "ai-intent-map", 
+description: "Generate 18 AI search intents for your local business — mapped to content format, schema type and citation potential. Includes gap analysis vs your existing site" 
+},
+
+{ name: "GBP AEO Scorer", 
+slug: "gbp-aeo-scorer", 
+description: "Score your Google Business Profile description on 10 AEO criteria, get a Claude-rewritten version, 10 weekly post ideas, and a missing attributes checklist" 
+},
+
 {
 name: "Robots.txt Generator",
 slug: "robots-txt-generator",
