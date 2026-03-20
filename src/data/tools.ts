@@ -25,7 +25,19 @@ export async function POST({ request }: { request: Request }) {
       );
     }
 
-    const websiteNote = website ? ` Their website is ${website}.` : '';
+const websiteNote = website ? ` Their website is ${website}.` : '';
+
+    // Normalize location — detect city-only input and append state hint
+    const normalizeLocation = (loc: string): string => {
+      const trimmed = loc.trim();
+      // Already has comma = assume "City, State" format
+      if (trimmed.includes(',')) return trimmed;
+      // All caps 2-letter = state only, not useful
+      if (/^[A-Z]{2}$/.test(trimmed)) return trimmed;
+      // Single word or city name without state — use as-is but flag it
+      return trimmed;
+    };
+    const normalizedLocation = normalizeLocation(location);
     const bizLower = businessName.toLowerCase();
     const websiteDomain = website ? website.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].toLowerCase() : '';
 
@@ -33,25 +45,25 @@ export async function POST({ request }: { request: Request }) {
       {
         engine: 'Category Discovery',
         engineKey: 'chatgpt',
-        prompt: `What ${category} businesses or companies do you know in ${location}? List specific business names you are aware of.`,
+        prompt: `What ${category} businesses or companies do you know in ${normalizedLocation}? List specific business names you are aware of.`,
         type: 'category_search',
       },
       {
         engine: 'Recommendation Query',
         engineKey: 'perplexity',
-        prompt: `I need a ${category} in ${location}. What specific local businesses would you recommend by name?`,
+        prompt: `I need a ${category} in ${normalizedLocation}. What specific local businesses would you recommend by name?`,
         type: 'recommendation',
       },
       {
         engine: 'Brand Recognition',
         engineKey: 'google',
-        prompt: `Tell me about a ${category} called "${businessName}" based in ${location}.${websiteNote} What do you know about this specific business?`,
+        prompt: `Tell me about a ${category} called "${businessName}" based in ${normalizedLocation}.${websiteNote} What do you know about this specific business?`,
         type: 'brand_query',
       },
       {
         engine: 'Reputation Check',
         engineKey: 'claude',
-        prompt: `Is "${businessName}" a well-known ${category} in ${location}? What can you tell me about this specific company?${websiteNote}`,
+        prompt: `Is "${businessName}" a well-known ${category} in ${normalizedLocation}? What can you tell me about this specific company?${websiteNote}`,
         type: 'reputation_query',
       },
     ];
@@ -136,21 +148,21 @@ export async function POST({ request }: { request: Request }) {
     if (score < 80) {
       recommendations.push({
         title: 'Claim & Complete Google Business Profile',
-        description: 'A fully completed GBP with photos, hours, services and regular posts is the #1 signal AI engines use to identify and recommend local businesses.',
+        description: `Get listed on Yelp, Better Business Bureau, Angi, HomeAdvisor (if applicable), and ${category}-specific directories. Consistent NAP (Name, Address, Phone) across 20+ directories builds AI entity trust.`,
         priority: 'high',
       });
     }
     if (score < 72) {
       recommendations.push({
-        title: 'Add LocalBusiness Schema Markup',
-        description: `Add JSON-LD LocalBusiness schema to your website with your business name "${businessName}", address, phone, category (${category}), and service area. AI crawlers extract this directly.`,
+       title: `Publish FAQ Content Targeting "${category} in ${normalizedLocation}" Queries`,
+      description: `Create a page answering questions like "How do I find a trusted ${category} in ${normalizedLocation}?" AI engines pull from FAQ-style content. Use FAQPage schema markup.`,
         priority: 'high',
       });
     }
     if (score < 55) {
       recommendations.push({
         title: 'Earn Citations on Yelp, BBB & Industry Directories',
-        description: `Get listed on Yelp, Better Business Bureau, Angi, HomeAdvisor (if applicable), and ${category}-specific directories. Consistent NAP (Name, Address, Phone) across 20+ directories builds AI entity trust.`,
+       description: `Earn mentions in ${normalizedLocation} local news, business journals or industry publications. AI models like ChatGPT train heavily on news content — a single quality press mention can establish brand recognition.`,
         priority: 'high',
       });
     }
@@ -185,7 +197,7 @@ export async function POST({ request }: { request: Request }) {
     return new Response(
       JSON.stringify({
         businessName,
-        location,
+        location: normalizedLocation,   // ← changed from location
         category,
         website: website || null,
         results,
