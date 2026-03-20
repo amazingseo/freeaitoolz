@@ -583,11 +583,13 @@ const catColors: Record<string, string> = {
     const allTools: { name: string; slug: string; description: string; category: string }[] = [];
     // We inline the tool data directly into the script via a data attribute on the body
     // Instead, we'll read from a hidden JSON element injected below
-    const toolDataEl = document.getElementById('toolDataJson');
-    if (toolDataEl) {
-      const parsed = JSON.parse(toolDataEl.textContent || '[]');
-      allTools.push(...parsed);
-    }
+    const toolDataEl = document.getElementById('toolDataJson') as HTMLElement;
+if (toolDataEl) {
+  try {
+    const parsed = JSON.parse(toolDataEl.dataset.tools || '[]');
+    allTools.push(...parsed);
+  } catch {}
+}
 
     function openSearch() {
       searchModal.classList.remove('hidden');
@@ -647,19 +649,22 @@ const catColors: Record<string, string> = {
     });
   </script>
 
-  <!-- Hidden tool data for search -->
-  <script id="toolDataJson" type="application/json">
-    {JSON.stringify(
-      toolCategories.flatMap(cat =>
-        cat.tools.map(t => ({
-          name: t.name,
-          slug: t.slug,
-          description: t.description,
-          category: cat.name,
-        }))
-      )
-    )}
-  </script>
+  <!-- Hidden tool data for search — data attribute works in Astro, script tags don't evaluate expressions -->
+<div
+  id="toolDataJson"
+  class="hidden"
+  aria-hidden="true"
+  data-tools={JSON.stringify(
+    toolCategories.flatMap(cat =>
+      cat.tools.map(t => ({
+        name: t.name,
+        slug: t.slug,
+        description: t.description,
+        category: cat.name,
+      }))
+    )
+  )}
+></div>
 
 </body>
 </html>
